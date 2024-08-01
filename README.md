@@ -7,17 +7,36 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+## About this project
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This sample project is managing gateways - master devices that control multiple peripheral devices. 
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+The task is to create a REST service (JSON/HTTP) for storing information about these gateways and their associated devices. This information must be stored in the database. 
+
+- When storing a gateway, any field marked as “to be validated” must be validated and an error returned if it is invalid.
+- Also, no more that 10 peripheral devices are allowed for a gateway.
+- The service must also offer an operation for displaying information about all stored gateways (and their devices) 
+- Operation for displaying details for a single gateway. 
+- It must be possible to add and remove a device from a gateway.
+- Basic UI - recommended or (providing test data for Postman (or other rest client) if you do not have enough time.
+-  Meaningful Unit tests.
+-  Readme file with installation guides.
+-  An automated build.
+
+## Entities
+
+[gateway]():
+
+- a unique serial number (string), 
+- human-readable name (string),
+- IPv4 address (to be validated),
+- multiple associated peripheral devices. 
+
+[peripheral]():
+- a UID (number),
+- vendor (string),
+- date created,
+- status - online/offline.
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
@@ -25,42 +44,77 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Prerequisites
 
-## Laravel Sponsors
+Before you begin, make sure you have the following installed:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **PHP** >= 8.0
+- **Composer** - [Installation Instructions](https://getcomposer.org/download/)
+- **MySQL** 
 
-### Premium Partners
+## Installation
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+Follow these steps to set up the project on your local environment:
 
-## Contributing
+1. **Clone the repository**
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+   Clone this repository to your local machine using Git:
+   ```bash
+   git clone https://github.com/magerosco/gateways.git
+2. **Navigate to the project directory**
 
-## Code of Conduct
+    Use Composer to install all required PHP dependencies:
+    ```bash
+    cd your-project
+3. **Install PHP dependencies**
+    ```bash
+    composer install
+4. **Set up the .env file**
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+    Copy the .env.example file to .env:
+    ```bash
+    cp .env.example .env
+ - Open the .env file in your preferred text editor and configure the database connection and other environment settings.
+ 
+ 5. **Generate the application key**
+ 
+    Laravel requires an application key to encrypt data. Generate this key using the following command:
+    ```bash
+    php artisan key:generate
+6. **Set up the database**
 
-## Security Vulnerabilities
+    Ensure your database is created and correctly configured in the .env file. Then run the migrations to create the tables:
+    
+    ```bash
+    php artisan migrate
+7. **Seed the database**
+    Includes seeders, you can populate the database with initial data using:
+    ```bash
+    php artisan db:seed
+8. **Start the development server**
+    ```bash
+    php artisan serve
+- By default, the application will be available at http://localhost:8000.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Testing 
 
-## License
+ **(Recommended) You can run the feature's tests using PHPUnit:**
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+    php artisan test --filter=PeripheralTest
+```
+
+```bash
+    php artisan test --filter=GatewayTest
+```
+
+ **(Optional) You can run the project's tests using PHPUnit:**
+
+```bash
+    php artisan test
+```
+ 
+ ## Testing REST service with postman 
+
+### --TODO
