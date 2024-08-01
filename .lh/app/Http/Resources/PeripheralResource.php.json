@@ -1,0 +1,42 @@
+{
+    "sourceFile": "app/Http/Resources/PeripheralResource.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 6,
+            "patches": [
+                {
+                    "date": 1722338352712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722338368508,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,12 @@\n      * @return array<string, mixed>\n      */\n     public function toArray(Request $request): array\n     {\n-        return []\n+        return [\n+            'id' => $this->id,\n+            'name' => $this->name,\n+            'description' => $this->UID,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at,]\n     }\n }\n"
+                },
+                {
+                    "date": 1722338378324,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,10 @@\n     {\n         return [\n             'id' => $this->id,\n             'name' => $this->name,\n-            'description' => $this->UID,\n+            'UID' => $this->UID,\n+            'UID' => $this->UID,\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at,]\n     }\n }\n"
+                },
+                {
+                    "date": 1722338385889,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,10 @@\n         return [\n             'id' => $this->id,\n             'name' => $this->name,\n             'UID' => $this->UID,\n-            'UID' => $this->UID,\n+            'vendor' => $this->vendor,\n+            'vendor' => $this->vendor,\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at,]\n     }\n }\n"
+                },
+                {
+                    "date": 1722338392398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,10 @@\n             'id' => $this->id,\n             'name' => $this->name,\n             'UID' => $this->UID,\n             'vendor' => $this->vendor,\n-            'vendor' => $this->vendor,\n+            'status' => $this->venstatusdor,\n             'created_at' => $this->created_at,\n-            'updated_at' => $this->updated_at,]\n+            'updated_at' => $this->updated_at\n+            ]\n     }\n }\n"
+                },
+                {
+                    "date": 1722338406390,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,8 @@\n             'UID' => $this->UID,\n             'vendor' => $this->vendor,\n             'status' => $this->venstatusdor,\n             'created_at' => $this->created_at,\n-            'updated_at' => $this->updated_at\n-            ]\n+            'updated_at' => $this->updated_at,\n+        ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722338861654,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,27 @@\n+<?php\n+\n+namespace App\\Http\\Resources;\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Http\\Resources\\Json\\JsonResource;\n+\n+class PeripheralResource extends JsonResource\n+{\n+    /**\n+     * Transform the resource into an array.\n+     *\n+     * @return array<string, mixed>\n+     */\n+    public function toArray(Request $request): array\n+    {\n+        return [\n+            'id' => $this->id,\n+            'name' => $this->name,\n+            'UID' => $this->UID,\n+            'vendor' => $this->vendor,\n+            'status' => $this->status,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at,\n+        ];\n+    }\n+}\n"
+                }
+            ],
+            "date": 1722338352712,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Resources;\n\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Http\\Resources\\Json\\JsonResource;\n\nclass PeripheralResource extends JsonResource\n{\n    /**\n     * Transform the resource into an array.\n     *\n     * @return array<string, mixed>\n     */\n    public function toArray(Request $request): array\n    {\n        return []\n    }\n}\n"
+        }
+    ]
+}

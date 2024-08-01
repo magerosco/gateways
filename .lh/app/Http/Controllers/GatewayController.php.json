@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/Http/Controllers/GatewayController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1722340649204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722340661208,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n      * Display a listing of the resource.\n      */\n     public function index()\n     {\n-         \n+         re\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                }
+            ],
+            "date": 1722340649204,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers;\n\nuse App\\Models\\Gateway;\nuse Illuminate\\Http\\Request;\n\nclass GatewayController extends Controller\n{\n    /**\n     * Display a listing of the resource.\n     */\n    public function index()\n    {\n         \n    }\n\n    /**\n     * Show the form for creating a new resource.\n     */\n    public function create()\n    {\n        //\n    }\n\n    /**\n     * Store a newly created resource in storage.\n     */\n    public function store(Request $request)\n    {\n        //\n    }\n\n    /**\n     * Display the specified resource.\n     */\n    public function show(Gateway $gateway)\n    {\n        //\n    }\n\n    /**\n     * Show the form for editing the specified resource.\n     */\n    public function edit(Gateway $gateway)\n    {\n        //\n    }\n\n    /**\n     * Update the specified resource in storage.\n     */\n    public function update(Request $request, Gateway $gateway)\n    {\n        //\n    }\n\n    /**\n     * Remove the specified resource from storage.\n     */\n    public function destroy(Gateway $gateway)\n    {\n        //\n    }\n}\n"
+        }
+    ]
+}

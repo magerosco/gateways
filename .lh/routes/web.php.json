@@ -1,0 +1,30 @@
+{
+    "sourceFile": "routes/web.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1722423756518,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722423763934,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,9 @@\n <?php\n \n use Illuminate\\Support\\Facades\\Route;\n+use App\\Http\\Controllers\\API\\GatewayController;\n+use App\\Http\\Controllers\\API\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n Route::view('dashboard', 'dashboard')\n"
+                },
+                {
+                    "date": 1722423774746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,6 +17,6 @@\n require __DIR__.'/auth.php';\n \n \n \n-Route::resource('/gateway', GatewayController::class);\n+Route::resource('/agateway', GatewayController::class);\n Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1722424682904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,7 @@\n <?php\n \n use Illuminate\\Support\\Facades\\Route;\n-use App\\Http\\Controllers\\API\\GatewayController;\n-use App\\Http\\Controllers\\API\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n Route::view('dashboard', 'dashboard')\n@@ -14,9 +12,4 @@\n     ->middleware(['auth'])\n     ->name('profile');\n \n require __DIR__.'/auth.php';\n-\n-\n-\n-Route::resource('/agateway', GatewayController::class);\n-Route::resource('/peripheral', PeripheralController::class);\n"
+                }
+            ],
+            "date": 1722423756518,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Support\\Facades\\Route;\n\nRoute::view('/', 'welcome');\n\nRoute::view('dashboard', 'dashboard')\n    ->middleware(['auth', 'verified'])\n    ->name('dashboard');\n\nRoute::view('profile', 'profile')\n    ->middleware(['auth'])\n    ->name('profile');\n\nrequire __DIR__.'/auth.php';\n\n\n\nRoute::resource('/gateway', GatewayController::class);\nRoute::resource('/peripheral', PeripheralController::class);\n"
+        }
+    ]
+}

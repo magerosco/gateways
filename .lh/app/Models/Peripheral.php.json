@@ -1,0 +1,54 @@
+{
+    "sourceFile": "app/Models/Peripheral.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1722334868323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722334985096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,7 @@\n {\n     use HasFactory;\n \n     protected $guarded = [];\n+\n+    \n }\n"
+                },
+                {
+                    "date": 1722334990674,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    \n+    pu\n }\n"
+                },
+                {
+                    "date": 1722334998140,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    pu\n+    public function\n }\n"
+                },
+                {
+                    "date": 1722335010965,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    public function\n+    public function gata\n }\n"
+                },
+                {
+                    "date": 1722335021391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    public function gata\n+    public function gatewaya\n }\n"
+                },
+                {
+                    "date": 1722335026842,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    public function gatewaya\n+    public function gateway()\n }\n"
+                },
+                {
+                    "date": 1722335036796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,6 +10,6 @@\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    public function gateway()\n+    public function gateway(): Bel\n }\n"
+                },
+                {
+                    "date": 1722335043367,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,13 +3,14 @@\n namespace App\\Models;\n \n use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\n use Illuminate\\Database\\Eloquent\\Model;\n+use Illuminate\\Database\\Eloquent\\Relations\\BelongsTo;\n \n class Peripheral extends Model\n {\n     use HasFactory;\n \n     protected $guarded = [];\n \n-    public function gateway(): Bel\n+    public function gateway(): BelongsTo\n }\n"
+                },
+                {
+                    "date": 1722335048779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,8 @@\n \n     protected $guarded = [];\n \n     public function gateway(): BelongsTo\n+    {\n+        return $this->belongsTo(Gateway::class);\n+    }\n }\n"
+                }
+            ],
+            "date": 1722334868323,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Peripheral extends Model\n{\n    use HasFactory;\n\n    protected $guarded = [];\n}\n"
+        }
+    ]
+}

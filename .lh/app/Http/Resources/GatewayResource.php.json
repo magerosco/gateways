@@ -1,0 +1,130 @@
+{
+    "sourceFile": "app/Http/Resources/GatewayResource.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 28,
+            "patches": [
+                {
+                    "date": 1722338083275,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722338094746,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,18 @@\n      * @return array<string, mixed>\n      */\n     public function toArray(Request $request): array\n     {\n-        return\n+        return [\n+            'id' => $this->id,\n+            'email' => $this->email,\n+            'email_verified_at' => $this->email_verified_at,\n+            'password' => $this->password,\n+            'image' => $this->image,\n+//            'phone'=>$this->phone Example for: HasOne\n+            'phones' => $this->getPhones($this->phones),\n+//            'phoneSim'=>$this->phoneSim,\n+            'courses' => $this->courses,\n+\n+        ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722338102183,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n     public function toArray(Request $request): array\n     {\n         return [\n             'id' => $this->id,\n-            'email' => $this->email,\n+            'serial_number' => $this->email,\n             'email_verified_at' => $this->email_verified_at,\n             'password' => $this->password,\n             'image' => $this->image,\n //            'phone'=>$this->phone Example for: HasOne\n"
+                },
+                {
+                    "date": 1722338113539,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,10 @@\n     public function toArray(Request $request): array\n     {\n         return [\n             'id' => $this->id,\n-            'serial_number' => $this->email,\n-            'email_verified_at' => $this->email_verified_at,\n+            'serial_number' => $this->serial_number,\n+            'name' => $this->name,\n             'password' => $this->password,\n             'image' => $this->image,\n //            'phone'=>$this->phone Example for: HasOne\n             'phones' => $this->getPhones($this->phones),\n"
+                },
+                {
+                    "date": 1722338122787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,9 +17,9 @@\n         return [\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n-            'password' => $this->password,\n+            'IPv4_address' => $this->password,\n             'image' => $this->image,\n //            'phone'=>$this->phone Example for: HasOne\n             'phones' => $this->getPhones($this->phones),\n //            'phoneSim'=>$this->phoneSim,\n"
+                },
+                {
+                    "date": 1722338130898,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -17,12 +17,12 @@\n         return [\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n-            'IPv4_address' => $this->password,\n+            'IPv4_address' => $this->IPv4_address,\n             'image' => $this->image,\n //            'phone'=>$this->phone Example for: HasOne\n-            'phones' => $this->getPhones($this->phones),\n+            'peripheral_id' => $this->getPhones($this->phones),\n //            'phoneSim'=>$this->phoneSim,\n             'courses' => $this->courses,\n \n         ];\n"
+                },
+                {
+                    "date": 1722338139862,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,12 +18,10 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-            'image' => $this->image,\n //            'phone'=>$this->phone Example for: HasOne\n-            'peripheral_id' => $this->getPhones($this->phones),\n-//            'phoneSim'=>$this->phoneSim,\n+            'peripheral' => $this->getPhones($this->phones),\n             'courses' => $this->courses,\n \n         ];\n     }\n"
+                },
+                {
+                    "date": 1722338146106,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,10 +18,9 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-//            'phone'=>$this->phone Example for: HasOne\n-            'peripheral' => $this->getPhones($this->phones),\n+            'peripheral' => $this->getperipheral_id($this->phones),\n             'courses' => $this->courses,\n \n         ];\n     }\n"
+                },
+                {
+                    "date": 1722338157138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->getperipheral_id($this->phones),\n+            'peripheral' => $this->getPeripheral($this->peripheral_),\n             'courses' => $this->courses,\n \n         ];\n     }\n"
+                },
+                {
+                    "date": 1722338178428,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->getPeripheral($this->peripheral_),\n+            'peripheral' => $this->getPeripheral($this->peripheral),\n             'courses' => $this->courses,\n \n         ];\n     }\n"
+                },
+                {
+                    "date": 1722338186027,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,5 +23,7 @@\n             'courses' => $this->courses,\n \n         ];\n     }\n+\n+    pu\n }\n"
+                },
+                {
+                    "date": 1722338194451,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,6 +24,13 @@\n \n         ];\n     }\n \n-    pu\n+    public function getPeripheral($peripheral)\n+    {\n+        if (count($peripheral) > 0) {\n+            return $peripheral;\n+        } else {\n+            return null;\n+        }\n+    }\n }\n"
+                },
+                {
+                    "date": 1722338206476,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,10 @@\n     }\n \n     public function getPeripheral($peripheral)\n     {\n+\n+        $arr_phones = array();\n         if (count($peripheral) > 0) {\n             return $peripheral;\n         } else {\n             return null;\n"
+                },
+                {
+                    "date": 1722338256630,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,12 +27,8 @@\n \n     public function getPeripheral($peripheral)\n     {\n \n-        $arr_phones = array();\n-        if (count($peripheral) > 0) {\n-            return $peripheral;\n-        } else {\n-            return null;\n-        }\n+        $arr_$peripheral = array();\n+       \n     }\n }\n"
+                },
+                {
+                    "date": 1722338265034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,7 +28,7 @@\n     public function getPeripheral($peripheral)\n     {\n \n         $arr_$peripheral = array();\n-       \n+\n     }\n }\n"
+                },
+                {
+                    "date": 1722338271146,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n \n     public function getPeripheral($peripheral)\n     {\n \n-        $arr_$peripheral = array();\n+        $arr_$peripheral = ;\n \n     }\n }\n"
+                },
+                {
+                    "date": 1722338278267,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,8 @@\n \n     public function getPeripheral($peripheral)\n     {\n \n-        $arr_$peripheral = ;\n-\n+        $arr_$peripheral = [];\n+        for\n     }\n }\n"
+                },
+                {
+                    "date": 1722338283475,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,7 +28,7 @@\n     public function getPeripheral($peripheral)\n     {\n \n         $arr_$peripheral = [];\n-        for\n+        foreach ($peripheral as $key => $value) {\n     }\n }\n"
+                },
+                {
+                    "date": 1722338288583,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,7 +28,7 @@\n     public function getPeripheral($peripheral)\n     {\n \n         $arr_$peripheral = [];\n-        foreach ($peripheral as $key => $value) {\n+        foreach ($peripheral as $value) {\n     }\n }\n"
+                },
+                {
+                    "date": 1722338302928,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,5 +30,6 @@\n \n         $arr_$peripheral = [];\n         foreach ($peripheral as $value) {\n     }\n+    }\n }\n"
+                },
+                {
+                    "date": 1722338309878,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,10 +26,9 @@\n     }\n \n     public function getPeripheral($peripheral)\n     {\n+        foreach ($peripheral as $value) {\n \n-        $arr_$peripheral = [];\n-        foreach ($peripheral as $value) {\n+        }\n     }\n-    }\n }\n"
+                },
+                {
+                    "date": 1722338322197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,11 @@\n     }\n \n     public function getPeripheral($peripheral)\n     {\n+\n+\n+        $arr_peripheral = [];\n         foreach ($peripheral as $value) {\n \n         }\n     }\n"
+                },
+                {
+                    "date": 1722338327527,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,12 +26,10 @@\n     }\n \n     public function getPeripheral($peripheral)\n     {\n-\n-\n         $arr_peripheral = [];\n         foreach ($peripheral as $value) {\n-\n+            array\n         }\n     }\n }\n"
+                },
+                {
+                    "date": 1722338338787,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,8 @@\n     public function getPeripheral($peripheral)\n     {\n         $arr_peripheral = [];\n         foreach ($peripheral as $value) {\n-            array\n+            array_push($arr_peripheral,  new )\n         }\n     }\n }\n"
+                },
+                {
+                    "date": 1722338399766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,16 +20,18 @@\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n             'peripheral' => $this->getPeripheral($this->peripheral),\n             'courses' => $this->courses,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at\n \n         ];\n     }\n \n     public function getPeripheral($peripheral)\n     {\n         $arr_peripheral = [];\n         foreach ($peripheral as $value) {\n-            array_push($arr_peripheral,  new )\n+            array_push($arr_peripheral,  new PeripheralResource($value));\n         }\n     }\n }\n"
+                },
+                {
+                    "date": 1722338430160,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n             'peripheral' => $this->getPeripheral($this->peripheral),\n             'courses' => $this->courses,\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n-\n         ];\n     }\n \n     public function getPeripheral($peripheral)\n@@ -32,6 +31,7 @@\n         $arr_peripheral = [];\n         foreach ($peripheral as $value) {\n             array_push($arr_peripheral,  new PeripheralResource($value));\n         }\n+        return $arr_peripheral;\n     }\n }\n"
+                },
+                {
+                    "date": 1722338792735,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,8 @@\n     {\n         return [\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n-            'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n             'peripheral' => $this->getPeripheral($this->peripheral),\n             'courses' => $this->courses,\n             'created_at' => $this->created_at,\n"
+                },
+                {
+                    "date": 1722338810349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n     {\n         return [\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n+            'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n             'peripheral' => $this->getPeripheral($this->peripheral),\n             'courses' => $this->courses,\n             'created_at' => $this->created_at,\n"
+                },
+                {
+                    "date": 1722338899813,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,8 @@\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n             'peripheral' => $this->getPeripheral($this->peripheral),\n-            'courses' => $this->courses,\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n         ];\n     }\n"
+                }
+            ],
+            "date": 1722338083275,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Resources;\n\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Http\\Resources\\Json\\JsonResource;\n\nclass GatewayResource extends JsonResource\n{\n    /**\n     * Transform the resource into an array.\n     *\n     * @return array<string, mixed>\n     */\n    public function toArray(Request $request): array\n    {\n        return\n    }\n}\n"
+        }
+    ]
+}

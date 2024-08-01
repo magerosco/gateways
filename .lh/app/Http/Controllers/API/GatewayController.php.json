@@ -1,0 +1,278 @@
+{
+    "sourceFile": "app/Http/Controllers/API/GatewayController.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 65,
+            "patches": [
+                {
+                    "date": 1722340745611,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722340761837,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n namespace App\\Http\\Controllers\\API;\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n+use App\\Models\\Gateway;\n \n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1722340769210,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,11 +10,11 @@\n {\n     /**\n      * Display a listing of the resource.\n      */\n-    public function index()\n+    public function index():\n     {\n-         return view('gateway.index');\n+\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722340777792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,14 +5,15 @@\n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n \n+\n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n      */\n-    public function index():\n+    public function index(): \\Illuminate\\Http\\JsonResponse\n     {\n \n     }\n \n"
+                },
+                {
+                    "date": 1722340786398,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,10 +4,10 @@\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n+use \\Illuminate\\Http\\JsonResponse\n \n-\n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n"
+                },
+                {
+                    "date": 1722340793158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,16 +4,16 @@\n \n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n-use \\Illuminate\\Http\\JsonResponse\n+use \\Illuminate\\Http\\JsonResponse;\n \n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n      */\n-    public function index(): \\Illuminate\\Http\\JsonResponse\n+    public function index(): JsonResponse\n     {\n \n     }\n \n"
+                },
+                {
+                    "date": 1722340808984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-\n+        return response()->json(Gateway::all());\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722340814955,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(Gateway::all());\n+        return response()->json(Gateway::all(), );\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722340822052,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(Gateway::all(), );\n+        return response()->json(Gateway::all(), HTTP_);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722340828111,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(Gateway::all(), HTTP_);\n+        return response()->json(Gateway::all(), HTTP_respo);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722340848366,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(Gateway::all(), HTTP_respo);\n+        return response()->json(Gateway::all(), HTTP_STATUS_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722340867065,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,8 +5,9 @@\n use App\\Http\\Controllers\\Controller;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n use \\Illuminate\\Http\\JsonResponse;\n+use \\Symfony\\Component\\HttpFoundation\\Response;\n \n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1722340884562,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(Gateway::all(), HTTP_STATUS_OK);\n+        return response()->json(Gateway::all(), re);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722341294829,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(Gateway::all(), re);\n+        return response()->json(, response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722341300187,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(, response::HTTP_OK);\n+        return response()->json(new , response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722341306786,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n namespace App\\Http\\Controllers\\API;\n \n use App\\Http\\Controllers\\Controller;\n+use App\\Http\\Resources\\GatewayResource;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n use \\Illuminate\\Http\\JsonResponse;\n use \\Symfony\\Component\\HttpFoundation\\Response;\n@@ -14,9 +15,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(new , response::HTTP_OK);\n+        return response()->json(new GatewayResource, response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722341702433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,9 +15,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(new GatewayResource, response::HTTP_OK);\n+        return response()->json(new GatewayResource(Gateway::all()), response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n@@ -31,9 +31,9 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        //\n+        \n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341721557,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        \n+        Ga\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341728204,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        Ga\n+        Gat\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341733931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        Gat\n+        Gatewaty\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341747866,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        Gatewaty\n+        Gateway\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341754695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,10 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        Gateway\n+        Gateway::create($request->all());\n+        \n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341761090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n      */\n     public function store(Request $request)\n     {\n         Gateway::create($request->all());\n-        \n+        return\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341787644,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,10 +31,11 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n+        $gataway\n         Gateway::create($request->all());\n-        return\n+        return response()->json(null, Response::HTTP_CREATED);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341798885,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,10 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        $gataway\n+        \n+        $gataway =\n         Gateway::create($request->all());\n         return response()->json(null, Response::HTTP_CREATED);\n     }\n \n"
+                },
+                {
+                    "date": 1722341811279,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,11 +31,11 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-        \n-        $gataway =\n-        Gateway::create($request->all());\n+\n+        $gataway =Gateway::create($request->all());\n+\n         return response()->json(null, Response::HTTP_CREATED);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1722341821768,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,11 +32,13 @@\n      */\n     public function store(Request $request)\n     {\n \n-        $gataway =Gateway::create($request->all());\n+        $gataway = Gateway::create($request->all());\n \n-        return response()->json(null, Response::HTTP_CREATED);\n+        return response()->json([\n+            'data' => new GatewayResource($gataway),\n+        ], Response::HTTP_CREATED);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722341833845,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,8 +36,9 @@\n         $gataway = Gateway::create($request->all());\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n+            \n         ], Response::HTTP_CREATED);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1722341841391,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,14 +31,15 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n+v\n \n         $gataway = Gateway::create($request->all());\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n-            \n+            'message' => 'Gateway created successfully',\n         ], Response::HTTP_CREATED);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1722341853372,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,8 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(Request $request)\n     {\n-v\n \n         $gataway = Gateway::create($request->all());\n \n         return response()->json([\n"
+                },
+                {
+                    "date": 1722341875178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n \n     /**\n      * Store a newly created resource in storage.\n      */\n-    public function store(Request $request)\n+    public function store(GatewayRequest $request)\n     {\n \n         $gataway = Gateway::create($request->all());\n \n"
+                },
+                {
+                    "date": 1722341885307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n use App\\Models\\Gateway;\n use \\Illuminate\\Http\\JsonResponse;\n use \\Symfony\\Component\\HttpFoundation\\Response;\n \n+\n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n"
+                },
+                {
+                    "date": 1722342228784,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -7,18 +7,18 @@\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n use \\Illuminate\\Http\\JsonResponse;\n use \\Symfony\\Component\\HttpFoundation\\Response;\n+use App\\Http\\Requests\\GatewayRequest;\n \n-\n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(new GatewayResource(Gateway::all()), response::HTTP_OK);\n+        return response()->json(new GatewayResource::collection(Gateway::all()), response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342237549,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return response()->json(new GatewayResource::collection(Gateway::all()), response::HTTP_OK);\n+        return response()->json(new GatewayResource::collection((Gateway::all())), response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342255891,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,10 +15,8 @@\n     /**\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n-    {\n-        return response()->json(new GatewayResource::collection((Gateway::all())), response::HTTP_OK);\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342262544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,10 @@\n     /**\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n+    {\n+        \n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342271153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        \n+        return \n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342277310,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      * Display a listing of the resource.\n      */\n     public function index(): JsonResponse\n     {\n-        return \n+        return GatewayResource\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342285244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,11 @@\n {\n     /**\n      * Display a listing of the resource.\n      */\n-    public function index(): JsonResponse\n+    public function index(): AnonymousResourceCollection\n     {\n-        return GatewayResource\n+        return GatewayResource::collection(Gateway::all());\n     }\n \n     /**\n      * Show the form for creating a new resource.\n"
+                },
+                {
+                    "date": 1722342297286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,9 +14,9 @@\n {\n     /**\n      * Display a listing of the resource.\n      */\n-    public function index(): AnonymousResourceCollection\n+    public function index(): \\Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection\n     {\n         return GatewayResource::collection(Gateway::all());\n     }\n \n"
+                },
+                {
+                    "date": 1722342998737,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(GatewayRequest $request)\n     {\n-\n+        GatewayRequest\n         $gataway = Gateway::create($request->all());\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n"
+                },
+                {
+                    "date": 1722343491309,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,11 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(GatewayRequest $request)\n     {\n-        GatewayRequest\n+\n+        $request->validated();\n+        \n         $gataway = Gateway::create($request->all());\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n"
+                },
+                {
+                    "date": 1722343655910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,10 +33,10 @@\n      */\n     public function store(GatewayRequest $request)\n     {\n \n-        $request->validated();\n-        \n+        validatedData = $request->validated();\n+\n         $gataway = Gateway::create($request->all());\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n"
+                },
+                {
+                    "date": 1722343661504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,11 +33,11 @@\n      */\n     public function store(GatewayRequest $request)\n     {\n \n-        validatedData = $request->validated();\n+        $validatedData = $request->validated();\n \n-        $gataway = Gateway::create($request->all());\n+        $gataway = Gateway::create($validatedData);\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n             'message' => 'Gateway created successfully',\n"
+                },
+                {
+                    "date": 1722356390658,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,17 +32,16 @@\n      * Store a newly created resource in storage.\n      */\n     public function store(GatewayRequest $request)\n     {\n-\n         $validatedData = $request->validated();\n \n         $gataway = Gateway::create($validatedData);\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n             'message' => 'Gateway created successfully',\n-        ], Response::HTTP_CREATED);\n+        ], Response::);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722356397158,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n             'message' => 'Gateway created successfully',\n-        ], Response::);\n+        ], Response::HTTP_);\n     }\n \n     /**\n      * Display the specified resource.\n"
+                },
+                {
+                    "date": 1722356678217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,17 +39,17 @@\n \n         return response()->json([\n             'data' => new GatewayResource($gataway),\n             'message' => 'Gateway created successfully',\n-        ], Response::HTTP_);\n+        ], Response::HTTP_CREATED);\n     }\n \n     /**\n      * Display the specified resource.\n      */\n     public function show(Gateway $gateway)\n     {\n-        //\n+        \n     }\n \n     /**\n      * Show the form for editing the specified resource.\n"
+                },
+                {
+                    "date": 1722356688322,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,11 +45,12 @@\n \n     /**\n      * Display the specified resource.\n      */\n-    public function show(Gateway $gateway)\n+    public function show(Gateway )\n     {\n-        \n+\n+\n     }\n \n     /**\n      * Show the form for editing the specified resource.\n"
+                },
+                {
+                    "date": 1722356693910,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,11 +45,13 @@\n \n     /**\n      * Display the specified resource.\n      */\n-    public function show(Gateway )\n+    public function show($id)\n     {\n \n+        $gateway = Gateway::find($id);\n+        \n \n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1722356699392,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -47,12 +47,14 @@\n      * Display the specified resource.\n      */\n     public function show($id)\n     {\n-\n         $gateway = Gateway::find($id);\n-        \n \n+        return response()->json([\n+            'data' => new GatewayResource($gateway),\n+        ], Response::HTTP_OK);\n+\n     }\n \n     /**\n      * Show the form for editing the specified resource.\n"
+                },
+                {
+                    "date": 1722356721697,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -45,12 +45,14 @@\n \n     /**\n      * Display the specified resource.\n      */\n-    public function show($id)\n+    public function show($id): JsonResponse\n     {\n         $gateway = Gateway::find($id);\n-\n+        if (!$note) {\n+            return response()->json([], $note::HTTP_NOT_FOUND);\n+        }\n         return response()->json([\n             'data' => new GatewayResource($gateway),\n         ], Response::HTTP_OK);\n \n"
+                },
+                {
+                    "date": 1722356782511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,10 +48,10 @@\n      */\n     public function show($id): JsonResponse\n     {\n         $gateway = Gateway::find($id);\n-        if (!$note) {\n-            return response()->json([], $note::HTTP_NOT_FOUND);\n+        if (!$gateway) {\n+            return response()->json([], Response::HTTP_NOT_FOUND);\n         }\n         return response()->json([\n             'data' => new GatewayResource($gateway),\n         ], Response::HTTP_OK);\n"
+                },
+                {
+                    "date": 1722356802138,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,16 +57,10 @@\n         ], Response::HTTP_OK);\n \n     }\n \n-    /**\n-     * Show the form for editing the specified resource.\n-     */\n-    public function edit(Gateway $gateway)\n-    {\n-        //\n-    }\n \n+\n     /**\n      * Update the specified resource in storage.\n      */\n     public function update(Request $request, Gateway $gateway)\n"
+                },
+                {
+                    "date": 1722356807266,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,12 +58,8 @@\n \n     }\n \n \n-\n-    /**\n-     * Update the specified resource in storage.\n-     */\n     public function update(Request $request, Gateway $gateway)\n     {\n         //\n     }\n"
+                },
+                {
+                    "date": 1722356820337,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -58,9 +58,9 @@\n \n     }\n \n \n-    public function update(Request $request, Gateway $gateway)\n+    public function update(Request $request, GatewayRequest $gateway)\n     {\n         //\n     }\n \n"
+                },
+                {
+                    "date": 1722356826686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,9 +60,10 @@\n \n \n     public function update(Request $request, GatewayRequest $gateway)\n     {\n-        //\n+        \n+\n     }\n \n     /**\n      * Remove the specified resource from storage.\n"
+                },
+                {
+                    "date": 1722356839924,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -60,16 +60,25 @@\n \n \n     public function update(Request $request, GatewayRequest $gateway)\n     {\n-        \n \n+        $validatedData = $request->validated();\n+        $gateway->update($validatedData);\n+        return response()->json(\n+            [\n+                'data' => new GatewayResource($gateway),\n+                'message' => 'Gateway updated successfully',\n+            ],\n+            Response::HTTP_OK,\n+        );\n+\n     }\n \n     /**\n      * Remove the specified resource from storage.\n      */\n     public function destroy(Gateway $gateway)\n     {\n-        //\n+        \n     }\n }\n"
+                },
+                {
+                    "date": 1722356846578,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -78,7 +78,8 @@\n      * Remove the specified resource from storage.\n      */\n     public function destroy(Gateway $gateway)\n     {\n-        \n+        $gateway->delete();\n+        re\n     }\n }\n"
+                },
+                {
+                    "date": 1722356851772,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,7 +79,12 @@\n      */\n     public function destroy(Gateway $gateway)\n     {\n         $gateway->delete();\n-        re\n+        return response()->json(\n+            [\n+                'message' => 'Gateway deleted successfully',\n+            ],\n+            Response::HTTP_OK,\n+        )\n     }\n }\n"
+                },
+                {
+                    "date": 1722356857374,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -84,7 +84,7 @@\n             [\n                 'message' => 'Gateway deleted successfully',\n             ],\n             Response::HTTP_OK,\n-        )\n+        );\n     }\n }\n"
+                },
+                {
+                    "date": 1722356863023,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -5,10 +5,10 @@\n use App\\Http\\Controllers\\Controller;\n use App\\Http\\Resources\\GatewayResource;\n use Illuminate\\Http\\Request;\n use App\\Models\\Gateway;\n-use \\Illuminate\\Http\\JsonResponse;\n-use \\Symfony\\Component\\HttpFoundation\\Response;\n+use Illuminate\\Http\\JsonResponse;\n+use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n class GatewayController extends Controller\n {\n@@ -36,12 +36,15 @@\n         $validatedData = $request->validated();\n \n         $gataway = Gateway::create($validatedData);\n \n-        return response()->json([\n-            'data' => new GatewayResource($gataway),\n-            'message' => 'Gateway created successfully',\n-        ], Response::HTTP_CREATED);\n+        return response()->json(\n+            [\n+                'data' => new GatewayResource($gataway),\n+                'message' => 'Gateway created successfully',\n+            ],\n+            Response::HTTP_CREATED,\n+        );\n     }\n \n     /**\n      * Display the specified resource.\n@@ -51,18 +54,18 @@\n         $gateway = Gateway::find($id);\n         if (!$gateway) {\n             return response()->json([], Response::HTTP_NOT_FOUND);\n         }\n-        return response()->json([\n-            'data' => new GatewayResource($gateway),\n-        ], Response::HTTP_OK);\n-\n+        return response()->json(\n+            [\n+                'data' => new GatewayResource($gateway),\n+            ],\n+            Response::HTTP_OK,\n+        );\n     }\n \n-\n     public function update(Request $request, GatewayRequest $gateway)\n     {\n-\n         $validatedData = $request->validated();\n         $gateway->update($validatedData);\n         return response()->json(\n             [\n@@ -70,9 +73,8 @@\n                 'message' => 'Gateway updated successfully',\n             ],\n             Response::HTTP_OK,\n         );\n-\n     }\n \n     /**\n      * Remove the specified resource from storage.\n"
+                },
+                {
+                    "date": 1722356871706,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,11 +75,9 @@\n             Response::HTTP_OK,\n         );\n     }\n \n-    /**\n-     * Remove the specified resource from storage.\n-     */\n+\n     public function destroy(Gateway $gateway)\n     {\n         $gateway->delete();\n         return response()->json(\n"
+                },
+                {
+                    "date": 1722356899094,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,11 +75,14 @@\n             Response::HTTP_OK,\n         );\n     }\n \n-\n     public function destroy(Gateway $gateway)\n     {\n+        $gateway = Gateway::find($id);\n+        if (!$gateway) {\n+            return response()->json([], Response::HTTP_NOT_FOUND);\n+        }\n         $gateway->delete();\n         return response()->json(\n             [\n                 'message' => 'Gateway deleted successfully',\n"
+                },
+                {
+                    "date": 1722356914785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n             Response::HTTP_OK,\n         );\n     }\n \n-    public function destroy(Gateway $gateway)\n+    public function destroy(Gateway )\n     {\n         $gateway = Gateway::find($id);\n         if (!$gateway) {\n             return response()->json([], Response::HTTP_NOT_FOUND);\n"
+                },
+                {
+                    "date": 1722356920990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -75,9 +75,9 @@\n             Response::HTTP_OK,\n         );\n     }\n \n-    public function destroy(Gateway )\n+    public function destroy($id): JsonResponse\n     {\n         $gateway = Gateway::find($id);\n         if (!$gateway) {\n             return response()->json([], Response::HTTP_NOT_FOUND);\n"
+                },
+                {
+                    "date": 1722356932231,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,16 +20,8 @@\n         return GatewayResource::collection(Gateway::all());\n     }\n \n     /**\n-     * Show the form for creating a new resource.\n-     */\n-    public function create()\n-    {\n-        //\n-    }\n-\n-    /**\n      * Store a newly created resource in storage.\n      */\n     public function store(GatewayRequest $request)\n     {\n"
+                }
+            ],
+            "date": 1722340745611,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Http\\Controllers\\API;\n\nuse App\\Http\\Controllers\\Controller;\nuse Illuminate\\Http\\Request;\n\nclass GatewayController extends Controller\n{\n    /**\n     * Display a listing of the resource.\n     */\n    public function index()\n    {\n         return view('gateway.index');\n    }\n\n    /**\n     * Show the form for creating a new resource.\n     */\n    public function create()\n    {\n        //\n    }\n\n    /**\n     * Store a newly created resource in storage.\n     */\n    public function store(Request $request)\n    {\n        //\n    }\n\n    /**\n     * Display the specified resource.\n     */\n    public function show(Gateway $gateway)\n    {\n        //\n    }\n\n    /**\n     * Show the form for editing the specified resource.\n     */\n    public function edit(Gateway $gateway)\n    {\n        //\n    }\n\n    /**\n     * Update the specified resource in storage.\n     */\n    public function update(Request $request, Gateway $gateway)\n    {\n        //\n    }\n\n    /**\n     * Remove the specified resource from storage.\n     */\n    public function destroy(Gateway $gateway)\n    {\n        //\n    }\n}\n"
+        }
+    ]
+}

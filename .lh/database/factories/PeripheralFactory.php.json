@@ -1,0 +1,54 @@
+{
+    "sourceFile": "database/factories/PeripheralFactory.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 9,
+            "patches": [
+                {
+                    "date": 1722412668849,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722412674277,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,8 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            \n+            ''\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412679605,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            ''\n+            'UID' => fake()->randomNumber(6),\n+            'vendor' => fake()->company(),\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412686534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,9 @@\n     {\n         return [\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n+            'description' => fake()->sentence(3),\n+            \n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412692450,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,9 @@\n         return [\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n             'description' => fake()->sentence(3),\n-            \n+            'gateway_id' => null,\n+            'user_id' => null\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412701665,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,8 +20,7 @@\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n             'description' => fake()->sentence(3),\n             'gateway_id' => null,\n-            'user_id' => null\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412811029,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,8 +19,8 @@\n         return [\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n             'description' => fake()->sentence(3),\n-            'gateway_id' => null,\n+            'gateway_id' => 1,\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412939383,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     {\n         return [\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n-            'description' => fake()->sentence(3),\n+            'status' => fake()->sentence(3),\n             'gateway_id' => 1,\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412945386,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     {\n         return [\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n-            'status' => fake()->sentence(3),\n+            'status' => 'online',\t\n             'gateway_id' => 1,\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722413012298,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,8 @@\n     {\n         return [\n             'UID' => fake()->randomNumber(6),\n             'vendor' => fake()->company(),\n-            'status' => 'online',\t\n             'gateway_id' => 1,\n         ];\n     }\n }\n"
+                }
+            ],
+            "date": 1722412668849,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Factories;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\Factory;\n\n/**\n * @extends \\Illuminate\\Database\\Eloquent\\Factories\\Factory<\\App\\Models\\Peripheral>\n */\nclass PeripheralFactory extends Factory\n{\n    /**\n     * Define the model's default state.\n     *\n     * @return array<string, mixed>\n     */\n    public function definition(): array\n    {\n        return [\n            \n        ];\n    }\n}\n"
+        }
+    ]
+}

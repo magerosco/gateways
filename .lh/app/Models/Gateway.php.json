@@ -1,0 +1,74 @@
+{
+    "sourceFile": "app/Models/Gateway.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1722334861152,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722334874099,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,7 +6,8 @@\n use Illuminate\\Database\\Eloquent\\Model;\n \n class Gateway extends Model\n {\n-    use HasFactory;`\n-    \n+    use HasFactory;\n+\n+    protected $guarded = [];\n }\n"
+                },
+                {
+                    "date": 1722334881935,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,5 +9,8 @@\n {\n     use HasFactory;\n \n     protected $guarded = [];\n+\n+\n+    public\n }\n"
+                },
+                {
+                    "date": 1722334889698,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n     protected $guarded = [];\n \n \n-    public\n+    public function get\n }\n"
+                },
+                {
+                    "date": 1722334895036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n     protected $guarded = [];\n \n \n-    public function get\n+    public function getP\n }\n"
+                },
+                {
+                    "date": 1722334904907,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n     protected $guarded = [];\n \n \n-    public function getP\n+    public function getPeripheral\n }\n"
+                },
+                {
+                    "date": 1722334910506,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n     protected $guarded = [];\n \n \n-    public function getPeripheral\n+    public function getPeripheral()\n }\n"
+                },
+                {
+                    "date": 1722334917413,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n     protected $guarded = [];\n \n \n-    public function getPeripheral()\n+    public function getPeripheral(): \n }\n"
+                },
+                {
+                    "date": 1722334952432,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n \n     protected $guarded = [];\n \n \n-    public function getPeripheral(): \n+    public function getPeripheral(): O\n }\n"
+                },
+                {
+                    "date": 1722334959870,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,15 @@\n namespace App\\Models;\n \n use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\n use Illuminate\\Database\\Eloquent\\Model;\n+use Illuminate\\Database\\Eloquent\\Relations\\HasOneOrMany;\n \n class Gateway extends Model\n {\n     use HasFactory;\n \n     protected $guarded = [];\n \n \n-    public function getPeripheral(): O\n+    public function getPeripheral(): HasOneOrMany\n }\n"
+                },
+                {
+                    "date": 1722334966256,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,5 +13,8 @@\n     protected $guarded = [];\n \n \n     public function getPeripheral(): HasOneOrMany\n+    {\n+        return $this->hasMany(Peripheral::class);\n+    }\n }\n"
+                },
+                {
+                    "date": 1722335006744,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n \n     protected $guarded = [];\n \n \n-    public function getPeripheral(): HasOneOrMany\n+    public function peripheral(): HasOneOrMany\n     {\n         return $this->hasMany(Peripheral::class);\n     }\n }\n"
+                },
+                {
+                    "date": 1722341168380,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n class Gateway extends Model\n {\n     use HasFactory;\n \n+    protected $table = 'gateways';\n     protected $guarded = [];\n \n \n     public function peripheral(): HasOneOrMany\n"
+                },
+                {
+                    "date": 1722341216607,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,8 @@\n class Gateway extends Model\n {\n     use HasFactory;\n \n-    protected $table = 'gateways';\n     protected $guarded = [];\n \n \n     public function peripheral(): HasOneOrMany\n"
+                },
+                {
+                    "date": 1722434822628,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,12 @@\n {\n     use HasFactory;\n \n     protected $guarded = [];\n+    protected $fillable = [\n+        'serial_number', 'name', 'IPv4_address', 'peripheral',\n+    ];\n \n-\n     public function peripheral(): HasOneOrMany\n     {\n         return $this->hasMany(Peripheral::class);\n     }\n"
+                }
+            ],
+            "date": 1722334861152,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace App\\Models;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\HasFactory;\nuse Illuminate\\Database\\Eloquent\\Model;\n\nclass Gateway extends Model\n{\n    use HasFactory;`\n    \n}\n"
+        }
+    ]
+}

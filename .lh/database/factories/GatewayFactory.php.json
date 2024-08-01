@@ -1,0 +1,90 @@
+{
+    "sourceFile": "database/factories/GatewayFactory.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 18,
+            "patches": [
+                {
+                    "date": 1722412818943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722412824573,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,8 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            \n+            'name' => fake()->name(),\n+            'IPv4_address' => fake()->ipv4(),\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412830036,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,7 +18,8 @@\n     {\n         return [\n             'name' => fake()->name(),\n             'IPv4_address' => fake()->ipv4(),\n+            \n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412839290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     {\n         return [\n             'name' => fake()->name(),\n             'IPv4_address' => fake()->ipv4(),\n-            \n+            'IPv6_address' => fake()->ipv6(),\n+            'peripheral_id' => 1\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412880708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,8 @@\n     {\n         return [\n             'name' => fake()->name(),\n             'IPv4_address' => fake()->ipv4(),\n-            'IPv6_address' => fake()->ipv6(),\n-            'peripheral_id' => 1\n+            \n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412887092,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,8 @@\n     {\n         return [\n             'name' => fake()->name(),\n             'IPv4_address' => fake()->ipv4(),\n-            \n+            'serial_number' => fake()->randomNumber(6)\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722412902714,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,8 +18,9 @@\n     {\n         return [\n             'name' => fake()->name(),\n             'IPv4_address' => fake()->ipv4(),\n-            'serial_number' => fake()->randomNumber(6)\n+            'serial_number' => fake()->randomNumber(6),\n+            \n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722432468394,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,11 +16,11 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->name(),\n+            'name' => fake()->,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n-            \n+\n         ];\n     }\n }\n"
+                },
+                {
+                    "date": 1722432490589,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->,\n+            'name' => fake()->div,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432495756,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->div,\n+            'name' => fake()->str,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432501283,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->str,\n+            'name' => fake(),\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432512587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake(),\n+            'name' => fake()->str,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432519791,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->str,\n+            'name' => ,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432527156,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => ,\n+            'name' => fake()->,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432537433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->,\n+            'name' => fake()->i,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432552951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->i,\n+            'name' => fake()->nam,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432568188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->nam,\n+            'name' => fake()->name,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432661710,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->name,\n+            'name' => fake()->t,\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                },
+                {
+                    "date": 1722432671233,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -16,9 +16,9 @@\n      */\n     public function definition(): array\n     {\n         return [\n-            'name' => fake()->t,\n+            'name' => fake()->title(),\n             'IPv4_address' => fake()->ipv4(),\n             'serial_number' => fake()->randomNumber(6),\n \n         ];\n"
+                }
+            ],
+            "date": 1722412818943,
+            "name": "Commit-0",
+            "content": "<?php\n\nnamespace Database\\Factories;\n\nuse Illuminate\\Database\\Eloquent\\Factories\\Factory;\n\n/**\n * @extends \\Illuminate\\Database\\Eloquent\\Factories\\Factory<\\App\\Models\\Gateway>\n */\nclass GatewayFactory extends Factory\n{\n    /**\n     * Define the model's default state.\n     *\n     * @return array<string, mixed>\n     */\n    public function definition(): array\n    {\n        return [\n            \n        ];\n    }\n}\n"
+        }
+    ]
+}

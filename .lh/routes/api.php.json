@@ -1,0 +1,74 @@
+{
+    "sourceFile": "routes/api.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 14,
+            "patches": [
+                {
+                    "date": 1722337650176,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1722337659090,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,4 +6,5 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n+Route\n"
+                },
+                {
+                    "date": 1722337664881,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n-Route\n+Route::G\n"
+                },
+                {
+                    "date": 1722337670950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,5 +6,5 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n-Route::G\n+Route::resource('user', UserController::class);\n"
+                },
+                {
+                    "date": 1722337688440,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,8 +2,9 @@\n \n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n \n+\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n"
+                },
+                {
+                    "date": 1722337701085,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,11 +1,12 @@\n <?php\n \n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n+use App\\Http\\Controllers\\UserController;\n \n-\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n Route::resource('user', UserController::class);\n+Route::resource('Gateway', UserController::class);\n"
+                },
+                {
+                    "date": 1722337708900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,5 +8,5 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n Route::resource('user', UserController::class);\n-Route::resource('Gateway', UserController::class);\n+Route::resource('user', GatewayController::class);\n"
+                },
+                {
+                    "date": 1722337716740,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,11 @@\n \n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n+use App\\Http\\Controllers\\GatewayController;\n \n+\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n"
+                },
+                {
+                    "date": 1722337722688,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,5 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n Route::resource('user', UserController::class);\n-Route::resource('user', GatewayController::class);\n+Route::resource('Gateway', GatewayController::class);\n"
+                },
+                {
+                    "date": 1722337741142,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,6 +9,6 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n-Route::resource('user', UserController::class);\n+oute::resource('user', UserController::class);\n Route::resource('Gateway', GatewayController::class);\n"
+                },
+                {
+                    "date": 1722340972821,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,6 +9,6 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n-oute::resource('user', UserController::class);\n-Route::resource('Gateway', GatewayController::class);\n+\n+Route::resource('cateway', GatewayController::class);\n"
+                },
+                {
+                    "date": 1722340978504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,5 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('cateway', GatewayController::class);\n+Route::resource('/gateway', GatewayController::class);\n"
+                },
+                {
+                    "date": 1722341005327,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n-use App\\Http\\Controllers\\GatewayController;\n+use App\\Http\\Controllers\\AGatewayController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n"
+                },
+                {
+                    "date": 1722341019362,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,13 +2,13 @@\n \n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n-use App\\Http\\Controllers\\AGatewayController;\n+use App\\Http\\Controllers\\API\\GatewayController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class);\n+Route::resource('/gateway', ::class);\n"
+                },
+                {
+                    "date": 1722341030736,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,5 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', ::class);\n+Route::resource('/gateway', GatewayController::class);\n"
+                }
+            ],
+            "date": 1722337650176,
+            "name": "Commit-0",
+            "content": "<?php\n\nuse Illuminate\\Http\\Request;\nuse Illuminate\\Support\\Facades\\Route;\n\nRoute::get('/user', function (Request $request) {\n    return $request->user();\n})->middleware('auth:sanctum');\n\n"
+        }
+    ]
+}
