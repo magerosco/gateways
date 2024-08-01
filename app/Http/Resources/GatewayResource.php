@@ -19,18 +19,10 @@ class GatewayResource extends JsonResource
             'serial_number' => $this->serial_number,
             'name' => $this->name,
             'IPv4_address' => $this->IPv4_address,
-            'peripheral' => $this->getPeripheral($this->peripheral),
+            'peripheral' => $this->peripheral,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
     }
 
-    public function getPeripheral($peripheral)
-    {
-        $arr_peripheral = [];
-        foreach ($peripheral as $value) {
-            array_push($arr_peripheral,  new PeripheralResource($value));
-        }
-        return $arr_peripheral;
-    }
 }
