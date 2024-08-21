@@ -6,13 +6,13 @@ use App\Facades\AdditionalDataRequest;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Services\ResponseStrategy\ResponseContext;
+use App\Services\ResponseStrategy\ResponseContextInterface;
 use App\Services\ResponseStrategy\ApiResponseStrategy;
 use App\Services\ResponseStrategy\ViewResponseStrategy;
 
 class ApiOrWebMiddleware
 {
-    public function __construct(protected ResponseContext $responseContext, protected ApiResponseStrategy $apiStrategy, protected ViewResponseStrategy $viewStrategy)
+    public function __construct(protected ResponseContextInterface $responseContext, protected ApiResponseStrategy $apiStrategy, protected ViewResponseStrategy $viewStrategy)
     {
     }
 

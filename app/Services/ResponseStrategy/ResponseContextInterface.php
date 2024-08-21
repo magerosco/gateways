@@ -2,7 +2,7 @@
 
 namespace App\Services\ResponseStrategy;
 
-class ResponseContext
+class ResponseContextInterface
 {
 
     protected $strategy;

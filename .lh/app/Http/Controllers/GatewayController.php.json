@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 155,
+            "activePatchIndex": 156,
             "patches": [
                 {
                     "date": 1722340649204,
@@ -628,6 +628,10 @@
                 {
                     "date": 1724256313916,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,9 @@\n \n     public function index(): \\Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection|JsonResponse\n     {\n         $gateways = $this->gatewayRepository->all();\n-        return $this->responseContext->executeStrategy(Std $gateways);\n+        return $this->responseContext->executeStrategy(Ob $gateways);\n     }\n \n     public function create()\n     {\n"
+                },
+                {
+                    "date": 1724271034323,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,16 +12,16 @@\n use App\\Services\\ResponseStrategy\\ResponseContext;\n \n class GatewayController extends Controller\n {\n-    public function __construct(protected GatewayRepositoryInterface $gatewayRepository, protected ResponseContext $responseContext)\n+    public function __construct(protected GatewayRepositoryInterface $gatewayRepository, protected ResponseContextInterface $responseContext)\n     {\n     }\n \n     public function index(): \\Illuminate\\Http\\Resources\\Json\\AnonymousResourceCollection|JsonResponse\n     {\n         $gateways = $this->gatewayRepository->all();\n-        return $this->responseContext->executeStrategy(Ob $gateways);\n+        return $this->responseContext->executeStrategy($gateways);\n     }\n \n     public function create()\n     {\n"
                 }
             ],
             "date": 1722340649204,
