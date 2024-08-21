@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 16,
             "patches": [
                 {
                     "date": 1722334861152,
@@ -64,6 +64,14 @@
                 {
                     "date": 1722434822628,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,12 @@\n {\n     use HasFactory;\n \n     protected $guarded = [];\n+    protected $fillable = [\n+        'serial_number', 'name', 'IPv4_address', 'peripheral',\n+    ];\n \n-\n     public function peripheral(): HasOneOrMany\n     {\n         return $this->hasMany(Peripheral::class);\n     }\n"
+                },
+                {
+                    "date": 1722514463679,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     use HasFactory;\n \n     protected $guarded = [];\n     protected $fillable = [\n-        'serial_number', 'name', 'IPv4_address', 'peripheral',\n+        'serial_number', 'name', 'IPv4_address', 'peripherals',\n     ];\n \n     public function peripheral(): HasOneOrMany\n     {\n"
+                },
+                {
+                    "date": 1722514477695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     use HasFactory;\n \n     protected $guarded = [];\n     protected $fillable = [\n-        'serial_number', 'name', 'IPv4_address', 'peripherals',\n+        'serial_number', 'name', 'IPv4_address', 'peripheral',\n     ];\n \n     public function peripheral(): HasOneOrMany\n     {\n"
                 }
             ],
             "date": 1722334861152,

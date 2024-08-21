@@ -2,64 +2,98 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gateway;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\GatewayRequest;
+use App\Http\Resources\GatewayResource;
+use Symfony\Component\HttpFoundation\Response;
+use App\Repositories\GatewayRepositoryInterface;
+use App\Services\ResponseStrategy\ResponseContext;
 
 class GatewayController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function __construct(protected GatewayRepositoryInterface $gatewayRepository, protected ResponseContext $responseContext)
     {
-         return view('gateway.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection|JsonResponse
+    {
+        $gateways = $this->gatewayRepository->all();
+        return $this->responseContext->executeStrategy($gateways);
+    }
+
     public function create()
     {
-        //
+        // return View('gateway.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(GatewayRequest $request)
     {
-        //
+        $validatedData = $request->validated();
+
+        $gataway = $this->gatewayRepository->create($validatedData);
+        $data = new GatewayResource($gataway);
+
+        if ($request->get('is_api')) {
+            return response()->json(['data' => $data, 'message' => 'Gateway created successfully'], Response::HTTP_CREATED);
+        } else {
+            return redirect()
+                ->route('gateway.index')
+                ->with(['data' => $data->toJson(), 'message' => 'Gateway created successfully'], Response::HTTP_CREATED);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Gateway $gateway)
+    public function show(Request $request, $id): JsonResponse
     {
-        //
+        $gateway = $this->gatewayRepository->find($id);
+        if (!$gateway) {
+            return response()->json([], Response::HTTP_NOT_FOUND);
+        }
+        if ($request->get('is_api')) {
+            return response()->json(['data' => new GatewayResource($gateway)], Response::HTTP_OK);
+        } else {
+            return view('gateway.show', ['gateway' => $gateway->toJson()]);
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Gateway $gateway)
+    public function edit(Request $request, string $id)
     {
-        //
+        if ($request->get('is_api')) {
+            return response()->json(['data' => ['id' => $id]], Response::HTTP_BAD_REQUEST);
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Gateway $gateway)
+    public function update(GatewayRequest $request, string $id)
     {
-        //
+        $gateway = $this->gatewayRepository->find($id);
+        if (!$gateway) {
+            return response()->json([], Response::HTTP_NOT_FOUND);
+        }
+        $validatedData = $request->validated();
+        $this->gatewayRepository->update($id, $validatedData);
+
+        return response()->json(
+            [
+                'data' => new GatewayResource($gateway),
+                'message' => 'Gateway updated successfully',
+            ],
+            Response::HTTP_OK,
+        );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Gateway $gateway)
+    public function destroy($id): JsonResponse
     {
-        //
+        $gateway = $this->gatewayRepository->find($id);
+        if (!$gateway) {
+            return response()->json([], Response::HTTP_NOT_FOUND);
+        }
+        $this->gatewayRepository->delete($id);
+        return response()->json(
+            [
+                'message' => 'Gateway deleted successfully',
+            ],
+            Response::HTTP_OK,
+        );
     }
 }

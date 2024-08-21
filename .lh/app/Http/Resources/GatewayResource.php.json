@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 28,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1722338083275,
@@ -120,6 +120,22 @@
                 {
                     "date": 1722338899813,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,9 +19,8 @@\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n             'peripheral' => $this->getPeripheral($this->peripheral),\n-            'courses' => $this->courses,\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n         ];\n     }\n"
+                },
+                {
+                    "date": 1722514452482,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->getPeripheral($this->peripheral),\n+            'peripherals' => $this->getPeripheral($this->peripherals),\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n         ];\n     }\n"
+                },
+                {
+                    "date": 1722514475984,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-            'peripherals' => $this->getPeripheral($this->peripherals),\n+            'peripheral' => $this->getPeripheral($this->peripheral),\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n         ];\n     }\n"
+                },
+                {
+                    "date": 1722514632285,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->getPeripheral($this->peripheral),\n+            'peripheral' => $this->peripheral,\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n         ];\n     }\n"
+                },
+                {
+                    "date": 1722514644418,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,5 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n-    public function getPeripheral($peripheral)\n-    {\n-        $arr_peripheral = [];\n-        foreach ($peripheral as $value) {\n-            array_push($arr_peripheral,  new PeripheralResource($value));\n-        }\n-        return $arr_peripheral;\n-    }\n }\n"
                 }
             ],
             "date": 1722338083275,

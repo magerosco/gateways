@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1722423756518,
@@ -20,6 +20,26 @@
                 {
                     "date": 1722424682904,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,7 @@\n <?php\n \n use Illuminate\\Support\\Facades\\Route;\n-use App\\Http\\Controllers\\API\\GatewayController;\n-use App\\Http\\Controllers\\API\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n Route::view('dashboard', 'dashboard')\n@@ -14,9 +12,4 @@\n     ->middleware(['auth'])\n     ->name('profile');\n \n require __DIR__.'/auth.php';\n-\n-\n-\n-Route::resource('/agateway', GatewayController::class);\n-Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1724146668241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,5 +11,9 @@\n Route::view('profile', 'profile')\n     ->middleware(['auth'])\n     ->name('profile');\n \n+\n+Route::resource('/gateway', GatewayController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+\n require __DIR__.'/auth.php';\n"
+                },
+                {
+                    "date": 1724146680081,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n <?php\n \n use Illuminate\\Support\\Facades\\Route;\n+use App\\Http\\Controllers\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n Route::view('dashboard', 'dashboard')\n"
+                },
+                {
+                    "date": 1724246058979,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,8 @@\n <?php\n \n use Illuminate\\Support\\Facades\\Route;\n+use App\\Http\\Controllers\\GatewayController;\n use App\\Http\\Controllers\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n@@ -13,8 +14,8 @@\n     ->middleware(['auth'])\n     ->name('profile');\n \n \n-Route::resource('/gateway', GatewayController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n \n require __DIR__.'/auth.php';\n"
+                },
+                {
+                    "date": 1724246588453,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,7 +15,7 @@\n     ->name('profile');\n \n \n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+// Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n \n require __DIR__.'/auth.php';\n"
+                },
+                {
+                    "date": 1724246618591,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n <?php\n \n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n Route::view('dashboard', 'dashboard')\n"
                 }
             ],
             "date": 1722423756518,

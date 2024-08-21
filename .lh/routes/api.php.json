@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 14,
+            "activePatchIndex": 29,
             "patches": [
                 {
                     "date": 1722337650176,
@@ -64,6 +64,66 @@
                 {
                     "date": 1722341030736,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,5 +10,5 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', ::class);\n+Route::resource('/gateway', GatewayController::class);\n"
+                },
+                {
+                    "date": 1724146624363,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,12 +3,14 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\API\\GatewayController;\n+use App\\Http\\Controllers\\API\\PeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class);\n+Route::resource('/gateway', GatewayController::class)-;\n+Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1724146630565,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class)-;\n+Route::resource('/gateway', GatewayController::class)->w;\n Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1724146636990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class)->w;\n+Route::resource('/gateway', GatewayController::class)->withoutMiddleware('auth:sanctum');\n Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1724146651871,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class)->withoutMiddleware('auth:sanctum');\n+Route::resource('/gateway', GatewayController::class)->withoutMiddleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1724146692339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,9 @@\n \n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n-use App\\Http\\Controllers\\API\\GatewayController;\n+use App\\Http\\Controllers\\GatewayController;\n use App\\Http\\Controllers\\API\\PeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n@@ -12,5 +12,5 @@\n })->middleware('auth:sanctum');\n \n \n Route::resource('/gateway', GatewayController::class)->withoutMiddleware('api_or_web');\n-Route::resource('/peripheral', PeripheralController::class);\n+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724241453100,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,14 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\API\\PeripheralController;\n+use App\\Http\\Controllers\\PeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/gateway', GatewayController::class)->Middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724241460411,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,6 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::resource('/gateway', GatewayController::class)->Middleware('api_or_web');\n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class)->Middleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724246551289,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,5 +12,5 @@\n })->middleware('auth:sanctum');\n \n \n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n-Route::resource('/peripheral', PeripheralController::class)->Middleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724246595838,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\PeripheralController;\n+use App\\Http\\Controllers\\APeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n"
+                },
+                {
+                    "date": 1724246603775,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,16 @@\n+<?php\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Support\\Facades\\Route;\n+use App\\Http\\Controllers\\UserController;\n+use App\\Http\\Controllers\\GatewayController;\n+use App\\Http\\Controllers\\API\\PeripheralController;\n+\n+\n+Route::get('/user', function (Request $request) {\n+    return $request->user();\n+})->middleware('auth:sanctum');\n+\n+\n+Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724246627944,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,21 +12,5 @@\n })->middleware('auth:sanctum');\n \n \n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n-<?php\n-\n-use Illuminate\\Http\\Request;\n-use Illuminate\\Support\\Facades\\Route;\n-use App\\Http\\Controllers\\UserController;\n-use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\APeripheralController;\n-\n-\n-Route::get('/user', function (Request $request) {\n-    return $request->user();\n-})->middleware('auth:sanctum');\n-\n-\n-Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/peripheral', App\\Http\\Controllers\\API\\PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724246638083,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,14 +3,14 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\API\\PeripheralController;\n+use App\\Http\\Controllers\\APIPeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n-Route::resource('/peripheral', App\\Http\\Controllers\\API\\PeripheralController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724246644243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,9 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\APIPeripheralController;\n+use App\\Http\\Controllers\\ApPeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n"
+                },
+                {
+                    "date": 1724246655547,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n-use App\\Http\\Controllers\\ApPeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n"
+                },
+                {
+                    "date": 1724246661406,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n+use App\\Http\\Controllers\\API\\PeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n"
                 }
             ],
             "date": 1722337650176,

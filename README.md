@@ -25,14 +25,14 @@ The task is to create a REST service (JSON/HTTP) for storing information about t
 
 ## Entities
 
-[gateway]():
+**gateway**:
 
 - a unique serial number (string), 
 - human-readable name (string),
 - IPv4 address (to be validated),
 - multiple associated peripheral devices. 
 
-[peripheral]():
+**peripheral**:
 - a UID (number),
 - vendor (string),
 - date created,
@@ -113,3 +113,21 @@ Follow these steps to set up the project on your local environment:
  ## Testing REST service with postman 
 
 ### --TODO
+```
+  GET|HEAD        api/gateway   
+  POST            api/gateway   
+  GET|HEAD        api/gateway/{gateway}   
+  PUT|PATCH       api/gateway/{gateway}   
+  DELETE          api/gateway/{gateway}   
+   
+
+  GET|HEAD        api/peripheral 
+  POST            api/peripheral   
+  GET|HEAD        api/peripheral/{peripheral}   
+  PUT|PATCH       api/peripheral/{peripheral} 
+  DELETE          api/peripheral/{peripheral} 
+```
+
+
+ ## Developer notes:
+ - This is a basic project, so, some design patterns aren't necessary. In order to give examples, they were implemented.  

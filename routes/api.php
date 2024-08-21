@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\API\GatewayController;
+use App\Http\Controllers\GatewayController;
 use App\Http\Controllers\API\PeripheralController;
 
 
@@ -12,5 +12,5 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::resource('/gateway', GatewayController::class);
-Route::resource('/peripheral', PeripheralController::class);
+Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');
+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');
