@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 32,
+            "activePatchIndex": 49,
             "patches": [
                 {
                     "date": 1722338083275,
@@ -136,6 +136,74 @@
                 {
                     "date": 1722514644418,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,5 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n-    public function getPeripheral($peripheral)\n-    {\n-        $arr_peripheral = [];\n-        foreach ($peripheral as $value) {\n-            array_push($arr_peripheral,  new PeripheralResource($value));\n-        }\n-        return $arr_peripheral;\n-    }\n }\n"
+                },
+                {
+                    "date": 1724328398691,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,5 +24,12 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n+    public function with(Request $request): array\n+    {\n+        return [\n+            'message' => 'Datos obtenidos correctamente.'\n+        ];\n+    }\n+\n }\n"
+                },
+                {
+                    "date": 1724328403785,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,35 @@\n+<?php\n+\n+namespace App\\Http\\Resources;\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Http\\Resources\\Json\\JsonResource;\n+\n+class GatewayResource extends JsonResource\n+{\n+    /**\n+     * Transform the resource into an array.\n+     *\n+     * @return array<string, mixed>\n+     */\n+    public function toArray(Request $request): array\n+    {\n+        return [\n+            'id' => $this->id,\n+            'serial_number' => $this->serial_number,\n+            'name' => $this->name,\n+            'IPv4_address' => $this->IPv4_address,\n+            'peripheral' => $this->peripheral,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at\n+        ];\n+    }\n+\n+    public function with(Request $request): array\n+    {\n+        return [\n+            'message' => ''\n+        ];\n+    }\n+\n+}\n"
+                },
+                {
+                    "date": 1724328592735,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,44 +27,9 @@\n \n     public function with(Request $request): array\n     {\n         return [\n-            'message' => ''\n+            'message' => 'GatewayResource'\n         ];\n     }\n \n }\n-<?php\n-\n-namespace App\\Http\\Resources;\n-\n-use Illuminate\\Http\\Request;\n-use Illuminate\\Http\\Resources\\Json\\JsonResource;\n-\n-class GatewayResource extends JsonResource\n-{\n-    /**\n-     * Transform the resource into an array.\n-     *\n-     * @return array<string, mixed>\n-     */\n-    public function toArray(Request $request): array\n-    {\n-        return [\n-            'id' => $this->id,\n-            'serial_number' => $this->serial_number,\n-            'name' => $this->name,\n-            'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->peripheral,\n-            'created_at' => $this->created_at,\n-            'updated_at' => $this->updated_at\n-        ];\n-    }\n-\n-    public function with(Request $request): array\n-    {\n-        return [\n-            'message' => 'Datos obtenidos correctamente.'\n-        ];\n-    }\n-\n-}\n"
+                },
+                {
+                    "date": 1724328799107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,10 @@\n \n     public function with(Request $request): array\n     {\n         return [\n-            'message' => 'GatewayResource'\n+            'message' => 'message = GatewayResource'\n         ];\n     }\n+    \n \n }\n"
+                },
+                {
+                    "date": 1724330572217,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,16 @@\n     {\n         return [\n             'message' => 'message = GatewayResource'\n         ];\n+        \n     }\n-    \n \n+    public function withResponse(Request $request, $response): void\n+    {\n+        $response->setData([\n+            'data' => $this->toArray($request),\n+            'message' => 'Datos obtenidos correctamente.'\n+        ]);\n+    }\n+\n }\n"
+                },
+                {
+                    "date": 1724330585126,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,14 +24,17 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n-    public function with(Request $request): array\n+    public function with(Request $request, $response): array\n     {\n         return [\n             'message' => 'message = GatewayResource'\n         ];\n-        \n+        $response->setData([\n+            'data' => $this->toArray($request),\n+            'message' => 'Datos obtenidos correctamente.'\n+        ]);\n     }\n \n     public function withResponse(Request $request, $response): void\n     {\n"
+                },
+                {
+                    "date": 1724330591946,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,11 +26,11 @@\n     }\n \n     public function with(Request $request, $response): array\n     {\n-        return [\n-            'message' => 'message = GatewayResource'\n-        ];\n+        // return [\n+        //     'message' => 'message = GatewayResource'\n+        // ];\n         $response->setData([\n             'data' => $this->toArray($request),\n             'message' => 'Datos obtenidos correctamente.'\n         ]);\n"
+                },
+                {
+                    "date": 1724330605933,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,13 +24,13 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n-    public function with(Request $request, $response): array\n+    public function with(Request $request): array\n     {\n-        // return [\n-        //     'message' => 'message = GatewayResource'\n-        // ];\n+        return [\n+            'message' => 'message = GatewayResource'\n+        ];\n         $response->setData([\n             'data' => $this->toArray($request),\n             'message' => 'Datos obtenidos correctamente.'\n         ]);\n"
+                },
+                {
+                    "date": 1724331264197,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,19 +29,19 @@\n     {\n         return [\n             'message' => 'message = GatewayResource'\n         ];\n-        $response->setData([\n-            'data' => $this->toArray($request),\n-            'message' => 'Datos obtenidos correctamente.'\n-        ]);\n+\n     }\n \n     public function withResponse(Request $request, $response): void\n     {\n         $response->setData([\n             'data' => $this->toArray($request),\n             'message' => 'Datos obtenidos correctamente.'\n         ]);\n+        return [\n+            'message' => 'message = GatewayResource'\n+        ];\n     }\n \n }\n"
+                },
+                {
+                    "date": 1724331277571,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,14 +32,14 @@\n         ];\n \n     }\n \n-    public function withResponse(Request $request, $response): void\n+    public function withResponse(Request $request, $response)\n     {\n-        $response->setData([\n-            'data' => $this->toArray($request),\n-            'message' => 'Datos obtenidos correctamente.'\n-        ]);\n+        // $response->setData([\n+        //     'data' => $this->toArray($request),\n+        //     'message' => 'Datos obtenidos correctamente.'\n+        // ]);\n         return [\n             'message' => 'message = GatewayResource'\n         ];\n     }\n"
+                },
+                {
+                    "date": 1724331291751,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,14 +32,14 @@\n         ];\n \n     }\n \n-    public function withResponse(Request $request, $response)\n+    public function withResponse(Request $request, $response): void\n     {\n-        // $response->setData([\n-        //     'data' => $this->toArray($request),\n-        //     'message' => 'Datos obtenidos correctamente.'\n-        // ]);\n+        $response->setData([\n+            'data' => $this->toArray($request),\n+            'message' => 'Datos obtenidos correctamente.'\n+        ]);\n         return [\n             'message' => 'message = GatewayResource'\n         ];\n     }\n"
+                },
+                {
+                    "date": 1724331525988,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,14 @@\n         $response->setData([\n             'data' => $this->toArray($request),\n             'message' => 'Datos obtenidos correctamente.'\n         ]);\n-        return [\n-            'message' => 'message = GatewayResource'\n-        ];\n+\n+        $originalData = $response->getData(true);\n+        $response->setData([\n+            'data' => $originalData,\n+            'message' => 'Datos obtenidos correctamente.'\n+        ]);\n+\n     }\n \n }\n"
+                },
+                {
+                    "date": 1724331869484,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,28 @@\n+<?php\n+\n+namespace App\\Http\\Resources;\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Http\\Resources\\Json\\JsonResource;\n+\n+class GatewayResource extends JsonResource\n+{\n+    /**\n+     * Transform the resource into an array.\n+     *\n+     * @return array<string, mixed>\n+     */\n+    public function toArray(Request $request): array\n+    {\n+        return [\n+            'id' => $this->id,\n+            'serial_number' => $this->serial_number,\n+            'name' => $this->name,\n+            'IPv4_address' => $this->IPv4_address,\n+            'peripheral' => $this->peripheral,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at\n+        ];\n+    }\n+\n+}\n"
+                },
+                {
+                    "date": 1724332091854,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,36 +24,8 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n-}\n-<?php\n-\n-namespace App\\Http\\Resources;\n-\n-use Illuminate\\Http\\Request;\n-use Illuminate\\Http\\Resources\\Json\\JsonResource;\n-\n-class GatewayResource extends JsonResource\n-{\n-    /**\n-     * Transform the resource into an array.\n-     *\n-     * @return array<string, mixed>\n-     */\n-    public function toArray(Request $request): array\n-    {\n-        return [\n-            'id' => $this->id,\n-            'serial_number' => $this->serial_number,\n-            'name' => $this->name,\n-            'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->peripheral,\n-            'created_at' => $this->created_at,\n-            'updated_at' => $this->updated_at\n-        ];\n-    }\n-\n     public function with(Request $request): array\n     {\n         return [\n             'message' => 'message = GatewayResource'\n@@ -62,12 +34,12 @@\n     }\n \n     public function withResponse(Request $request, $response): void\n     {\n-        $response->setData([\n-            'data' => $this->toArray($request),\n-            'message' => 'Datos obtenidos correctamente.'\n-        ]);\n+        // $response->setData([\n+        //     'data' => $this->toArray($request),\n+        //     'message' => 'Datos obtenidos correctamente.'\n+        // ]);\n \n         $originalData = $response->getData(true);\n         $response->setData([\n             'data' => $originalData,\n"
+                },
+                {
+                    "date": 1724332168980,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * @return array<string, mixed>\n      */\n     public function toArray(Request $request): array\n     {\n-        return [\n+        $ [\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n"
+                },
+                {
+                    "date": 1724332595556,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,9 +13,9 @@\n      * @return array<string, mixed>\n      */\n     public function toArray(Request $request): array\n     {\n-        $ [\n+        return [\n             'id' => $this->id,\n             'serial_number' => $this->serial_number,\n             'name' => $this->name,\n             'IPv4_address' => $this->IPv4_address,\n@@ -24,28 +24,6 @@\n             'updated_at' => $this->updated_at\n         ];\n     }\n \n-    public function with(Request $request): array\n-    {\n-        return [\n-            'message' => 'message = GatewayResource'\n-        ];\n \n-    }\n-\n-    public function withResponse(Request $request, $response): void\n-    {\n-        // $response->setData([\n-        //     'data' => $this->toArray($request),\n-        //     'message' => 'Datos obtenidos correctamente.'\n-        // ]);\n-\n-        $originalData = $response->getData(true);\n-        $response->setData([\n-            'data' => $originalData,\n-            'message' => 'Datos obtenidos correctamente.'\n-        ]);\n-\n-    }\n-\n }\n"
+                },
+                {
+                    "date": 1724332600617,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,28 @@\n+<?php\n+\n+namespace App\\Http\\Resources;\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Http\\Resources\\Json\\JsonResource;\n+\n+class GatewayResource extends JsonResource\n+{\n+    /**\n+     * Transform the resource into an array.\n+     *\n+     * @return array<string, mixed>\n+     */\n+    public function toArray(Request $request): array\n+    {\n+        return [\n+            'id' => $this->id,\n+            'serial_number' => $this->serial_number,\n+            'name' => $this->name,\n+            'IPv4_address' => $this->IPv4_address,\n+            'peripheral' => $this->peripheral,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at\n+        ];\n+    }\n+\n+}\n"
                 }
             ],
             "date": 1722338083275,

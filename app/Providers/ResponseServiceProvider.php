@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use App\Services\ResponseStrategy\ApiResponseStrategy;
 use App\Services\ResponseStrategy\ViewResponseStrategy;
+use App\Services\ResponseStrategy\RedirectResponseStrategy;
 use App\Services\ResponseStrategy\ResponseContextInterface;
 
 class ResponseServiceProvider extends ServiceProvider
@@ -17,6 +18,10 @@ class ResponseServiceProvider extends ServiceProvider
 
         $this->app->bind(ViewResponseStrategy::class, function ($app) {
             return new ViewResponseStrategy();
+        });
+
+        $this->app->bind(RedirectResponseStrategy::class, function ($app) {
+            return new RedirectResponseStrategy();
         });
 
 

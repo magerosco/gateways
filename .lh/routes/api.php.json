@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 29,
+            "activePatchIndex": 52,
             "patches": [
                 {
                     "date": 1722337650176,
@@ -124,6 +124,98 @@
                 {
                     "date": 1724246661406,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n use Illuminate\\Http\\Request;\n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\UserController;\n use App\\Http\\Controllers\\GatewayController;\n+use App\\Http\\Controllers\\API\\PeripheralController;\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n"
+                },
+                {
+                    "date": 1724323963700,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,6 +11,7 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n+Ro\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724323972011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Ro\n+Route::Gr\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724323986986,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,9 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::Gr\n+Route::prefix('admin')->group(function () {\n+\n+});\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724323994779,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::prefix('admin')->group(function () {\n+Route::prefix('api_or_web')->group(function () {\n \n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324001487,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,7 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::prefix('api_or_web')->group(function () {\n-\n-});\n+Route::\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324015896,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,7 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::\n+Route::group\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324023856,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,7 +11,9 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::group\n+Route::group(['middleware' => ['auth:sanctum']], function () {\n+    \n+})\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324031622,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::group(['middleware' => ['auth:sanctum']], function () {\n-    \n+Route::group(['api_or_web' => ['auth:sanctum']], function () {\n+\n })\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324038346,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,7 @@\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n \n-})\n+});\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324044245,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n })->middleware('auth:sanctum');\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n-\n+    Route::get('/user', [UserController::class, 'show']);\n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324050354,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n })->middleware('auth:sanctum');\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n-    Route::get('/user', [UserController::class, 'show']);\n+    Route::get('/gateway', [GatewayController::class, 'show']);\n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324061234,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n })->middleware('auth:sanctum');\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n-    Route::get('/gateway', [GatewayController::class, 'show']);\n+    Route::get('/gateway', [GatewayController::class, 'index']);\n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324067826,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n })->middleware('auth:sanctum');\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n-    Route::get('/gateway', [GatewayController::class, 'index']);\n+    Route::get('/gateway', [GatewayController::class, 'index'])\n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324073796,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,8 @@\n })->middleware('auth:sanctum');\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n-    Route::get('/gateway', [GatewayController::class, 'index'])\n+    Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324079692,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,7 +13,9 @@\n \n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n+    Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n+    \n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324086336,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,11 @@\n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n+    Route::get('/peripheral', [PeripheralController::class, 'index'])->name('peripheral.index');\n+    Route::get('/peripheral/{id}', [PeripheralController::class, 'show'])->name('peripheral.show');\n+    Route::get('/user', [UserController::class, 'show'])->name('user.show');\n     \n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324098685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,11 +14,8 @@\n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n-    Route::get('/peripheral', [PeripheralController::class, 'index'])->name('peripheral.index');\n-    Route::get('/peripheral/{id}', [PeripheralController::class, 'show'])->name('peripheral.show');\n-    Route::get('/user', [UserController::class, 'show'])->name('user.show');\n-    \n+\n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324105851,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,8 +14,9 @@\n \n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n+    Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n \n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324112043,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -15,8 +15,10 @@\n Route::group(['api_or_web' => ['auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n+    Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n+    Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');\n \n });\n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324119656,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,6 +19,6 @@\n     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n     Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');\n \n });\n-Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n+\n Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324159276,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,5 +20,5 @@\n     Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');\n \n });\n \n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1724324171305,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,14 +11,14 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::group(['api_or_web' => ['auth:sanctum']], function () {\n+Route::group(['' => ['auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n     Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');\n \n });\n \n-Route::resource('/peripheral', PeripheralController::class);\n+Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n"
+                },
+                {
+                    "date": 1724324189045,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,14 +11,14 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::group(['' => ['auth:sanctum']], function () {\n+Route::group(['middleware' => ['api_or_web']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n     Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');\n \n });\n \n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class);\n"
                 }
             ],
             "date": 1722337650176,

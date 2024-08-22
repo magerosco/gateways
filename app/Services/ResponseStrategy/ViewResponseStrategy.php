@@ -3,15 +3,14 @@
 namespace App\Services\ResponseStrategy;
 
 use App\Facades\AdditionalDataRequest;
-use App\Http\Resources\GatewayResource;
 
 class ViewResponseStrategy implements ResponseStrategy
 {
-    public function getResponse($data)
+    public function getResponse($data = null)
     {
         $dataRequest = AdditionalDataRequest::getValue();
 
-        $json_data = $dataRequest['resource']::collection($data)->toJson();
+        $json_data = $data?->toJson();
         return view($dataRequest['view'], ['data' => $json_data]);
     }
 }

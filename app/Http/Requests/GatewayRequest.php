@@ -2,11 +2,12 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Exceptions\HttpResponseException;
-use \Symfony\Component\HttpFoundation\Response;
+use Illuminate\Validation\Rule;
 use App\Rules\ValidIPv4AddressRule;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class GatewayRequest extends FormRequest
 {
@@ -25,12 +26,11 @@ class GatewayRequest extends FormRequest
      */
     public function rules(): array
     {
-
+        $objectId = $this->route('id');
         return [
-            
             'name' => 'max:255',
-            'serial_number' => 'required|unique:gateways,serial_number',
-            'IPv4_address' =>  [new ValidIPv4AddressRule()],
+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],
+            'IPv4_address' => [new ValidIPv4AddressRule()],
         ];
     }
 
@@ -38,11 +38,15 @@ class GatewayRequest extends FormRequest
     {
         $errors = $validator->errors();
 
-        throw new HttpResponseException(response()->json([
-            'success' => false,
-            'message' => 'Validation errors',
-            'data' => $errors
-        ], Response::HTTP_BAD_REQUEST));
+        throw new HttpResponseException(
+            response()->json(
+                [
+                    'success' => false,
+                    'message' => 'Validation errors',
+                    'data' => $errors,
+                ],
+                Response::HTTP_BAD_REQUEST,
+            ),
+        );
     }
-
 }

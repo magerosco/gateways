@@ -12,5 +12,13 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');
-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');
+Route::group(['middleware' => ['api_or_web']], function () {
+    Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');
+    Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');
+    Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');
+    Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');
+    Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');
+
+});
+
+Route::resource('/peripheral', PeripheralController::class);

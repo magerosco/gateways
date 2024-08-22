@@ -19,8 +19,7 @@ class GatewayController extends Controller
 
     public function index(): \Illuminate\Http\Resources\Json\AnonymousResourceCollection|JsonResponse
     {
-        $gateways = $this->gatewayRepository->all();
-        return $this->responseContext->executeStrategy($gateways);
+        return $this->responseContext->executeStrategy(GatewayResource::collection($this->gatewayRepository->all()));
     }
 
     public function create()
@@ -32,36 +31,23 @@ class GatewayController extends Controller
     {
         $validatedData = $request->validated();
 
-        $gataway = $this->gatewayRepository->create($validatedData);
-        $data = new GatewayResource($gataway);
+        $gateway = $this->gatewayRepository->create($validatedData);
 
-        if ($request->get('is_api')) {
-            return response()->json(['data' => $data, 'message' => 'Gateway created successfully'], Response::HTTP_CREATED);
-        } else {
-            return redirect()
-                ->route('gateway.index')
-                ->with(['data' => $data->toJson(), 'message' => 'Gateway created successfully'], Response::HTTP_CREATED);
-        }
+        return $this->responseContext->executeStrategy(new GatewayResource($gateway), 'Gateway created successfully', Response::HTTP_CREATED);
     }
 
-    public function show(Request $request, $id): JsonResponse
+    public function show($id): JsonResponse
     {
         $gateway = $this->gatewayRepository->find($id);
         if (!$gateway) {
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
-        if ($request->get('is_api')) {
-            return response()->json(['data' => new GatewayResource($gateway)], Response::HTTP_OK);
-        } else {
-            return view('gateway.show', ['gateway' => $gateway->toJson()]);
-        }
+        return $this->responseContext->executeStrategy(new GatewayResource($gateway));
     }
 
     public function edit(Request $request, string $id)
     {
-        if ($request->get('is_api')) {
-            return response()->json(['data' => ['id' => $id]], Response::HTTP_BAD_REQUEST);
-        }
+        // TODO
     }
 
     public function update(GatewayRequest $request, string $id)
@@ -73,13 +59,7 @@ class GatewayController extends Controller
         $validatedData = $request->validated();
         $this->gatewayRepository->update($id, $validatedData);
 
-        return response()->json(
-            [
-                'data' => new GatewayResource($gateway),
-                'message' => 'Gateway updated successfully',
-            ],
-            Response::HTTP_OK,
-        );
+        return $this->responseContext->executeStrategy(new GatewayResource($gateway), 'Gateway updated successfully', Response::HTTP_OK);
     }
 
     public function destroy($id): JsonResponse
@@ -89,11 +69,7 @@ class GatewayController extends Controller
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
         $this->gatewayRepository->delete($id);
-        return response()->json(
-            [
-                'message' => 'Gateway deleted successfully',
-            ],
-            Response::HTTP_OK,
-        );
+
+        return $this->responseContext->executeStrategy([], 'Gateway deleted successfully', Response::HTTP_OK);
     }
 }
