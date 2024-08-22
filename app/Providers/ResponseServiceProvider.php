@@ -6,7 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use App\Services\ResponseStrategy\ApiResponseStrategy;
 use App\Services\ResponseStrategy\ViewResponseStrategy;
 use App\Services\ResponseStrategy\RedirectResponseStrategy;
-use App\Services\ResponseStrategy\ResponseContextInterface;
+use App\Services\ResponseStrategy\ResponseContext;
 
 class ResponseServiceProvider extends ServiceProvider
 {
@@ -25,8 +25,8 @@ class ResponseServiceProvider extends ServiceProvider
         });
 
 
-        $this->app->singleton(ResponseContextInterface::class, function ($app) {
-            return new ResponseContextInterface();
+        $this->app->singleton(ResponseContext::class, function ($app) {
+            return new ResponseContext();
         });
     }
 }

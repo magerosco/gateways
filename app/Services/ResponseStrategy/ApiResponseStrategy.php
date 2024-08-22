@@ -9,8 +9,6 @@ class ApiResponseStrategy implements ResponseStrategy
 {
     public function getResponse($data = null, $message = null, $response = Response::HTTP_OK)
     {
-        $dataRequest = AdditionalDataRequest::getValue();
-
         $result = ['data' => $data];
 
         if ($message) {

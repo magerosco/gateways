@@ -6,25 +6,14 @@ use Closure;
 use Illuminate\Http\Request;
 use SebastianBergmann\Type\Exception;
 use App\Facades\AdditionalDataRequest;
+use App\Services\ResponseStrategyFactory;
 use Symfony\Component\HttpFoundation\Response;
-use App\Services\ResponseStrategy\ApiResponseStrategy;
-use App\Services\ResponseStrategy\ViewResponseStrategy;
-use App\Services\ResponseStrategy\RedirectResponseStrategy;
-use App\Services\ResponseStrategy\ResponseContextInterface;
+use App\Services\ResponseStrategy\ResponseContext;
 
 class ApiOrWebMiddleware
 {
-    private static $map = [
-        'API' => ApiResponseStrategy::class,
-        'index' => ViewResponseStrategy::class,
-        'store' => RedirectResponseStrategy::class,
-        'show' => ViewResponseStrategy::class,
-        'edit' => ViewResponseStrategy::class,
-        'update' => RedirectResponseStrategy::class,
-        'destroy' => RedirectResponseStrategy::class,
-    ];
 
-    public function __construct(protected ResponseContextInterface $responseContext, protected ApiResponseStrategy $apiStrategy, protected ViewResponseStrategy $viewStrategy)
+    public function __construct(protected ResponseContext $responseContext)
     {
     }
 
@@ -62,16 +51,18 @@ class ApiOrWebMiddleware
         ]);
     }
 
+    /**
+     * Used factory design patterns to create the response strategy.
+     */
     public function defineResponseStrategy()
     {
         $dataRequest = AdditionalDataRequest::getValue();
 
-        if (!array_key_exists($dataRequest['method'], self::$map)) {
+        try {
+            $strategy = ResponseStrategyFactory::createStrategy($dataRequest['method']);
+        } catch (Exception $e) {
             throw new Exception('Unknown method');
         }
-
-        $className = self::$map[$dataRequest['method']];
-        $strategy = new $className();
 
         $this->responseContext->setStrategy($strategy);
     }

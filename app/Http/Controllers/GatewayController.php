@@ -9,11 +9,11 @@ use App\Http\Requests\GatewayRequest;
 use App\Http\Resources\GatewayResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repositories\GatewayRepositoryInterface;
-use App\Services\ResponseStrategy\ResponseContextInterface;
+use App\Services\ResponseStrategy\ResponseContext;
 
 class GatewayController extends Controller
 {
-    public function __construct(protected GatewayRepositoryInterface $gatewayRepository, protected ResponseContextInterface $responseContext)
+    public function __construct(protected GatewayRepositoryInterface $gatewayRepository, protected ResponseContext $responseContext)
     {
     }
 
