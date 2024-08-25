@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 27,
+            "activePatchIndex": 30,
             "patches": [
                 {
                     "date": 1722356434563,
@@ -116,6 +116,18 @@
                 {
                     "date": 1722504129078,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -37,12 +37,12 @@\n         $peripheral = Peripheral::find($id);\n         if (!$peripheral) {\n             return response()->json([], Response::HTTP_NOT_FOUND);\n         }\n-        $token = csrf_token();\n+\n         return response()->json(\n             [\n-                'data' => $token,\n+                'data' => new PeripheralResource($peripheral),\n             ],\n             Response::HTTP_OK,\n         );\n     }\n"
+                },
+                {
+                    "date": 1724427798899,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,9 +53,9 @@\n             return response()->json([], Response::HTTP_NOT_FOUND);\n         }\n \n         $validatedData = $request->validated();\n-        $peripheral->update($validatedData);\n+        $updated_data$peripheral->update($validatedData);\n         return response()->json(\n             [\n                 'data' => new PeripheralResource($peripheral),\n                 'message' => 'Peripheral updated successfully',\n"
+                },
+                {
+                    "date": 1724427804992,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,12 +53,12 @@\n             return response()->json([], Response::HTTP_NOT_FOUND);\n         }\n \n         $validatedData = $request->validated();\n-        $updated_data$peripheral->update($validatedData);\n+        $updated_data = $peripheral->update($validatedData);\n         return response()->json(\n             [\n-                'data' => new PeripheralResource($peripheral),\n+                'data' => new PeripheralResource($updated_data),\n                 'message' => 'Peripheral updated successfully',\n             ],\n             Response::HTTP_OK,\n         );\n"
+                },
+                {
+                    "date": 1724427814185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,12 +53,12 @@\n             return response()->json([], Response::HTTP_NOT_FOUND);\n         }\n \n         $validatedData = $request->validated();\n-        $updated_data = $peripheral->update($validatedData);\n+        $updated_data$peripheral->update($validatedData);\n         return response()->json(\n             [\n-                'data' => new PeripheralResource($updated_data),\n+                'data' => new PeripheralResource($peripheral),\n                 'message' => 'Peripheral updated successfully',\n             ],\n             Response::HTTP_OK,\n         );\n"
                 }
             ],
             "date": 1722356434563,

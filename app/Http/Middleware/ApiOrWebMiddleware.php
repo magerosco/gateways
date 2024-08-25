@@ -59,6 +59,7 @@ class ApiOrWebMiddleware
         $dataRequest = AdditionalDataRequest::getValue();
 
         try {
+            //Factory Method, returns a concrete instance based on the ResponseStrategy interface.
             $strategy = ResponseStrategyFactory::createStrategy($dataRequest['method']);
         } catch (Exception $e) {
             throw new Exception('Unknown method');

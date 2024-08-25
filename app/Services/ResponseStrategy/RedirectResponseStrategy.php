@@ -13,9 +13,8 @@ class RedirectResponseStrategy implements ResponseStrategy
 
         $json_data = ['data' => $data?->toJson()];
 
-        if ($message) {
-            $json_data['message'] = $message;
-        }
+        isset($message) && ($json_data['message'] = $message);
+
         return redirect()
             ->route($dataRequest['route'])
             ->with($json_data, $response);

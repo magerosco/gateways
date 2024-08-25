@@ -3,7 +3,6 @@
 namespace App\Services\ResponseStrategy;
 
 use Symfony\Component\HttpFoundation\Response;
-use App\Facades\AdditionalDataRequest;
 
 class ApiResponseStrategy implements ResponseStrategy
 {
@@ -11,9 +10,7 @@ class ApiResponseStrategy implements ResponseStrategy
     {
         $result = ['data' => $data];
 
-        if ($message) {
-            $result['message'] = $message;
-        }
+        isset($message) && ($result['message'] = $message);
 
         return response()->json($result, $response);
     }

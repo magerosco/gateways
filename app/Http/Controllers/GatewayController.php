@@ -30,7 +30,6 @@ class GatewayController extends Controller
     public function store(GatewayRequest $request)
     {
         $validatedData = $request->validated();
-
         $gateway = $this->gatewayRepository->create($validatedData);
 
         return $this->responseContext->executeStrategy(new GatewayResource($gateway), 'Gateway created successfully', Response::HTTP_CREATED);
@@ -38,10 +37,7 @@ class GatewayController extends Controller
 
     public function show($id): JsonResponse
     {
-        $gateway = $this->gatewayRepository->find($id);
-        if (!$gateway) {
-            return response()->json([], Response::HTTP_NOT_FOUND);
-        }
+        $gateway = $this->gatewayRepository->find($id); //findOrFail
         return $this->responseContext->executeStrategy(new GatewayResource($gateway));
     }
 
@@ -52,22 +48,17 @@ class GatewayController extends Controller
 
     public function update(GatewayRequest $request, string $id)
     {
-        $gateway = $this->gatewayRepository->find($id);
-        if (!$gateway) {
-            return response()->json([], Response::HTTP_NOT_FOUND);
-        }
-        $validatedData = $request->validated();
-        $this->gatewayRepository->update($id, $validatedData);
+        $this->gatewayRepository->find($id); //findOrFail
 
-        return $this->responseContext->executeStrategy(new GatewayResource($gateway), 'Gateway updated successfully', Response::HTTP_OK);
+        $validatedData = $request->validated();
+        $updated_data = $this->gatewayRepository->update($id, $validatedData);
+
+        return $this->responseContext->executeStrategy(new GatewayResource($updated_data), 'Gateway updated successfully', Response::HTTP_OK);
     }
 
     public function destroy($id): JsonResponse
     {
-        $gateway = $this->gatewayRepository->find($id);
-        if (!$gateway) {
-            return response()->json([], Response::HTTP_NOT_FOUND);
-        }
+        $this->gatewayRepository->find($id); //findOrFail
         $this->gatewayRepository->delete($id);
 
         return $this->responseContext->executeStrategy([], 'Gateway deleted successfully', Response::HTTP_OK);
