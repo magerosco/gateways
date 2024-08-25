@@ -10,6 +10,9 @@ use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Requests\GatewayRequest;
 
+/**
+ * @deprecated. Behavior migrated to App\Http\Controllers\GatewayController.php
+ */
 class GatewayController extends Controller
 {
     /**

@@ -7,16 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RedirectResponseStrategy implements ResponseStrategy
 {
-    public function getResponse($data = null, $message = null, $response = Response::HTTP_OK)
+    public function getResponse(StrategyDataInterface $data = null)
     {
         $dataRequest = AdditionalDataRequest::getValue();
 
-        $json_data = ['data' => $data?->toJson()];
+        $json_data = ['data' => $data !== null ? $data->getData()?->toJson() : null];
 
-        isset($message) && ($json_data['message'] = $message);
+        if ($data !== null && !empty($data->getMessage())) {
+            $result['message'] = $data->getMessage();
+        }
+
+        $statusCode = $data !== null ? $data->getHttpResponse() : Response::HTTP_OK;
 
         return redirect()
             ->route($dataRequest['route'])
-            ->with($json_data, $response);
+            ->with($json_data, $statusCode);
     }
 }

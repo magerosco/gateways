@@ -4,5 +4,5 @@ namespace App\Services\ResponseStrategy;
 
 interface ResponseStrategy
 {
-    public function getResponse($data);
+    public function getResponse(StrategyDataInterface $data);
 }

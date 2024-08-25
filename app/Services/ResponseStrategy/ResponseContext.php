@@ -2,9 +2,6 @@
 
 namespace App\Services\ResponseStrategy;
 
-use Symfony\Component\HttpFoundation\Response;
-
-
 /**
  * Class ResponseContext
  * it's a context that will be used to execute the strategy
@@ -30,8 +27,8 @@ class ResponseContext
     /**
      * It is used by the controller to execute the strategy as a concrete instance of the response.
      */
-    public function executeStrategy($data, $message = null, $response = Response::HTTP_OK)
+    public function executeStrategy(StrategyDataInterface $data = null): mixed
     {
-        return $this->strategy->getResponse($data, $message, $response);
+        return $this->strategy->getResponse($data);
     }
 }

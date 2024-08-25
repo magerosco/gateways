@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 65,
+            "activePatchIndex": 74,
             "patches": [
                 {
                     "date": 1722340745611,
@@ -268,6 +268,42 @@
                 {
                     "date": 1722356932231,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,16 +20,8 @@\n         return GatewayResource::collection(Gateway::all());\n     }\n \n     /**\n-     * Show the form for creating a new resource.\n-     */\n-    public function create()\n-    {\n-        //\n-    }\n-\n-    /**\n      * Store a newly created resource in storage.\n      */\n     public function store(GatewayRequest $request)\n     {\n"
+                },
+                {
+                    "date": 1724609274460,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,8 +9,9 @@\n use Illuminate\\Http\\JsonResponse;\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n+\n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n@@ -54,10 +55,14 @@\n             Response::HTTP_OK,\n         );\n     }\n \n-    public function update(Request $request, GatewayRequest $gateway)\n+    public function update(GatewayRequest $request, String $id)\n     {\n+        $gateway = Gateway::find($id);\n+        if (!$gateway) {\n+            return response()->json([], Response::HTTP_NOT_FOUND);\n+        }\n         $validatedData = $request->validated();\n         $gateway->update($validatedData);\n         return response()->json(\n             [\n"
+                },
+                {
+                    "date": 1724609280792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -9,9 +9,11 @@\n use Illuminate\\Http\\JsonResponse;\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n-\n+/**\n+ * @d\n+ */\n class GatewayController extends Controller\n {\n     /**\n      * Display a listing of the resource.\n"
+                },
+                {
+                    "date": 1724609297762,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @d\n+ * @deprecated \n  */\n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1724609317766,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @deprecated \n+ * @deprecate\n  */\n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1724609329165,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @deprecate\n+ * @deprecated. Behavio\n  */\n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1724609344514,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @deprecated. Behavio\n+ * @deprecated. Behavior migrated to Development and integration of Rest API services using the Laravel framework to replace or add new functionality to existing legacy code in order to improve performance and promote migration to clean and scalable code.\n  */\n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1724609350137,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @deprecated. Behavior migrated to Development and integration of Rest API services using the Laravel framework to replace or add new functionality to existing legacy code in order to improve performance and promote migration to clean and scalable code.\n+ * @deprecated. Behavior migrated to  App\\Http\\Controllers\\API\n  */\n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1724609356115,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @deprecated. Behavior migrated to  App\\Http\\Controllers\\API\n+ * @deprecated. Behavior migrated to  App\\Http\\Controllers\\GatewayController.\n  */\n class GatewayController extends Controller\n {\n     /**\n"
+                },
+                {
+                    "date": 1724609363712,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,9 @@\n use Symfony\\Component\\HttpFoundation\\Response;\n use App\\Http\\Requests\\GatewayRequest;\n \n /**\n- * @deprecated. Behavior migrated to  App\\Http\\Controllers\\GatewayController.\n+ * @deprecated. Behavior migrated to App\\Http\\Controllers\\GatewayController.php\n  */\n class GatewayController extends Controller\n {\n     /**\n"
                 }
             ],
             "date": 1722340745611,
