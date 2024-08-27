@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Services\ResponseStrategy;
+namespace App\Services\ResponseStrategy\OutputDataFormat;
+
+
 
 
 class StrategyData implements StrategyDataInterface

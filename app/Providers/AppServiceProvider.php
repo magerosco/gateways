@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use App\Repositories\GatewayRepository;
 use Illuminate\Support\ServiceProvider;
-use App\Repositories\GatewayRepositoryInterface;
+use App\Repositories\CrudRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(GatewayRepositoryInterface::class, GatewayRepository::class);
+        $this->app->bind(CrudRepositoryInterface::class, GatewayRepository::class);
         $this->app->singleton('additionalDataRequest', function ($app) {
-            return new \App\Services\AdditionalDataRequest;
+            return new \App\Services\ResponseStrategy\AdditionalDataRequest;
         });
     }
 

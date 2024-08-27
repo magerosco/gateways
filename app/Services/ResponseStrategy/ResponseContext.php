@@ -2,6 +2,8 @@
 
 namespace App\Services\ResponseStrategy;
 
+use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
+
 /**
  * Class ResponseContext
  * it's a context that will be used to execute the strategy
@@ -19,7 +21,7 @@ class ResponseContext
     /**
      * Used by the middleware to set a concrete response strategy.
      */
-    public function setStrategy(ResponseStrategy $strategy)
+    public function setStrategy(ResponseStrategyInterface $strategy)
     {
         $this->strategy = $strategy;
     }

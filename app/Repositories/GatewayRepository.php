@@ -4,7 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Gateway;
 
-class GatewayRepository implements GatewayRepositoryInterface
+class GatewayRepository implements CrudRepositoryInterface
 {
     public function all()
     {

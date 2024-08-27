@@ -1,17 +1,22 @@
 <?php
 
-namespace App\Services\ResponseStrategy;
+namespace App\Services\ResponseStrategy\Output;
 
+use Throwable;
 use App\Facades\AdditionalDataRequest;
+use App\Services\ResponseStrategy\ResponseStrategyInterface;
+use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
-class ViewResponseStrategy implements ResponseStrategy
+class ViewResponseStrategy implements ResponseStrategyInterface
 {
     public function getResponse(StrategyDataInterface $data = null)
     {
-        $dataRequest = AdditionalDataRequest::getValue();
+        try {
+            $json_data = ['data' => $data !== null ? $data->getData()?->toJson() : null];
 
-        $json_data = ['data' => $data !== null ? $data->getData()?->toJson() : null];
-
-        return view($dataRequest['view'], ['data' => $json_data]);
+            return view(AdditionalDataRequest::getView(), ['data' => $json_data]);
+        } catch (Throwable $e) {
+            return $e->getMessage();
+        }
     }
 }

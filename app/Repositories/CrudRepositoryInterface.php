@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-interface GatewayRepositoryInterface
+interface CrudRepositoryInterface
 {
     public function all();
     public function find($id);

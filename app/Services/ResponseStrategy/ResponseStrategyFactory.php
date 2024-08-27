@@ -1,22 +1,23 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\ResponseStrategy;
 
 use SebastianBergmann\Type\Exception;
-use App\Services\ResponseStrategy\ResponseStrategy;
-use App\Services\ResponseStrategy\ApiResponseStrategy;
-use App\Services\ResponseStrategy\ViewResponseStrategy;
-use App\Services\ResponseStrategy\RedirectResponseStrategy;
+// use App\Services\ResponseStrategy\ResponseStrategyInterface;
+use App\Services\ResponseStrategy\Output\ApiResponseStrategy;
+use App\Services\ResponseStrategy\Output\ViewResponseStrategy;
+use App\Services\ResponseStrategy\Output\RedirectResponseStrategy;
 
 class ResponseStrategyFactory
 {
-    public static function createStrategy(string $method): ResponseStrategy
+    public static function createStrategy(string $method): ResponseStrategyInterface
     {
         switch ($method) {
             case 'API':
                 return new ApiResponseStrategy();
             case 'index':
             case 'show':
+            case 'create':
             case 'edit':
                 return new ViewResponseStrategy();
             case 'store':

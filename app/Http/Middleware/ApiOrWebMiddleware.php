@@ -6,13 +6,12 @@ use Closure;
 use Illuminate\Http\Request;
 use SebastianBergmann\Type\Exception;
 use App\Facades\AdditionalDataRequest;
-use App\Services\ResponseStrategyFactory;
+use App\Services\ResponseStrategy\ResponseStrategyFactory;
 use Symfony\Component\HttpFoundation\Response;
 use App\Services\ResponseStrategy\ResponseContext;
 
 class ApiOrWebMiddleware
 {
-
     public function __construct(protected ResponseContext $responseContext)
     {
     }
@@ -44,11 +43,9 @@ class ApiOrWebMiddleware
         [, $methodName] = explode('@', $controller);
 
         //facades
-        AdditionalDataRequest::setValue([
-            'method' => $request->is('api/*') ? 'API' : $methodName,
-            'view' => $request->route()->getName(),
-            'route' => $request->route()->getName(),
-        ]);
+        AdditionalDataRequest::setMethod($request->is('api/*') ? 'API' : $methodName);
+        AdditionalDataRequest::setView($request->route()->getName());
+        AdditionalDataRequest::setRoute($request->route()->getName());
     }
 
     /**
@@ -56,11 +53,9 @@ class ApiOrWebMiddleware
      */
     public function defineResponseStrategy()
     {
-        $dataRequest = AdditionalDataRequest::getValue();
-
         try {
             //Factory Method, returns a concrete instance based on the ResponseStrategy interface.
-            $strategy = ResponseStrategyFactory::createStrategy($dataRequest['method']);
+            $strategy = ResponseStrategyFactory::createStrategy(AdditionalDataRequest::getMethod());
         } catch (Exception $e) {
             throw new Exception('Unknown method');
         }

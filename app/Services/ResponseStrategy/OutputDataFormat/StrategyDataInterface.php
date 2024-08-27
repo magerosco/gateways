@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\ResponseStrategy;
+namespace App\Services\ResponseStrategy\OutputDataFormat;
 
 interface StrategyDataInterface
 {

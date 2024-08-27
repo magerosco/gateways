@@ -1,18 +1,63 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\ResponseStrategy;
 
 class AdditionalDataRequest
 {
-    protected $value;
+    protected $method;
+    protected $view;
+    protected $route;
 
-    public function setValue($value)
+    /**
+     * Set the value of route
+     */
+    public function setRoute($route): self
     {
-        $this->value = $value;
+        $this->route = $route;
+
+        return $this;
+    }
+    /**
+     * Set the value of route
+     */
+    public function setView($view): self
+    {
+        $this->view = $view;
+
+        return $this;
     }
 
-    public function getValue()
+    /**
+     * Set the value of method
+     */
+    public function setMethod($method): self
     {
-        return $this->value;
+        $this->method = $method;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of method
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * Get the value of view
+     */
+    public function getView()
+    {
+        return $this->view;
+    }
+
+    /**
+     * Get the value of route
+     */
+    public function getRoute()
+    {
+        return $this->route;
     }
 }
