@@ -3,12 +3,19 @@
 namespace App\Services\ResponseStrategy\OutputDataFormat;
 
 
-
-
 class StrategyData implements StrategyDataInterface
 {
-    public function __construct(private array|object $data = [], private string $message = '', private int $response = 200)
+    private array|object $data = [];
+    private string $message = '';
+    private int $response = 200;
+
+    public function setStrategyData(array|object $data = [], string $message = '', int $response = 200): StrategyDataInterface
     {
+        $this->data = $data;
+        $this->message = $message;
+        $this->response = $response;
+
+        return $this;
     }
 
     public function getData(): array|object
