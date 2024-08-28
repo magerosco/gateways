@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\ResponseStrategy\ResponseContextInterface;
 use App\Services\ResponseStrategy\ResponseContext;
 use App\Services\ResponseStrategy\Output\ApiResponseStrategy;
 use App\Services\ResponseStrategy\Output\ViewResponseStrategy;
@@ -24,8 +25,7 @@ class ResponseServiceProvider extends ServiceProvider
             return new RedirectResponseStrategy();
         });
 
-
-        $this->app->singleton(ResponseContext::class, function ($app) {
+        $this->app->singleton(ResponseContextInterface::class, function ($app) {
             return new ResponseContext();
         });
     }

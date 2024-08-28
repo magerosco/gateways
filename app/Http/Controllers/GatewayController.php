@@ -10,13 +10,13 @@ use App\Http\Requests\GatewayRequest;
 use App\Http\Resources\GatewayResource;
 use Symfony\Component\HttpFoundation\Response;
 use App\Repositories\CrudRepositoryInterface;
-use App\Services\ResponseStrategy\ResponseContext;
+use App\Services\ResponseStrategy\ResponseContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use App\Services\ResponseStrategy\OutputDataFormat\StrategyData;
 
 class GatewayController extends Controller
 {
-    public function __construct(protected CrudRepositoryInterface $repository, protected ResponseContext $responseContext)
+    public function __construct(protected CrudRepositoryInterface $repository, protected ResponseContextInterface $responseContext)
     {
     }
 

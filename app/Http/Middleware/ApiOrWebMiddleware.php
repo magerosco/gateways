@@ -8,11 +8,11 @@ use SebastianBergmann\Type\Exception;
 use App\Facades\AdditionalDataRequest;
 use App\Services\ResponseStrategy\ResponseStrategyFactory;
 use Symfony\Component\HttpFoundation\Response;
-use App\Services\ResponseStrategy\ResponseContext;
+use App\Services\ResponseStrategy\ResponseContextInterface;
 
 class ApiOrWebMiddleware
 {
-    public function __construct(protected ResponseContext $responseContext)
+    public function __construct(protected ResponseContextInterface $responseContext)
     {
     }
 
@@ -42,7 +42,11 @@ class ApiOrWebMiddleware
         $controller = class_basename($action['controller']);
         [, $methodName] = explode('@', $controller);
 
-        //facades
+        /**
+         * facades, the intentions is to have a dinamic data abaliable for all app
+         *  without need to create dependencies
+         **/
+
         AdditionalDataRequest::setMethod($request->is('api/*') ? 'API' : $methodName);
         AdditionalDataRequest::setView($request->route()->getName());
         AdditionalDataRequest::setRoute($request->route()->getName());

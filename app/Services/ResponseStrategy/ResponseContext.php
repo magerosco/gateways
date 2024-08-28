@@ -9,7 +9,7 @@ use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
  * it's a context that will be used to execute the strategy
  *
  */
-class ResponseContext
+class ResponseContext implements ResponseContextInterface
 {
     protected $strategy;
 
