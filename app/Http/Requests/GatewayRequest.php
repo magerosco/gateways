@@ -34,6 +34,14 @@ class GatewayRequest extends FormRequest
         ];
     }
 
+    protected function prepareForValidation()
+    {
+        $this->merge([
+            'name' => strip_tags($this->name),
+            'serial_number' => strip_tags($this->serial_number),
+        ]);
+    }
+
     protected function failedValidation(Validator $validator)
     {
         $errors = $validator->errors();

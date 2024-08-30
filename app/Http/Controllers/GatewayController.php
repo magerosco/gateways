@@ -41,7 +41,7 @@ class GatewayController extends Controller
 
     public function store(GatewayRequest $request): JsonResponse|RedirectResponse
     {
-        $validatedData = $request->validated();
+        $validatedData = $request->validated(); //  this is not a validation, it only returns the validated data after be validated from the GatewayRequest
         $gateway = $this->repository->create($validatedData);
 
         $strategy = $this->strategyData->setStrategyData(new GatewayResource($gateway), 'Gateway created successfully', Response::HTTP_CREATED);
@@ -71,7 +71,7 @@ class GatewayController extends Controller
 
     public function update(GatewayRequest $request, string $id): JsonResponse|RedirectResponse
     {
-        $validatedData = $request->validated();
+        $validatedData = $request->validated();//  this is not a validation, it only returns the validated data after be validated from the GatewayRequest
         $updated_data = $this->repository->update($id, $validatedData); //it uses findOrFail
 
         $strategy = $this->strategyData->setStrategyData(new GatewayResource($updated_data), 'Gateway updated successfully', Response::HTTP_OK);

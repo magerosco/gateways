@@ -1,58 +1,25 @@
 {
     "sourceFile": "app/Http/Requests/GatewayRequest.php",
-    "activeCommit": 0,
+    "activeCommit": 1,
     "commits": [
         {
-            "activePatchIndex": 10,
-            "patches": [
-                {
-                    "date": 1722338626725,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n"
-                },
-                {
-                    "date": 1722338765595,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,11 @@\n      * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n      */\n     public function rules(): array\n     {\n+\n         return [\n-            //\n+            'name' => 'max:255|min:2',\n+            'UID' => 'numeric|min:1',\n         ];\n     }\n }\n"
-                },
-                {
-                    "date": 1722338778505,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,8 +23,8 @@\n     {\n \n         return [\n             'name' => 'max:255|min:2',\n-            'UID' => 'numeric|min:1',\n+            'IPv4_address' => 'numeric|min:1',\n         ];\n     }\n }\n"
-                },
-                {
-                    "date": 1722338801265,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,8 @@\n     public function rules(): array\n     {\n \n         return [\n-            'name' => 'max:255|min:2',\n             'IPv4_address' => 'numeric|min:1',\n         ];\n     }\n }\n"
-                },
-                {
-                    "date": 1722338926897,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,8 @@\n     public function rules(): array\n     {\n \n         return [\n-            'IPv4_address' => 'numeric|min:1',\n+            'IPv4_address' => filter_var($ip, FILTER_VALIDATE_IP),\n         ];\n     }\n }\n"
-                },
-                {
-                    "date": 1722339082075,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,8 +22,12 @@\n     public function rules(): array\n     {\n \n         return [\n-            'IPv4_address' => filter_var($ip, FILTER_VALIDATE_IP),\n+            'IPv4_address' => 'field_name' => ['required', function ($attribute, $value, $fail) {\n+                if ($value !== 'desired_value') {\n+                    $fail($attribute.' is invalid.');\n+                }\n+            }],,\n         ];\n     }\n }\n"
-                },
-                {
-                    "date": 1722339087660,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     public function rules(): array\n     {\n \n         return [\n-            'IPv4_address' => 'field_name' => ['required', function ($attribute, $value, $fail) {\n+            'IPv4_address' =>  ['required', function ($attribute, $value, $fail) {\n                 if ($value !== 'desired_value') {\n                     $fail($attribute.' is invalid.');\n                 }\n             }],,\n"
-                },
-                {
-                    "date": 1722339095931,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     public function rules(): array\n     {\n \n         return [\n-            'IPv4_address' =>  ['required', function ($attribute, $value, $fail) {\n+            'IPv4_address' =>  [ function ($attribute, $value, $fail) {\n                 if ($value !== 'desired_value') {\n                     $fail($attribute.' is invalid.');\n                 }\n             }],,\n"
-                },
-                {
-                    "date": 1722339104277,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,8 +26,8 @@\n             'IPv4_address' =>  [ function ($attribute, $value, $fail) {\n                 if ($value !== 'desired_value') {\n                     $fail($attribute.' is invalid.');\n                 }\n-            }],,\n+            }],\n         ];\n     }\n }\n"
-                },
-                {
-                    "date": 1722339123423,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,9 +24,9 @@\n \n         return [\n             'IPv4_address' =>  [ function ($attribute, $value, $fail) {\n                 if ($value !== 'desired_value') {\n-                    $fail(.$attribute.' is invalid.');\n+                    $fail( .$attribute.' is invalid.');\n                 }\n             }],\n         ];\n     }\n"
-                },
-                {
-                    "date": 1722342945151,
-                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,34 @@\n+<?php\n+\n+namespace App\\Http\\Requests;\n+\n+use Illuminate\\Foundation\\Http\\FormRequest;\n+\n+class GatewayRequest extends FormRequest\n+{\n+    /**\n+     * Determine if the user is authorized to make this request.\n+     */\n+    public function authorize(): bool\n+    {\n+        return true;\n+    }\n+\n+    /**\n+     * Get the validation rules that apply to the request.\n+     *\n+     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n+     */\n+    public function rules(): array\n+    {\n+\n+        return [\n+            'serial_number' \n+            'IPv4_address' =>  [ function ($attribute, $value, $fail) {\n+                if (!filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {\n+                    $fail('IPv4'.$attribute.' is invalid.');\n+                }\n+            }],\n+        ];\n+    }\n+}\n"
-                }
-            ],
+            "activePatchIndex": 0,
+            "patches": [],
             "date": 1722338626725,
             "name": "Commit-0",
             "content": "<?php\n\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\n\nclass GatewayRequest extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n     */\n    public function rules(): array\n    {\n        return [\n            //\n        ];\n    }\n}\n"
+        },
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1725034888222,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1725034888222,
+            "name": "ls",
+            "content": "<?php\n\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Validation\\Rule;\nuse App\\Rules\\ValidIPv4AddressRule;\nuse Illuminate\\Foundation\\Http\\FormRequest;\nuse Illuminate\\Contracts\\Validation\\Validator;\nuse Symfony\\Component\\HttpFoundation\\Response;\nuse Illuminate\\Http\\Exceptions\\HttpResponseException;\n\nclass GatewayRequest extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n     */\n    public function rules(): array\n    {\n        $objectId = $this->route('id');\n        return [\n            'name' => 'max:255',\n            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n            'IPv4_address' => [new ValidIPv4AddressRule()],\n        ];\n    }\n\n    protected function prepareForValidation()\n    {\n        $this->merge([\n            'name' => strip_tags($this->name),\n            'serial_number' => strip_tags($this->serial_number),\n        ]);\n    }\n\n    protected function failedValidation(Validator $validator)\n    {\n        $errors = $validator->errors();\n\n        throw new HttpResponseException(\n            response()->json(\n                [\n                    'success' => false,\n                    'message' => 'Validation errors',\n                    'data' => $errors,\n                ],\n                Response::HTTP_BAD_REQUEST,\n            ),\n        );\n    }\n}\n"
         }
     ]
 }
