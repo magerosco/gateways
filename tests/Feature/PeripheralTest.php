@@ -2,15 +2,38 @@
 
 namespace Tests\Feature;
 
-use App\Models\Peripheral;
-use App\Models\Gateway;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Gateway;
+use App\Models\Peripheral;
+use App\Facades\AdditionalDataRequest;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class PeripheralTest extends TestCase
 {
+
+    protected $user;
+    protected $token;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = \App\Models\User::where('name', 'Tester User')->first();
+
+        if (empty($this->user)) {
+            $this->user = \App\Models\User::factory()->create([
+                'name' => 'Tester User',
+                'email' => 'tester@example.com',
+                'password' => '12345678',
+            ]);
+        }
+        $this->token = $this->user->createToken('TestToken')->plainTextToken;
+
+        AdditionalDataRequest::setMethod('API');
+    }
+
     /**
      * A basic feature test example.
      */
@@ -23,7 +46,7 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_list(): void
     {
-        $response = $this->get('/api/peripheral/');
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']],
@@ -34,7 +57,7 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_detail(): void
     {
-        $response = $this->get('/api/peripheral/1');
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/1');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);
         $response->assertJsonFragment(['id' => 1]);
@@ -42,7 +65,7 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_non_existing_peripheral_detail(): void
     {
-        $response = $this->get('/api/peripheral/9999');
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/9999');
         $response->assertStatus(404);
     }
 
@@ -58,7 +81,7 @@ class PeripheralTest extends TestCase
             'status' => 'online',
         ];
 
-        $response = $this->postJson('/api/peripheral', $data);
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
 
         $response->assertJsonStructure([
             'data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at'],
@@ -80,7 +103,7 @@ class PeripheralTest extends TestCase
             'status' => 'invalid',
         ];
 
-        $response = $this->postJson('/api/peripheral', $data);
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
 
         $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);
 
@@ -99,13 +122,13 @@ class PeripheralTest extends TestCase
                 'status' => 'online',
             ];
             if ($key < 11) {
-                $response = $this->postJson('/api/peripheral', $data);
+                $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
                 $response->assertStatus(201);
                 $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);
                 continue;
             }
 
-            $response = $this->postJson('/api/peripheral', $data);
+            $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
             $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);
             $response->assertJsonFragment(['status' => ["gateway_id can't be associated with more than 10 gateways."]]);
             $response->assertStatus(400);
@@ -126,7 +149,7 @@ class PeripheralTest extends TestCase
             'gateway_id' => $gateway_id,
             'status' => 'offline',
         ];
-        $response = $this->putJson("/api/peripheral/$id", $updatedData);
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->putJson("/api/peripheral/$id", $updatedData);
 
         $response->assertJsonStructure([
             'data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at'],

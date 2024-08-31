@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 52,
+            "activePatchIndex": 59,
             "patches": [
                 {
                     "date": 1722337650176,
@@ -216,6 +216,34 @@
                 {
                     "date": 1724324189045,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,14 +11,14 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::group(['' => ['auth:sanctum']], function () {\n+Route::group(['middleware' => ['api_or_web']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n     Route::delete('/gateway/{id}', [GatewayController::class, 'destroy'])->name('gateway.destroy');\n \n });\n \n-Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');\n+Route::resource('/peripheral', PeripheralController::class);\n"
+                },
+                {
+                    "date": 1725036313587,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n     return $request->user();\n })->middleware('auth:sanctum');\n \n \n-Route::group(['middleware' => ['api_or_web']], function () {\n+Route::group(['middleware' => ['api_or_web',]], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n"
+                },
+                {
+                    "date": 1725036793731,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,10 +10,11 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n+Route::post('login', [AuthController::class, 'login']);\n \n-Route::group(['middleware' => ['api_or_web',]], function () {\n+Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n"
+                },
+                {
+                    "date": 1725036846904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,9 +10,8 @@\n Route::get('/user', function (Request $request) {\n     return $request->user();\n })->middleware('auth:sanctum');\n \n-Route::post('login', [AuthController::class, 'login']);\n \n Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n"
+                },
+                {
+                    "date": 1725036976767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n-})->middleware('auth:sanctum');\n+})->wmiddleware('auth:sanctum');\n \n \n Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n"
+                },
+                {
+                    "date": 1725036983489,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n-})->wmiddleware('auth:sanctum');\n+})->withomiddleware('auth:sanctum');\n \n \n Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n"
+                },
+                {
+                    "date": 1725036989904,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n-})->withomiddleware('auth:sanctum');\n+})->withoutMiddlewaremiddleware('auth:sanctum');\n \n \n Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n"
+                },
+                {
+                    "date": 1725037046592,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n-})->withoutMiddleware('auth:sanctum');\n+})->wimiddleware('auth:sanctum');\n \n \n Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n"
                 }
             ],
             "date": 1722337650176,

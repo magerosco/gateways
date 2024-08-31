@@ -127,6 +127,33 @@ Follow these steps to set up the project on your local environment:
   PUT|PATCH       api/peripheral/{peripheral} 
   DELETE          api/peripheral/{peripheral} 
 ```
+1. **Login to get the token.**
+
+```
+POST            api/login
+
+Body raw:
+{
+  "email": "tester@example.com",
+  "password": "12345678"
+}
+```
+![alt text](public/image/{0C44C1DE-D1EE-479B-AC32-E35984484270}.png)
+
+2. **(Optional), you can create a new user and then login.**
+```
+POST            api/register
+
+Body raw:
+{
+    "name": "john",
+    "email": "john@example.com",
+    "password": "12345678",
+    "password_confirmation": "12345678"
+}
+```
+![alt text](public/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
+
 
 
  ## Developer notes:

@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\GatewayController;
 use App\Http\Controllers\API\PeripheralController;
@@ -11,8 +12,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+Route::post('register', [AuthController::class, 'register']);
+Route::post('login', [AuthController::class, 'login']);
 
-Route::group(['middleware' => ['api_or_web']], function () {
+
+Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {
     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');
     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');
     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 109,
+            "activePatchIndex": 121,
             "patches": [
                 {
                     "date": 1722435520502,
@@ -444,6 +444,54 @@
                 {
                     "date": 1722437533013,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -106,9 +106,9 @@\n             }\n \n             $response = $this->postJson('/api/peripheral', $data);\n             $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);\n-            $response->assertJsonFragment(['status' => [\"status can't be associated with more than 10 gateways.\"]]);\n+            $response->assertJsonFragment(['status' => [\"gateway_id can't be associated with more than 10 gateways.\"]]);\n             $response->assertStatus(400);\n         }\n     }\n \n"
+                },
+                {
+                    "date": 1725130578996,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,9 +22,9 @@\n     }\n \n     public function test_get_peripheral_list(): void\n     {\n-        $response = $this->get('/api/peripheral/');\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/');\n         $response->assertStatus(200);\n         $response->assertJsonStructure([\n             'data' => [['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']],\n         ]);\n"
+                },
+                {
+                    "date": 1725130584211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n     }\n \n     public function test_get_peripheral_detail(): void\n     {\n-        $response = $this->get('/api/peripheral/1');\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/1');\n         $response->assertStatus(200);\n         $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);\n         $response->assertJsonFragment(['id' => 1]);\n     }\n"
+                },
+                {
+                    "date": 1725130591164,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -41,9 +41,9 @@\n     }\n \n     public function test_get_peripheral_non_existing_peripheral_detail(): void\n     {\n-        $response = $this->get('/api/peripheral/9999');\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/9999');\n         $response->assertStatus(404);\n     }\n \n     public function test_can_store_peripheral()\n"
+                },
+                {
+                    "date": 1725130600191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n             'gateway_id' => $gateway_id,\n             'status' => 'online',\n         ];\n \n-        $response = $this->postJson('/api/peripheral', $data);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1725130615211,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -79,9 +79,9 @@\n             'gateway_id' => $gateway_id,\n             'status' => 'invalid',\n         ];\n \n-        $response = $this->postJson('/api/peripheral', $data);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);\n \n         $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);\n \n         $response->assertJsonFragment(['status' => ['status is invalid.']]);\n@@ -98,9 +98,9 @@\n                 'gateway_id' => $gateway_id,\n                 'status' => 'online',\n             ];\n             if ($key < 11) {\n-                $response = $this->postJson('/api/peripheral', $data);\n+                $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);\n                 $response->assertStatus(201);\n                 $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);\n                 continue;\n             }\n"
+                },
+                {
+                    "date": 1725130621212,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -104,9 +104,9 @@\n                 $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);\n                 continue;\n             }\n \n-            $response = $this->postJson('/api/peripheral', $data);\n+            $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);\n             $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);\n             $response->assertJsonFragment(['status' => [\"gateway_id can't be associated with more than 10 gateways.\"]]);\n             $response->assertStatus(400);\n         }\n"
+                },
+                {
+                    "date": 1725130644442,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -125,9 +125,9 @@\n             'vendor' => 'vendor TEST CREATED',\n             'gateway_id' => $gateway_id,\n             'status' => 'offline',\n         ];\n-        $response = $this->putJson(\"/api/peripheral/$id\", $updatedData);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->putJson(\"/api/peripheral/$id\", $updatedData);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1725130664675,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,28 @@\n use Tests\\TestCase;\n \n class PeripheralTest extends TestCase\n {\n+\n+    protected $user;\n+    protected $token;\n+\n+    protected function setUp(): void\n+    {\n+        parent::setUp();\n+\n+        $this->user = \\App\\Models\\User::where('name', 'Tester User')->first();\n+\n+        if (empty($this->user)) {\n+            $this->user = \\App\\Models\\User::factory()->create([\n+                'name' => 'Tester User',\n+                'email' => 'tester@example.com',\n+                'password' => '12345678',\n+            ]);\n+        }\n+        $this->token = $this->user->createToken('TestToken')->plainTextToken;\n+    }\n+    \n     /**\n      * A basic feature test example.\n      */\n     public function test_set_database_config(): void\n"
+                },
+                {
+                    "date": 1725130760188,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,17 +29,19 @@\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n     }\n-    \n+\n     /**\n      * A basic feature test example.\n      */\n     public function test_set_database_config(): void\n     {\n         Artisan::call('migrate:fresh --seed --env=\"testing\"');\n         $response = $this->get('/');\n         $response->assertStatus(200);\n+\n+        AdditionalDataRequest::setMethod('API');\n     }\n \n     public function test_get_peripheral_list(): void\n     {\n"
+                },
+                {
+                    "date": 1725130765596,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,14 +1,15 @@\n <?php\n \n namespace Tests\\Feature;\n \n+use Tests\\TestCase;\n+use App\\Models\\Gateway;\n use App\\Models\\Peripheral;\n-use App\\Models\\Gateway;\n+use App\\Facades\\AdditionalDataRequest;\n use Illuminate\\Support\\Facades\\Artisan;\n+use Illuminate\\Foundation\\Testing\\WithFaker;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n-use Illuminate\\Foundation\\Testing\\WithFaker;\n-use Tests\\TestCase;\n \n class PeripheralTest extends TestCase\n {\n \n"
+                },
+                {
+                    "date": 1725130780719,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -40,9 +40,8 @@\n         Artisan::call('migrate:fresh --seed --env=\"testing\"');\n         $response = $this->get('/');\n         $response->assertStatus(200);\n \n-        AdditionalDataRequest::setMethod('API');\n     }\n \n     public function test_get_peripheral_list(): void\n     {\n"
+                },
+                {
+                    "date": 1725130792130,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,11 @@\n                 'password' => '12345678',\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n+\n+\n+        AdditionalDataRequest::setMethod('API');\n     }\n \n     /**\n      * A basic feature test example.\n@@ -39,9 +42,8 @@\n     {\n         Artisan::call('migrate:fresh --seed --env=\"testing\"');\n         $response = $this->get('/');\n         $response->assertStatus(200);\n-\n     }\n \n     public function test_get_peripheral_list(): void\n     {\n"
                 }
             ],
             "date": 1722435520502,

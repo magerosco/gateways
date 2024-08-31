@@ -2,14 +2,37 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
-use Illuminate\Support\Facades\Artisan;
 use App\Models\Gateway;
+use App\Facades\AdditionalDataRequest;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GatewayTest extends TestCase
 {
+
+    protected $user;
+    protected $token;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->user = \App\Models\User::where('name', 'Tester User')->first();
+
+        if (empty($this->user)) {
+            $this->user = \App\Models\User::factory()->create([
+                'name' => 'Tester User',
+                'email' => 'tester@example.com',
+                'password' => '12345678',
+            ]);
+        }
+        $this->token = $this->user->createToken('TestToken')->plainTextToken;
+
+        AdditionalDataRequest::setMethod('API');
+    }
+
     /**
      * A basic feature test example.
      */
@@ -22,7 +45,9 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_list(): void
     {
-        $response = $this->get('/api/gateway/');
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/gateway/');
+
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']],
@@ -33,8 +58,7 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_detail(): void
     {
-
-        $response = $this->get('/api/gateway/1');
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/gateway/1');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);
         $response->assertJsonFragment(['id' => 1]);
@@ -42,7 +66,7 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_non_existing_gateway_detail(): void
     {
-        $response = $this->get('/api/gateway/9999');
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/gateway/9999');
         $response->assertStatus(404);
     }
 
@@ -55,7 +79,7 @@ class GatewayTest extends TestCase
             'peripheral' => [],
         ];
 
-        $response = $this->postJson('/api/gateway', $data);
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/gateway', $data);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
@@ -68,7 +92,6 @@ class GatewayTest extends TestCase
 
     public function test_can_update_gateway()
     {
-
         $gateway = Gateway::factory()->create();
         $id = $gateway->id;
 
@@ -77,7 +100,7 @@ class GatewayTest extends TestCase
             'IPv4_address' => '192.168.0.2',
             'name' => 'Updated Gateway',
         ];
-        $response = $this->putJson("/api/gateway/$id", $updatedData);
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->putJson("/api/gateway/$id", $updatedData);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
