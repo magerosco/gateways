@@ -110,4 +110,19 @@ class GatewayTest extends TestCase
         $response->assertJsonFragment($updatedData);
         $response->assertStatus(200);
     }
+
+    public function test_can_destroy_gateway()
+    {
+        $gateway = Gateway::factory()->create();
+        $id = $gateway->id;
+
+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson("/api/gateway/$id");
+
+        $response->assertJsonStructure([
+            'data' => [],
+            'message',
+        ]);
+
+        $response->assertStatus(200);
+    }
 }

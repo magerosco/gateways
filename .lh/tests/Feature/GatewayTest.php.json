@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 153,
+            "activePatchIndex": 164,
             "patches": [
                 {
                     "date": 1722420931409,
@@ -620,6 +620,50 @@
                 {
                     "date": 1725130806280,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,11 @@\n                 'password' => '12345678',\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n+\n+\n+        AdditionalDataRequest::setMethod('API');\n     }\n \n     /**\n      * A basic feature test example.\n"
+                },
+                {
+                    "date": 1725178162531,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,8 @@\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n \n-\n         AdditionalDataRequest::setMethod('API');\n     }\n \n     /**\n@@ -110,5 +109,27 @@\n \n         $response->assertJsonFragment($updatedData);\n         $response->assertStatus(200);\n     }\n+\n+\n+    public function test_can_update_gateway()\n+    {\n+        $gateway = Gateway::factory()->create();\n+        $id = $gateway->id;\n+\n+        $updatedData = [\n+            'serial_number' => '88888888',\n+            'IPv4_address' => '192.168.0.2',\n+            'name' => 'Updated Gateway',\n+        ];\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->putJson(\"/api/gateway/$id\", $updatedData);\n+\n+        $response->assertJsonStructure([\n+            'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n+            'message',\n+        ]);\n+\n+        $response->assertJsonFragment($updatedData);\n+        $response->assertStatus(200);\n+    }\n }\n"
+                },
+                {
+                    "date": 1725178182707,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -111,9 +111,9 @@\n         $response->assertStatus(200);\n     }\n \n \n-    public function test_can_update_gateway()\n+    public function test_can_destroy_gateway()\n     {\n         $gateway = Gateway::factory()->create();\n         $id = $gateway->id;\n \n"
+                },
+                {
+                    "date": 1725178245544,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n             'serial_number' => '88888888',\n             'IPv4_address' => '192.168.0.2',\n             'name' => 'Updated Gateway',\n         ];\n-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->putJson(\"/api/gateway/$id\", $updatedData);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->(\"/api/gateway/$id\", $updatedData);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1725178276678,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n             'serial_number' => '88888888',\n             'IPv4_address' => '192.168.0.2',\n             'name' => 'Updated Gateway',\n         ];\n-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->(\"/api/gateway/$id\", $updatedData);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\", $updatedData);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1725178288614,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -121,9 +121,9 @@\n             'serial_number' => '88888888',\n             'IPv4_address' => '192.168.0.2',\n             'name' => 'Updated Gateway',\n         ];\n-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\", $updatedData);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\", $uptedData);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1725178295004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -116,14 +116,9 @@\n     {\n         $gateway = Gateway::factory()->create();\n         $id = $gateway->id;\n \n-        $updatedData = [\n-            'serial_number' => '88888888',\n-            'IPv4_address' => '192.168.0.2',\n-            'name' => 'Updated Gateway',\n-        ];\n-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\", $uptedData);\n+        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\");\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1725178334900,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,8 +123,8 @@\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n         ]);\n \n-        $response->assertJsonFragment($updatedData);\n+        $response->assertJsonFragment($response);\n         $response->assertStatus(200);\n     }\n }\n"
+                },
+                {
+                    "date": 1725178371695,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -123,8 +123,8 @@\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n         ]);\n \n-        $response->assertJsonFragment($response);\n+\n         $response->assertStatus(200);\n     }\n }\n"
+                },
+                {
+                    "date": 1725178481748,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,12 +119,11 @@\n \n         $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\");\n \n         $response->assertJsonStructure([\n-            'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n+            'data' => [,\n             'message',\n         ]);\n \n-\n         $response->assertStatus(200);\n     }\n }\n"
+                },
+                {
+                    "date": 1725178487055,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -119,9 +119,9 @@\n \n         $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->deleteJson(\"/api/gateway/$id\");\n \n         $response->assertJsonStructure([\n-            'data' => [,\n+            'data' => [],\n             'message',\n         ]);\n \n         $response->assertStatus(200);\n"
+                },
+                {
+                    "date": 1725178524745,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -110,9 +110,8 @@\n         $response->assertJsonFragment($updatedData);\n         $response->assertStatus(200);\n     }\n \n-\n     public function test_can_destroy_gateway()\n     {\n         $gateway = Gateway::factory()->create();\n         $id = $gateway->id;\n"
                 }
             ],
             "date": 1722420931409,
