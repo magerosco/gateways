@@ -3,8 +3,8 @@
 namespace App\Services\ResponseStrategy\Output;
 
 use Throwable;
-use App\Facades\AdditionalDataRequest;
 use App\Services\ResponseStrategy\ResponseStrategyInterface;
+use App\Services\ResponseStrategy\Facades\AdditionalDataRequest;
 use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
 class ViewResponseStrategy implements ResponseStrategyInterface

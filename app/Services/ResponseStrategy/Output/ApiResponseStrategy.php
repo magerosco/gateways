@@ -3,7 +3,6 @@
 namespace App\Services\ResponseStrategy\Output;
 
 use Throwable;
-use Symfony\Component\HttpFoundation\Response;
 use App\Services\ResponseStrategy\ResponseStrategyInterface;
 use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
@@ -18,7 +17,7 @@ class ApiResponseStrategy implements ResponseStrategyInterface
                 $result['message'] = $data->getMessage();
             }
 
-            $statusCode = $data !== null ? $data->getHttpResponse() : Response::HTTP_OK;
+            $statusCode = $data !== null ? $data->getHttpResponse() : 200;
 
             return response()->json($result, $statusCode);
         } catch (Throwable $e) {

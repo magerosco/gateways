@@ -2,8 +2,7 @@
 
 namespace App\Services\ResponseStrategy;
 
-use SebastianBergmann\Type\Exception;
-// use App\Services\ResponseStrategy\ResponseStrategyInterface;
+use Exception;
 use App\Services\ResponseStrategy\Output\ApiResponseStrategy;
 use App\Services\ResponseStrategy\Output\ViewResponseStrategy;
 use App\Services\ResponseStrategy\Output\RedirectResponseStrategy;

@@ -3,9 +3,8 @@
 namespace App\Services\ResponseStrategy\Output;
 
 use Throwable;
-use App\Facades\AdditionalDataRequest;
-use Symfony\Component\HttpFoundation\Response;
 use App\Services\ResponseStrategy\ResponseStrategyInterface;
+use App\Services\ResponseStrategy\Facades\AdditionalDataRequest;
 use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
 class RedirectResponseStrategy implements ResponseStrategyInterface
@@ -19,7 +18,7 @@ class RedirectResponseStrategy implements ResponseStrategyInterface
                 $result['message'] = $data->getMessage();
             }
 
-            $statusCode = $data !== null ? $data->getHttpResponse() : Response::HTTP_OK;
+            $statusCode = $data !== null ? $data->getHttpResponse() : 200;
 
             return redirect()->route(AdditionalDataRequest::getRoute())->with($json_data, $statusCode);
         } catch (Throwable $e) {

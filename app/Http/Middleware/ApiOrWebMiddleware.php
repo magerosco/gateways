@@ -5,10 +5,10 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use SebastianBergmann\Type\Exception;
-use App\Facades\AdditionalDataRequest;
-use App\Services\ResponseStrategy\ResponseStrategyFactory;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\ResponseStrategy\ResponseStrategyFactory;
 use App\Services\ResponseStrategy\ResponseContextInterface;
+use App\Services\ResponseStrategy\Facades\AdditionalDataRequest;
 
 class ApiOrWebMiddleware
 {
