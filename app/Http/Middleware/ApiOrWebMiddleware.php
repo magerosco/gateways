@@ -42,11 +42,6 @@ class ApiOrWebMiddleware
         $controller = class_basename($action['controller']);
         [, $methodName] = explode('@', $controller);
 
-        /**
-         * facades, the intentions is to have a dinamic data abaliable for all app
-         *  without need to create dependencies
-         **/
-
         $service->setMethod($request->expectsJson() || $request->is('api/*') ? 'API' : $methodName);
         $service->setView($request->route()->getName());
         $service->setRoute($request->route()->getName());
