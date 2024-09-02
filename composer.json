@@ -4,20 +4,14 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/magerosco/anasa-response-strategy"
-        }
-    ],
     "require": {
         "php": "^8.2",
+        "anasa/response-strategy": "^1.0",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
-        "livewire/volt": "^1.0",
-        "anasa/response-strategy": "dev-main"
+        "livewire/volt": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

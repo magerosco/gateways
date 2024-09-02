@@ -4,33 +4,33 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9d32916fde43c47e0358221268fd34da",
+    "content-hash": "5aa9a3a88b0e206724176674f1070593",
     "packages": [
         {
             "name": "anasa/response-strategy",
-            "version": "dev-main",
+            "version": "v1.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magerosco/anasa-response-strategy.git",
-                "reference": "359dfc1ebc93ff7b9ec2cb0a716dbd6ab7ba4a5a"
+                "reference": "c846873c005b720d75f897ba950291fdd95a1d5e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magerosco/anasa-response-strategy/zipball/359dfc1ebc93ff7b9ec2cb0a716dbd6ab7ba4a5a",
-                "reference": "359dfc1ebc93ff7b9ec2cb0a716dbd6ab7ba4a5a",
+                "url": "https://api.github.com/repos/magerosco/anasa-response-strategy/zipball/c846873c005b720d75f897ba950291fdd95a1d5e",
+                "reference": "c846873c005b720d75f897ba950291fdd95a1d5e",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "^11.9",
                 "php": "^8.0"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
                     "Anasa\\ResponseStrategy\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "authors": [
                 {
                     "name": "Alejandro Anasagasti Cambara",
@@ -39,10 +39,10 @@
             ],
             "description": "Package to isolate the logic that determines the return type of the controller based on the source (API/Web)",
             "support": {
-                "source": "https://github.com/magerosco/anasa-response-strategy/tree/main",
-                "issues": "https://github.com/magerosco/anasa-response-strategy/issues"
+                "issues": "https://github.com/magerosco/anasa-response-strategy/issues",
+                "source": "https://github.com/magerosco/anasa-response-strategy/tree/v1.0.1"
             },
-            "time": "2024-09-02T05:37:15+00:00"
+            "time": "2024-09-02T07:59:30+00:00"
         },
         {
             "name": "brick/math",
@@ -8132,9 +8132,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "anasa/response-strategy": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
