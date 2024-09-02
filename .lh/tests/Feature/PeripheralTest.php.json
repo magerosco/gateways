@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 121,
+            "activePatchIndex": 123,
             "patches": [
                 {
                     "date": 1722435520502,
@@ -492,6 +492,14 @@
                 {
                     "date": 1725130792130,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,11 @@\n                 'password' => '12345678',\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n+\n+\n+        AdditionalDataRequest::setMethod('API');\n     }\n \n     /**\n      * A basic feature test example.\n@@ -39,9 +42,8 @@\n     {\n         Artisan::call('migrate:fresh --seed --env=\"testing\"');\n         $response = $this->get('/');\n         $response->assertStatus(200);\n-\n     }\n \n     public function test_get_peripheral_list(): void\n     {\n"
+                },
+                {
+                    "date": 1725261700743,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -4,9 +4,9 @@\n \n use Tests\\TestCase;\n use App\\Models\\Gateway;\n use App\\Models\\Peripheral;\n-use App\\Facades\\AdditionalDataRequest;\n+// use App\\Facades\\AdditionalDataRequest;\n use Illuminate\\Support\\Facades\\Artisan;\n use Illuminate\\Foundation\\Testing\\WithFaker;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n \n@@ -30,9 +30,8 @@\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n \n-\n         AdditionalDataRequest::setMethod('API');\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1725261708011,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,8 +8,9 @@\n // use App\\Facades\\AdditionalDataRequest;\n use Illuminate\\Support\\Facades\\Artisan;\n use Illuminate\\Foundation\\Testing\\WithFaker;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n+use Anasa\\ResponseStrategy\\Facades\\AdditionalDataRequest;\n \n class PeripheralTest extends TestCase\n {\n \n"
                 }
             ],
             "date": 1722435520502,

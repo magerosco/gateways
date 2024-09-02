@@ -4,10 +4,11 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Gateway;
-use App\Facades\AdditionalDataRequest;
+// use App\Facades\AdditionalDataRequest;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Anasa\ResponseStrategy\Facades\AdditionalDataRequest;
 
 class GatewayTest extends TestCase
 {
