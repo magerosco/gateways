@@ -8,7 +8,7 @@ use App\Models\Peripheral;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Anasa\ResponseStrategy\Facades\AdditionalDataRequest;
+use Anasa\ResponseStrategy\AdditionalDataRequest;
 
 class PeripheralTest extends TestCase
 {
@@ -31,7 +31,8 @@ class PeripheralTest extends TestCase
         }
         $this->token = $this->user->createToken('TestToken')->plainTextToken;
 
-        AdditionalDataRequest::setMethod('API');
+        $service = AdditionalDataRequest::getInstance();
+        $service->setMethod('API');
     }
 
     /**

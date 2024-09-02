@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 167,
+            "activePatchIndex": 170,
             "patches": [
                 {
                     "date": 1722420931409,
@@ -676,6 +676,18 @@
                 {
                     "date": 1725261851896,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,9 +3,8 @@\n namespace Tests\\Feature;\n \n use Tests\\TestCase;\n use App\\Models\\Gateway;\n-// use App\\Facades\\AdditionalDataRequest;\n use Illuminate\\Support\\Facades\\Artisan;\n use Illuminate\\Foundation\\Testing\\WithFaker;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n use Anasa\\ResponseStrategy\\Facades\\AdditionalDataRequest;\n"
+                },
+                {
+                    "date": 1725281278722,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n use App\\Models\\Gateway;\n use Illuminate\\Support\\Facades\\Artisan;\n use Illuminate\\Foundation\\Testing\\WithFaker;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n-use Anasa\\ResponseStrategy\\Facades\\AdditionalDataRequest;\n+use Anasa\\ResponseStrategyAdditionalDataRequest;\n \n class GatewayTest extends TestCase\n {\n \n"
+                },
+                {
+                    "date": 1725281305469,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -6,9 +6,9 @@\n use App\\Models\\Gateway;\n use Illuminate\\Support\\Facades\\Artisan;\n use Illuminate\\Foundation\\Testing\\WithFaker;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n-use Anasa\\ResponseStrategyAdditionalDataRequest;\n+use Anasa\\ResponseStrategy\\AdditionalDataRequest;\n \n class GatewayTest extends TestCase\n {\n \n@@ -29,8 +29,9 @@\n             ]);\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n \n+        $service = AdditionalDataRequest::getInstance();\n         AdditionalDataRequest::setMethod('API');\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1725281311479,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n         }\n         $this->token = $this->user->createToken('TestToken')->plainTextToken;\n \n         $service = AdditionalDataRequest::getInstance();\n-        AdditionalDataRequest::setMethod('API');\n+        $service->setMethod('API');\n     }\n \n     /**\n      * A basic feature test example.\n"
                 }
             ],
             "date": 1722420931409,

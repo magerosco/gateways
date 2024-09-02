@@ -4,24 +4,23 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5aa9a3a88b0e206724176674f1070593",
+    "content-hash": "bfd8f74a0f73a7d849d8c55e6067eb35",
     "packages": [
         {
             "name": "anasa/response-strategy",
-            "version": "v1.0.1",
+            "version": "v1.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magerosco/anasa-response-strategy.git",
-                "reference": "c846873c005b720d75f897ba950291fdd95a1d5e"
+                "reference": "db63211ad65f3456d1ede4b2f173258199eb6c4b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magerosco/anasa-response-strategy/zipball/c846873c005b720d75f897ba950291fdd95a1d5e",
-                "reference": "c846873c005b720d75f897ba950291fdd95a1d5e",
+                "url": "https://api.github.com/repos/magerosco/anasa-response-strategy/zipball/db63211ad65f3456d1ede4b2f173258199eb6c4b",
+                "reference": "db63211ad65f3456d1ede4b2f173258199eb6c4b",
                 "shasum": ""
             },
             "require": {
-                "laravel/framework": "^11.9",
                 "php": "^8.0"
             },
             "type": "library",
@@ -40,9 +39,9 @@
             "description": "Package to isolate the logic that determines the return type of the controller based on the source (API/Web)",
             "support": {
                 "issues": "https://github.com/magerosco/anasa-response-strategy/issues",
-                "source": "https://github.com/magerosco/anasa-response-strategy/tree/v1.0.1"
+                "source": "https://github.com/magerosco/anasa-response-strategy/tree/v1.0.2"
             },
-            "time": "2024-09-02T07:59:30+00:00"
+            "time": "2024-09-02T12:40:11+00:00"
         },
         {
             "name": "brick/math",
