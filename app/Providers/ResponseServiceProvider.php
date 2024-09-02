@@ -3,13 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\ResponseStrategy\ResponseContext;
-use App\Services\ResponseStrategy\ResponseContextInterface;
-use App\Services\ResponseStrategy\Output\ApiResponseStrategy;
-use App\Services\ResponseStrategy\Output\ViewResponseStrategy;
-use App\Services\ResponseStrategy\OutputDataFormat\StrategyData;
-use App\Services\ResponseStrategy\Output\RedirectResponseStrategy;
-use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
+use Anasa\ResponseStrategy\{ResponseContext,ResponseContextInterface};
+use Anasa\ResponseStrategy\OutputDataFormat\{StrategyData,StrategyDataInterface};
+use Anasa\ResponseStrategy\Output\{ApiResponseStrategy, ViewResponseStrategy, RedirectResponseStrategy};
 
 class ResponseServiceProvider extends ServiceProvider
 {

@@ -6,9 +6,8 @@ use Closure;
 use Illuminate\Http\Request;
 use SebastianBergmann\Type\Exception;
 use Symfony\Component\HttpFoundation\Response;
-use App\Services\ResponseStrategy\ResponseStrategyFactory;
-use App\Services\ResponseStrategy\ResponseContextInterface;
-use App\Services\ResponseStrategy\Facades\AdditionalDataRequest;
+use Anasa\ResponseStrategy\Facades\AdditionalDataRequest;
+use Anasa\ResponseStrategy\{ResponseStrategyFactory,ResponseContextInterface};
 
 class ApiOrWebMiddleware
 {
@@ -47,7 +46,7 @@ class ApiOrWebMiddleware
          *  without need to create dependencies
          **/
 
-        AdditionalDataRequest::setMethod($request->is('api/*') ? 'API' : $methodName);
+        AdditionalDataRequest::setMethod($request->expectsJson() || $request->is('api/*') ? 'API' : $methodName);
         AdditionalDataRequest::setView($request->route()->getName());
         AdditionalDataRequest::setRoute($request->route()->getName());
     }

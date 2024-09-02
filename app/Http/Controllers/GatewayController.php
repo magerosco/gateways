@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
@@ -10,10 +9,9 @@ use App\Http\Requests\GatewayRequest;
 use App\Http\Resources\GatewayResource;
 use App\Repositories\CrudRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Anasa\ResponseStrategy\ResponseContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use App\Services\ResponseStrategy\ResponseContextInterface;
-use App\Services\ResponseStrategy\OutputDataFormat\StrategyData;
-use App\Services\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
+use Anasa\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
 class GatewayController extends Controller
 {

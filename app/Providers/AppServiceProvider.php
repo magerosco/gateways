@@ -7,6 +7,7 @@ use App\Observers\UserObserver;
 use App\Repositories\GatewayRepository;
 use Illuminate\Support\ServiceProvider;
 use App\Repositories\CrudRepositoryInterface;
+use Anasa\ResponseStrategy\AdditionalDataRequest;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(CrudRepositoryInterface::class, GatewayRepository::class);
         $this->app->singleton('additionalDataRequest', function ($app) {
-            return new \App\Services\ResponseStrategy\AdditionalDataRequest;
+            return new AdditionalDataRequest;
         });
     }
 
