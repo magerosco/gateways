@@ -157,4 +157,58 @@ Body raw:
 
 
  ## Developer notes:
- - This is a basic project, so, some design patterns aren't necessary. In order to give examples, they were implemented.  
+ - This is a basic project, so, some design patterns aren't necessary. In order to give examples, they were implemented. 
+
+
+ ## Testing Cache with Redis
+**IMPORTANT!**
+To tes this way, you need Redis installed and running, and php must support redis (extension=php_redis.dll)
+
+**Clearing Cache:**
+```dm	
+php artisan cache:clear
+```
+
+**Set environment variables in the .env file:**
+```dm
+CACHE_STORE=redis
+```
+
+ **From postman:**
+![alt text](public/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
+
+**Run Laravel Command to Check if Redis is Working:**
+```
+ php artisan tinker
+```
+**In the console, run the following command:**
+```
+ Cache::get("App\Repositories\GatewayRepository::find1");
+``` 
+**Note:**
+"App\Repositories\GatewayRepository::find1" is the $key used to seted the cache.
+**__METHOD__ . $id** is equal to **"App\Repositories\GatewayRepository::find1"**
+
+```php
+ return $this->cacheRemember(__METHOD__ . $id, $this->cacheTime, function () use ($id) {
+            return Gateway::find($id);
+        });
+```
+**Output:**
+
+![alt text](public/image/{50387309-699E-47EA-922A-D070D7DB36F5}.png)
+
+## Testing Cache with database
+**Clearing Cache:**
+```dm	
+php artisan cache:clear
+```
+**Set environment variables in the .env file:**
+```dm
+CACHE_STORE=databese
+```
+ **From postman:**
+![alt text](public/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
+
+**Go to the database (table cache)):**
+![alt text](public/image/{B3BFA3A3-5AAD-451D-99CF-1D4A27E8E2A1}.png)
