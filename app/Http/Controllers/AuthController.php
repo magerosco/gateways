@@ -37,6 +37,7 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials)) {
             $user = auth()->user();
+            $user->tokens()->where('name', 'Personal Access Token')->delete();
             $token = $user->createToken('Personal Access Token')->plainTextToken;
 
             return response()->json(['token' => $token]);
