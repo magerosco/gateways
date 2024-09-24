@@ -1,11 +1,10 @@
-<p align="center"><a target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+![alt text](/README/image/php-cleaning.jpg)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## ⚠️IMPORTANT
+This project contains several design strategies that were not necessary for the solution. These are personal ideas to demonstrate concepts and intentions of using clean, decoupled code aligned with SOLID principles. 
+Explanation and details [HERE](README/README.md).
+
+
 
 ## About this project
 
@@ -112,7 +111,6 @@ Follow these steps to set up the project on your local environment:
  
  ## Testing REST service with postman 
 
-### --TODO
 ```
   GET|HEAD        api/gateway   
   POST            api/gateway   
@@ -138,7 +136,7 @@ Body raw:
   "password": "12345678"
 }
 ```
-![alt text](public/image/{0C44C1DE-D1EE-479B-AC32-E35984484270}.png)
+![alt text](README/image/{0C44C1DE-D1EE-479B-AC32-E35984484270}.png)
 
 2. **(Optional), you can create a new user and then login.**
 ```
@@ -152,7 +150,7 @@ Body raw:
     "password_confirmation": "12345678"
 }
 ```
-![alt text](public/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
+![alt text](README/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
 
 
 
