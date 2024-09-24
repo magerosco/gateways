@@ -11,22 +11,22 @@ class ResponseServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        $this->app->bind(ApiResponseStrategy::class, function ($app) {
+        $this->app->bind(ApiResponseStrategy::class, function () {
             return new ApiResponseStrategy();
         });
 
-        $this->app->bind(ViewResponseStrategy::class, function ($app) {
+        $this->app->bind(ViewResponseStrategy::class, function () {
             return new ViewResponseStrategy();
         });
 
-        $this->app->bind(RedirectResponseStrategy::class, function ($app) {
+        $this->app->bind(RedirectResponseStrategy::class, function () {
             return new RedirectResponseStrategy();
         });
-        $this->app->bind(StrategyDataInterface::class, function ($app) {
+        $this->app->bind(StrategyDataInterface::class, function () {
             return new StrategyData();
         });
 
-        $this->app->singleton(ResponseContextInterface::class, function ($app) {
+        $this->app->singleton(ResponseContextInterface::class, function () {
             return new ResponseContext();
         });
     }

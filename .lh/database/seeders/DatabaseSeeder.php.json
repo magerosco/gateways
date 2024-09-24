@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 6,
+            "activePatchIndex": 8,
             "patches": [
                 {
                     "date": 1722412075089,
@@ -32,6 +32,14 @@
                 {
                     "date": 1722412752986,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -13,11 +13,11 @@\n      */\n     public function run(): void\n     {\n         $this->call([\n+            UserSeeder::class,\n             GatewaySeeder::class,\n             PeripheralSeeder::class,\n-            UserSeeder::class,\n         ]);\n \n     }\n }\n"
+                },
+                {
+                    "date": 1727208575800,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -2,9 +2,8 @@\n \n namespace Database\\Seeders;\n \n use App\\Models\\User;\n-// use Illuminate\\Database\\Console\\Seeds\\WithoutModelEvents;\n use Illuminate\\Database\\Seeder;\n \n class DatabaseSeeder extends Seeder\n {\n"
+                },
+                {
+                    "date": 1727210728278,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n <?php\n \n namespace Database\\Seeders;\n \n-use App\\Models\\User;\n use Illuminate\\Database\\Seeder;\n \n class DatabaseSeeder extends Seeder\n {\n@@ -16,7 +15,6 @@\n             UserSeeder::class,\n             GatewaySeeder::class,\n             PeripheralSeeder::class,\n         ]);\n-\n     }\n }\n"
                 }
             ],
             "date": 1722412075089,

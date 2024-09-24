@@ -12,7 +12,6 @@ use Anasa\ResponseStrategy\AdditionalDataRequest;
 
 class PeripheralTest extends TestCase
 {
-
     protected $user;
     protected $token;
 
@@ -29,7 +28,7 @@ class PeripheralTest extends TestCase
                 'password' => '12345678',
             ]);
         }
-        $this->token = $this->user->createToken('TestToken')->plainTextToken;
+        $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;
 
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
@@ -47,7 +46,7 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_list(): void
     {
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/');
+        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/peripheral/');
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']],
@@ -58,7 +57,7 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/1');
+        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/peripheral/1');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);
         $response->assertJsonFragment(['id' => 1]);
@@ -66,7 +65,7 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_non_existing_peripheral_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->withHeaders(['Authorization' => 'Bearer ' . $this->token])->get('/api/peripheral/9999');
+        $response = $this->withHeaders(['Authorization' => $this->token])->withHeaders(['Authorization' => $this->token])->get('/api/peripheral/9999');
         $response->assertStatus(404);
     }
 
@@ -82,7 +81,7 @@ class PeripheralTest extends TestCase
             'status' => 'online',
         ];
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
+        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/peripheral', $data);
 
         $response->assertJsonStructure([
             'data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at'],
@@ -104,7 +103,7 @@ class PeripheralTest extends TestCase
             'status' => 'invalid',
         ];
 
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
+        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/peripheral', $data);
 
         $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);
 
@@ -123,13 +122,13 @@ class PeripheralTest extends TestCase
                 'status' => 'online',
             ];
             if ($key < 11) {
-                $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
+                $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/peripheral', $data);
                 $response->assertStatus(201);
                 $response->assertJsonStructure(['data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at']]);
                 continue;
             }
 
-            $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->postJson('/api/peripheral', $data);
+            $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/peripheral', $data);
             $response->assertJsonStructure(['success', 'data' => ['status'], 'message']);
             $response->assertJsonFragment(['status' => ["gateway_id can't be associated with more than 10 gateways."]]);
             $response->assertStatus(400);
@@ -150,7 +149,7 @@ class PeripheralTest extends TestCase
             'gateway_id' => $gateway_id,
             'status' => 'offline',
         ];
-        $response = $this->withHeaders(['Authorization' => 'Bearer ' . $this->token])->putJson("/api/peripheral/$id", $updatedData);
+        $response = $this->withHeaders(['Authorization' => $this->token])->putJson("/api/peripheral/$id", $updatedData);
 
         $response->assertJsonStructure([
             'data' => ['id', 'UID', 'vendor', 'status', 'gateway_id', 'created_at', 'updated_at'],
