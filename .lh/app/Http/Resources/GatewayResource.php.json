@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 49,
+            "activePatchIndex": 50,
             "patches": [
                 {
                     "date": 1722338083275,
@@ -204,6 +204,10 @@
                 {
                     "date": 1724332600617,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,28 @@\n+<?php\n+\n+namespace App\\Http\\Resources;\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Http\\Resources\\Json\\JsonResource;\n+\n+class GatewayResource extends JsonResource\n+{\n+    /**\n+     * Transform the resource into an array.\n+     *\n+     * @return array<string, mixed>\n+     */\n+    public function toArray(Request $request): array\n+    {\n+        return [\n+            'id' => $this->id,\n+            'serial_number' => $this->serial_number,\n+            'name' => $this->name,\n+            'IPv4_address' => $this->IPv4_address,\n+            'peripheral' => $this->peripheral,\n+            'created_at' => $this->created_at,\n+            'updated_at' => $this->updated_at\n+        ];\n+    }\n+\n+}\n"
+                },
+                {
+                    "date": 1727166863708,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -23,35 +23,5 @@\n             'created_at' => $this->created_at,\n             'updated_at' => $this->updated_at\n         ];\n     }\n-\n }\n-<?php\n-\n-namespace App\\Http\\Resources;\n-\n-use Illuminate\\Http\\Request;\n-use Illuminate\\Http\\Resources\\Json\\JsonResource;\n-\n-class GatewayResource extends JsonResource\n-{\n-    /**\n-     * Transform the resource into an array.\n-     *\n-     * @return array<string, mixed>\n-     */\n-    public function toArray(Request $request): array\n-    {\n-        return [\n-            'id' => $this->id,\n-            'serial_number' => $this->serial_number,\n-            'name' => $this->name,\n-            'IPv4_address' => $this->IPv4_address,\n-            'peripheral' => $this->peripheral,\n-            'created_at' => $this->created_at,\n-            'updated_at' => $this->updated_at\n-        ];\n-    }\n-\n-\n-}\n"
                 }
             ],
             "date": 1722338083275,

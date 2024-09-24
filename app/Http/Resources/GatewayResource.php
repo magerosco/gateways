@@ -24,5 +24,4 @@ class GatewayResource extends JsonResource
             'updated_at' => $this->updated_at
         ];
     }
-
 }

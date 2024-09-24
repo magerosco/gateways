@@ -23,14 +23,13 @@ class GatewayRepository implements CrudRepositoryInterface
 
     public function update($id, array $data)
     {
-        $Gateway = $this->find($id);
-        $Gateway->update($data);
-        return $Gateway;
+        $gateway = $this->find($id);
+        $gateway->update($data);
+        return $gateway;
     }
 
-    public function delete($id)
+    public function delete($gateway)
     {
-        $Gateway = $this->find($id);
-        $Gateway->delete();
+        $gateway->delete();
     }
 }

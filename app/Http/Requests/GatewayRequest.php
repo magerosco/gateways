@@ -26,10 +26,13 @@ class GatewayRequest extends FormRequest
      */
     public function rules(): array
     {
-        $objectId = $this->route('id');
+        $objectId = (int)$this->route('id');
         return [
             'name' => 'max:255',
-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],
+            'serial_number' => [
+                'required',
+                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')
+            ],
             'IPv4_address' => [new ValidIPv4AddressRule()],
         ];
     }

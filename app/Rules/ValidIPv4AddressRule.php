@@ -15,7 +15,7 @@ class ValidIPv4AddressRule implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         if (!filter_var($value, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4)) {
-            $fail($attribute.' is invalid.');
+            $fail($attribute . ' is invalid.');
         }
     }
 }

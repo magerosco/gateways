@@ -39,7 +39,8 @@ class GatewayController extends Controller
 
     public function store(GatewayRequest $request): JsonResponse|RedirectResponse
     {
-        $validatedData = $request->validated(); //  this is not a validation, it only returns the validated data after be validated from the GatewayRequest
+        //This is not a validation, it only returns the validated data after be validated from the GatewayRequest
+        $validatedData = $request->validated();
         $gateway = $this->repository->create($validatedData);
 
         $strategy = $this->strategyData->setStrategyData(new GatewayResource($gateway), 'Gateway created successfully', Response::HTTP_CREATED);
@@ -69,7 +70,8 @@ class GatewayController extends Controller
 
     public function update(GatewayRequest $request, string $id): JsonResponse|RedirectResponse
     {
-        $validatedData = $request->validated();//  this is not a validation, it only returns the validated data after be validated from the GatewayRequest
+        //This is not a validation, it only returns the validated data after be validated from the GatewayRequest
+        $validatedData = $request->validated();
         $updated_data = $this->repository->update($id, $validatedData); //it uses findOrFail
 
         $strategy = $this->strategyData->setStrategyData(new GatewayResource($updated_data), 'Gateway updated successfully', Response::HTTP_OK);
@@ -77,9 +79,9 @@ class GatewayController extends Controller
         return $this->responseContext->executeStrategy($strategy);
     }
 
-    public function destroy($id): JsonResponse|RedirectResponse
+    public function destroy($gateway): JsonResponse|RedirectResponse
     {
-        $this->repository->delete($id); //it uses findOrFail
+        $this->repository->delete($gateway);
 
         return $this->responseContext->executeStrategy($this->strategyData->setStrategyData([], 'Gateway deleted successfully', Response::HTTP_OK));
     }

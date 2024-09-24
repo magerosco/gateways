@@ -15,6 +15,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->alias([
             'api_or_web' => \App\Http\Middleware\ApiOrWebMiddleware::class,
+            'gateway_action' => \App\Http\Middleware\GatewayActionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

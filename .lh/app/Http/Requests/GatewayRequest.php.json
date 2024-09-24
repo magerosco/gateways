@@ -10,11 +10,95 @@
             "content": "<?php\n\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\n\nclass GatewayRequest extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n     */\n    public function rules(): array\n    {\n        return [\n            //\n        ];\n    }\n}\n"
         },
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 21,
             "patches": [
                 {
                     "date": 1725034888222,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1727166293945,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            // 'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166299601,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            // 'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166513243,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            // 'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166533122,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            // 'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166605167,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            'serial_number' => ['required', Rule::unique('gateway', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166615694,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateway', 'serial_number')->ignore($objectId)],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166677563,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166683465,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166714517,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166728931,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727166970191,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId)],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId,)],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727167139792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId,)],\n+            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727167146073,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,11 @@\n     {\n         $objectId = $this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => ['required', Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')],\n+            'serial_number' => [\n+                'required',\n+                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727167269792,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,14 +25,15 @@\n      * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n      */\n     public function rules(): array\n     {\n-        $objectId = $this->route('id');\n+        $objectId = ()$this->route('id');\n         return [\n             'name' => 'max:255',\n             'serial_number' => [\n                 'required',\n-                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')],\n+                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n+            ],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727167399916,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -25,14 +25,14 @@\n      * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n      */\n     public function rules(): array\n     {\n-        $objectId = ()$this->route('id');\n+        $objectId = (int)$this->route('id');\n         return [\n             'name' => 'max:255',\n             'serial_number' => [\n                 'required',\n-                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n+                // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n             ],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n"
+                },
+                {
+                    "date": 1727167461260,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n         return [\n             'name' => 'max:255',\n             'serial_number' => [\n                 'required',\n-                // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n+                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n             ],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n"
+                },
+                {
+                    "date": 1727167466971,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,9 +30,9 @@\n         return [\n             'name' => 'max:255',\n             'serial_number' => [\n                 'required',\n-                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n+                // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n             ],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n"
+                },
+                {
+                    "date": 1727167510153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,8 +28,9 @@\n     {\n         $objectId = (int)$this->route('id');\n         return [\n             'name' => 'max:255',\n+    'serial_number' => 'required|max:255'\n             'serial_number' => [\n                 'required',\n                 // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n             ],\n"
+                },
+                {
+                    "date": 1727167516609,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,13 +28,13 @@\n     {\n         $objectId = (int)$this->route('id');\n         return [\n             'name' => 'max:255',\n-    'serial_number' => 'required|max:255'\n-            'serial_number' => [\n-                'required',\n+    'serial_number' => 'required|max:255',\n+            // 'serial_number' => [\n+            //     'required',\n                 // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n-            ],\n+            // ],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
+                },
+                {
+                    "date": 1727167529520,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n     {\n         $objectId = (int)$this->route('id');\n         return [\n             'name' => 'max:255',\n-    'serial_number' => 'required|max:255',\n+            'serial_number' => 'required|max:255',\n             // 'serial_number' => [\n             //     'required',\n                 // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n             // ],\n"
+                },
+                {
+                    "date": 1727167768342,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,13 +28,12 @@\n     {\n         $objectId = (int)$this->route('id');\n         return [\n             'name' => 'max:255',\n-            'serial_number' => 'required|max:255',\n-            // 'serial_number' => [\n-            //     'required',\n-                // Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n-            // ],\n+            'serial_number' => [\n+                'required',\n+                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')\n+            ],\n             'IPv4_address' => [new ValidIPv4AddressRule()],\n         ];\n     }\n \n"
                 }
             ],
             "date": 1725034888222,
