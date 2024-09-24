@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 59,
+            "activePatchIndex": 60,
             "patches": [
                 {
                     "date": 1722337650176,
@@ -244,6 +244,10 @@
                 {
                     "date": 1725037046592,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -8,9 +8,9 @@\n \n \n Route::get('/user', function (Request $request) {\n     return $request->user();\n-})->withoutMiddleware('auth:sanctum');\n+})->wimiddleware('auth:sanctum');\n \n \n Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n"
+                },
+                {
+                    "date": 1727190078173,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -0,0 +1,33 @@\n+<?php\n+\n+use Illuminate\\Http\\Request;\n+use Illuminate\\Support\\Facades\\Route;\n+use App\\Http\\Controllers\\AuthController;\n+use App\\Http\\Controllers\\UserController;\n+use App\\Http\\Controllers\\GatewayController;\n+use App\\Http\\Controllers\\API\\PeripheralController;\n+\n+Route::get('/user', function (Request $request) {\n+    return $request->user();\n+})->middleware('auth:sanctum');\n+\n+Route::post('register', [AuthController::class, 'register']);\n+Route::post('login', [AuthController::class, 'login']);\n+\n+\n+Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {\n+    Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');\n+    Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');\n+    Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');\n+    Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');\n+    Route::delete('/gateway/{gateway}', [GatewayController::class, 'destroy'])->name('gateway.destroy')\n+    ->middleware('gateway_action:delete');\n+\n+    Route::get('/peripheral', [PeripheralController::class, 'index'])->name('peripheral.index');\n+    Route::get('/peripheral/{id}', [PeripheralController::class, 'show'])->name('peripheral.show');\n+    Route::post('/peripheral', [PeripheralController::class, 'store'])->name('peripheral.store');\n+    Route::put('/peripheral/{id}', [PeripheralController::class, 'update'])->name('gateway.update');\n+    Route::delete('/peripheral/{peripheral}', [PeripheralController::class, 'destroy'])->name('gateway.destroy');\n+});\n+\n+Route::model('gateway', App\\Models\\Gateway::class);\n"
                 }
             ],
             "date": 1722337650176,

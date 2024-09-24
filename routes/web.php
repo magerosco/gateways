@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GatewayController;
+use App\Http\Controllers\PeripheralController;
 
 Route::view('/', 'welcome');
 
@@ -15,6 +16,6 @@ Route::view('profile', 'profile')
 
 
 Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');
-// Route::resource('/peripheral', PeripheralController::class)->withoutMiddleware('api_or_web');
+Route::resource('/peripheral', PeripheralController::class)->middleware('api_or_web');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

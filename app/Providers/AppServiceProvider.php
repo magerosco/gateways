@@ -6,8 +6,6 @@ use App\Models\User;
 use App\Models\Gateway;
 use App\Observers\UserObserver;
 use App\Policies\GatewatyPolicy;
-use App\Repositories\GatewayRepository;
-use App\Repositories\CrudRepositoryInterface;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(CrudRepositoryInterface::class, GatewayRepository::class);
     }
 
     /**
