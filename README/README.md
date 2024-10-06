@@ -265,7 +265,7 @@ In addition, the route is loading the resource.
 Check also:
 ```php	
  use App\Http\Middleware\GatewayActionMiddleware;
- use App\Policies\GatewatyPolicy;
+ use App\Policies\GatewayPolicy;
 ```
 
 **USE** *Illuminate\Foundation\Support\Providers\AuthServiceProvider* FROM **AppServiceProvider.php**
@@ -277,7 +277,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 class AppServiceProvider extends ServiceProvider
 {
     protected $policies = [
-        Gateway::class => GatewatyPolicy::class,
+        Gateway::class => GatewayPolicy::class,
     ];
     
     public function register(): void{/*...code*/}
