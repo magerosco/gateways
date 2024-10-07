@@ -290,3 +290,73 @@ class AppServiceProvider extends ServiceProvider
 }
 ```
 </details>
+
+
+## An even example for an specific function from the repository
+<details>
+<summary>
+We can trigger an event on the repository, but we don't want coupled code.
+This solution uses a decorator to intercept method calls to the GatewayRepository and add the event for the needed function.
+</summary>
+
+**The most of the logic happens in the decorator, the rest is the provider to intercept the method calls.**
+
+```php
+namespace App\Repositories\Decorators;
+/*...code*/
+class GatewayRepositoryDecorator extends GatewayRepository
+{
+   /*...code*/
+    public function updateGateway($id, $data)
+    {
+        // Call the original updateGateway method
+        $result = $this->repository->updateGateway($id, $data);
+        $gateway = $this->find($id);
+
+        event(new GatewayUpdated($gateway));
+
+        return $result;
+    }
+}
+```
+```php
+namespace App\Providers;
+/*...code*/
+class GatewayInterceptorServiceProvider extends ServiceProvider
+{
+    public function boot()
+    {
+        //Using the decorator to intercept method calls to the GatewayRepository.
+        $this->app->extend(GatewayRepository::class, function ($repository) {
+            return new GatewayRepositoryDecorator($repository);
+        });
+    }
+}
+```
+
+***It's necessary highlight that implemented event doesn't use the interface ShouldQueue. so, slowness is experienced during the testing. We could add it to a queue and dispatch it as a scheduled job to ensure the asynchrony but implementing the queue will require many steps to test it.***
+
+```php
+namespace App\Listeners;
+/*...code*/
+class GatewayUpdatedListener
+{
+    /*...code*/
+    public function handle(GatewayUpdated $event): void
+    {
+        $gateway = $event->gateway;        
+        Log::info('GatewayUpdatedListener triggered: ', ['gateway' => $gateway]);
+    }
+}
+```
+Note: No big changes in the repository, just duplicated the update function now named updateGateway
+```php
+public function updateGateway($id, array $data)
+{
+    $gateway = $this->find($id);
+    $gateway->update($data);
+    return $gateway;
+}
+```
+</details>
+

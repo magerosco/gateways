@@ -72,7 +72,13 @@ class GatewayController extends Controller
     {
         //This is not a validation, it only returns the validated data after be validated from the GatewayRequest
         $validatedData = $request->validated();
-        $updated_data = $this->repository->update($id, $validatedData); //it uses findOrFail
+
+        /**
+         * It uses updateGateway instead of update because it is implemented to test the GatewayRepositoryDecorator
+         * to test even trigger for specific function.
+         */
+
+        $updated_data = $this->repository->updateGateway($id, $validatedData); //it uses findOrFail
 
         $strategy = $this->strategyData->setStrategyData(new GatewayResource($updated_data), 'Gateway updated successfully', Response::HTTP_OK);
 
