@@ -19,6 +19,10 @@ class UserSeeder extends Seeder
             'email' => 'tester@example.com',
             'password' => '12345678',
         ]);
-
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@admin.com',
+            'password' => 'admin',
+        ]);
     }
 }

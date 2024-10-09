@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 179,
+            "activePatchIndex": 181,
             "patches": [
                 {
                     "date": 1722420931409,
@@ -724,6 +724,14 @@
                 {
                     "date": 1728285996994,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,9 @@\n use Anasa\\ResponseStrategy\\AdditionalDataRequest;\n \n class GatewayTest extends TestCase\n {\n+\n     protected $user;\n     protected $token;\n \n     protected function setUp(): void\n"
+                },
+                {
+                    "date": 1728455823685,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,9 +18,9 @@\n     protected function setUp(): void\n     {\n         parent::setUp();\n \n-        $this->user = \\App\\Models\\User::where('name', 'Tester User')->first();\n+        $this->user = \\App\\Models\\User::where('name', 'admin')->first();\n \n         if (empty($this->user)) {\n             $this->user = \\App\\Models\\User::factory()->create([\n                 'name' => 'Tester User',\n"
+                },
+                {
+                    "date": 1728455830683,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -22,10 +22,10 @@\n         $this->user = \\App\\Models\\User::where('name', 'admin')->first();\n \n         if (empty($this->user)) {\n             $this->user = \\App\\Models\\User::factory()->create([\n-                'name' => 'Tester User',\n-                'email' => 'tester@example.com',\n+                'name' => 'admin',\n+                'email' => 'admin@admin.com',\n                 'password' => '12345678',\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n"
                 }
             ],
             "date": 1722420931409,

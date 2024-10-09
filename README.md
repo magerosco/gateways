@@ -125,6 +125,7 @@ Follow these steps to set up the project on your local environment:
   PUT|PATCH       api/peripheral/{peripheral} 
   DELETE          api/peripheral/{peripheral} 
 ```
+**Note: You must use the admin credentials to delete path: *api/peripheral/{peripheral}* or *api/gateway/{gateway}.***
 1. **Login to get the token.**
 
 ```
@@ -132,8 +133,8 @@ POST            api/login
 
 Body raw:
 {
-  "email": "tester@example.com",
-  "password": "12345678"
+  "email": "admin@admin.com",
+  "password": "admin"
 }
 ```
 ![alt text](README/image/{0C44C1DE-D1EE-479B-AC32-E35984484270}.png)

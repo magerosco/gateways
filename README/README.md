@@ -291,6 +291,55 @@ class AppServiceProvider extends ServiceProvider
 ```
 </details>
 
+## Handling the *Roles/Permissions* with [spatie/laravel-permission](https://github.com/spatie/laravel-permission) package.
+<details>
+<summary>
+The previous example handles accessibility correctly, but it's just for a case of you don't use a security package.
+</summary>
+For the example, a seeder was created to add roles and permissions:
+
+```php
+public function run(): void
+{
+    /*...code*/
+    Permission::create(['name' => 'gateway.update']);
+    Permission::create(['name' => 'gateway.destroy']);
+
+    /*...code*/
+    Permission::create(['name' => 'peripheral.update']);
+    Permission::create(['name' => 'peripheral.destroy']);
+
+    $admin = Role::create(['name' => 'admin']);
+    $admin->givePermissionTo(Permission::all());
+
+    $user = \App\Models\User::where('name', 'admin')->first();
+    $user->assignRole('admin');
+}
+```
+A middleware was created to handle the roles and permissions, It's not necessary, but will allow to personalize the access to the resources, and it will work for any input, whether it is an API or a Web input. This will not take into account the guard_name used by the package.
+```php
+class RoleOrPermissionMiddleware
+{
+    
+    public function handle(Request $request, Closure $next, $role = null): Response
+    {
+        //The route name is used to name the permission (like as the seeders)
+        $route = $request->route()->getName();
+        $user = $request->user();
+
+        if ($user->hasRole($role) || $user->can($route)) {
+            return $next($request);
+        }
+
+        abort(Response::HTTP_FORBIDDEN, 'You are not authorized.');
+    }
+}
+```
+```php
+ Route::delete('/peripheral/{peripheral}', [PeripheralController::class, 'destroy'])->name('peripheral.destroy')
+    ->middleware('role_or_permission:admin');
+```
+</details>
 
 ## An even example for an specific function from the repository
 <details>

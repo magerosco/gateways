@@ -26,7 +26,9 @@ Route::group(['middleware' => ['api_or_web', 'auth:sanctum']], function () {
     Route::get('/peripheral/{id}', [PeripheralController::class, 'show'])->name('peripheral.show');
     Route::post('/peripheral', [PeripheralController::class, 'store'])->name('peripheral.store');
     Route::put('/peripheral/{id}', [PeripheralController::class, 'update'])->name('peripheral.update');
-    Route::delete('/peripheral/{peripheral}', [PeripheralController::class, 'destroy'])->name('peripheral.destroy');
+    Route::delete('/peripheral/{peripheral}', [PeripheralController::class, 'destroy'])->name('peripheral.destroy')
+    ->middleware('role_or_permission:admin');
 });
 
 Route::model('gateway', App\Models\Gateway::class);
+Route::model('peripheral', App\Models\Peripheral::class);

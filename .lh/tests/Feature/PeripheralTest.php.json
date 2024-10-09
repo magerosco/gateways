@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 129,
+            "activePatchIndex": 130,
             "patches": [
                 {
                     "date": 1722435520502,
@@ -524,6 +524,10 @@
                 {
                     "date": 1727211557543,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n use Anasa\\ResponseStrategy\\AdditionalDataRequest;\n \n class PeripheralTest extends TestCase\n {\n-\n     protected $user;\n     protected $token;\n \n     protected function setUp(): void\n"
+                },
+                {
+                    "date": 1728455839180,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -18,15 +18,15 @@\n     protected function setUp(): void\n     {\n         parent::setUp();\n \n-        $this->user = \\App\\Models\\User::where('name', 'Tester User')->first();\n+        $this->user = \\App\\Models\\User::where('name', 'admin')->first();\n \n         if (empty($this->user)) {\n             $this->user = \\App\\Models\\User::factory()->create([\n-                'name' => 'Tester User',\n-                'email' => 'tester@example.com',\n-                'password' => '12345678',\n+                'name' => 'admin',\n+                'email' => 'admin@admin.com',\n+                'password' => 'admin',\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n"
                 }
             ],
             "date": 1722435520502,

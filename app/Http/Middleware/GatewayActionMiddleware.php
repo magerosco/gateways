@@ -20,7 +20,7 @@ class GatewayActionMiddleware
         $gateway = $request->route('gateway');
 
         if (!Gate::allows($ability, $gateway)) {
-            return $this->responseContext->executeStrategy($this->strategyData->setStrategyData([], 'errors.403', Response::HTTP_FORBIDDEN));
+            return $this->responseContext->executeStrategy($this->strategyData->setStrategyData([], 'You are not authorized.', Response::HTTP_FORBIDDEN));
         }
 
         return $next($request);

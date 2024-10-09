@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 8,
+            "activePatchIndex": 9,
             "patches": [
                 {
                     "date": 1722412075089,
@@ -40,6 +40,10 @@
                 {
                     "date": 1727210728278,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,8 @@\n <?php\n \n namespace Database\\Seeders;\n \n-use App\\Models\\User;\n use Illuminate\\Database\\Seeder;\n \n class DatabaseSeeder extends Seeder\n {\n@@ -16,7 +15,6 @@\n             UserSeeder::class,\n             GatewaySeeder::class,\n             PeripheralSeeder::class,\n         ]);\n-\n     }\n }\n"
+                },
+                {
+                    "date": 1728454913846,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -14,7 +14,8 @@\n         $this->call([\n             UserSeeder::class,\n             GatewaySeeder::class,\n             PeripheralSeeder::class,\n+            PeripheralSeeder::class,\n         ]);\n     }\n }\n"
                 }
             ],
             "date": 1722412075089,

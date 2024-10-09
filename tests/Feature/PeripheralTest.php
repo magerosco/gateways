@@ -19,13 +19,13 @@ class PeripheralTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = \App\Models\User::where('name', 'Tester User')->first();
+        $this->user = \App\Models\User::where('name', 'admin')->first();
 
         if (empty($this->user)) {
             $this->user = \App\Models\User::factory()->create([
-                'name' => 'Tester User',
-                'email' => 'tester@example.com',
-                'password' => '12345678',
+                'name' => 'admin',
+                'email' => 'admin@admin.com',
+                'password' => 'admin',
             ]);
         }
         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;

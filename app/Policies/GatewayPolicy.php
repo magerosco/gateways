@@ -10,6 +10,6 @@ class GatewayPolicy
     //A mocked logic to apply the policy.
     public function delete(User $user, Gateway $gateway): bool
     {
-        return str_contains($gateway->name, 'policy') || $user->email == 'tester@example.com';
+        return str_contains($gateway->name, 'policy') || $user->email == 'admin@admin.com';
     }
 }
