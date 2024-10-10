@@ -409,3 +409,149 @@ public function updateGateway($id, array $data)
 ```
 </details>
 
+
+## Swagger OpenAPI to align work between the backend and frontend
+<details>
+<summary>
+During the development process, it is common to find communication problems, or simply a different interpretation of the user stories. One solution to keep the Frontend and Backend aligned is to use Swagger to generate the documentation for each endpoint. This allows several developers to work at the same time, following the same previously defined format.
+</summary>
+
+<br>
+
+**This is a proposal on how to use Swagger OpenAPI without overloading the system with D that affects the readability of the code.**
+
+
+This is what we want to achieve http://127.0.0.1:8000/api/documentation 👇🏻
+![alt text](image/SwaggerDoc.png)
+
+<hr>
+⚠️**What we want to avoid:** This would be the basic solution, but this would add long lines of annotations in each class
+
+![alt text](image/SwaggerAnotationInController.png)
+
+![alt text](image/SwaggerAnnotationEndpoint.png)
+<hr>
+
+## An option to isolate Swagger OpenAPI from classes:
+
+/config/l5-swagger.php
+```php
+//the standard option must be removed.
+ 'annotations' => array_merge(
+    // base_path('app'), <<<DELETE/COMMENT LINE>>>
+    glob(base_path('app/OpenApi/Endpoints/*.php')),
+    glob(base_path('app/OpenApi/Schemas/*.php')),
+),
+```	
+**The next step would be to create the app/OpenApi/ directory. This way, you will have all the annotation-related classes in this directory and isolated from the code.**
+
+
+/GatewayEndpoints.php
+```php
+namespace App\OpenApi\Endpoints;
+
+use OpenApi\Annotations as OA;
+
+class GatewayEndpoints
+{
+    /**
+     * @OA\Get(
+     *     path="/api/gateway",
+     *     tags={"Gateway"},
+     *     summary="Gateway index",
+     *     @OA\Response(
+     *         response=200,
+     *         description="OK",
+     *         @OA\JsonContent(
+     *           type="array",
+     *           @OA\Items(ref="#/components/schemas/Gateway"))
+     *         )
+     *    )
+     */
+    public function index()
+    {
+        //
+    }
+    
+    //... more annotations
+
+    /**
+     * @OA\Post(
+     *     path="/api/gateway",
+     *     tags={"Gateway"},
+     *     summary="Gateway store",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             type="object",
+     *             required={"name", "serial_number", "IPv4_address"},
+     *             @OA\Property(property="serial_number", type="string", example="123456"),
+     *             @OA\Property(property="name", type="string", example="Gateway 1"),
+     *             @OA\Property(property="IPv4_address", type="string", example="127.0.0.1"),
+     *             @OA\Property(
+     *                 property="peripheral",
+     *                 type="array",
+     *                 @OA\Items(type="object", ref="#/components/schemas/Peripheral")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Gateway created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Gateway")
+     *     ),
+     *     @OA\Response(
+     *         response=302,
+     *         description="Gateway created successfully",
+     *         @OA\Header(
+     *             header="Location",
+     *             description="/api/gateway",
+     *             @OA\Schema(type="string", example="GET /api/gateway")
+     *         )
+     *     ),
+     *     @OA\Response(response=404, description="Not Found"),
+     *     @OA\Response(response=401, description="Unauthenticated")
+     * )
+     */
+    public function store()
+    {
+        //
+    }
+    
+    //.. more annotations
+}
+```
+
+/GatewayResourceSchema.php
+```php
+namespace App\OpenApi\Schemas;
+
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(
+ *      version="1.0.0",
+ *      title="API Documentation")
+ *
+ * @OA\Tag(name="Gateway", description="Gateway crud")
+ * @OA\Schema(
+ *       schema="Gateway",
+ *     type="object",
+ *     @OA\Property(property="id", type="integer", example=1),
+ *     @OA\Property(property="serial_number", type="string", example="1234567"),
+ *     @OA\Property(property="name", type="string", example="Gateway 1"),
+ *     @OA\Property(property="IPv4_address", type="string", example="127.0.0.1"),
+ *     @OA\Property(
+ *         property="peripheral",
+ *         type="array",
+ *         @OA\Items(type="object", ref="#/components/schemas/Peripheral")
+ *     ),
+ *     @OA\Property(property="created_at", type="string", format="date-time", example="2022-01-01T00:00:00.000000Z"),
+ *     @OA\Property(property="updated_at", type="string", format="date-time", example="2022-01-01T00:00:00.000000Z")
+ * )
+ */
+class GatewayResourceSchema
+{
+}
+```
+</details>

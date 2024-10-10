@@ -1,9 +1,13 @@
 ![alt text](/README/image/php-cleaning.jpg)
 
 ## ⚠️IMPORTANT
-This project contains several design strategies that were not necessary for the solution. These are personal ideas to demonstrate concepts and intentions of using clean, decoupled code aligned with SOLID principles. 
-Explanation and details [HERE](README/README.md).
-
+**Additional design strategies were added (which were not needed for the solution). These are personal ideas to show concepts and intentions of using clean, decoupled code aligned with SOLID principles.**  
+***Details 👉🏻 [HERE](README/README.md):***
+1. **Response Strategy**
+2. **Policy Example**
+3. **Handling the Roles/Permissions with spatie/laravel-permission and personalized middleware for the access to the resources.**
+4. **Dispatching events for an specific function from the repository**
+5. **Swagger OpenAPI to align work between the backend and frontend**
 
 
 ## About this project

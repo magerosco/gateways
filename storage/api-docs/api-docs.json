@@ -1,0 +1,350 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Documentation",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/gateway": {
+            "get": {
+                "tags": [
+                    "Gateway"
+                ],
+                "summary": "Gateway index",
+                "operationId": "a3c6af7181b40fb5538d7843aeb95426",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Gateway"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Gateway"
+                ],
+                "summary": "Gateway store",
+                "operationId": "f881c1a75a7674620947f989a427b276",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "serial_number",
+                                    "IPv4_address"
+                                ],
+                                "properties": {
+                                    "serial_number": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Gateway 1"
+                                    },
+                                    "IPv4_address": {
+                                        "type": "string",
+                                        "example": "127.0.0.1"
+                                    },
+                                    "peripheral": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Peripheral"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Gateway created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gateway"
+                                }
+                            }
+                        }
+                    },
+                    "302": {
+                        "description": "Gateway created successfully",
+                        "headers": {
+                            "Location": {
+                                "description": "/api/gateway",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "GET /api/gateway"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        },
+        "/api/gateway/{id}": {
+            "get": {
+                "tags": [
+                    "Gateway"
+                ],
+                "summary": "Gateway show",
+                "operationId": "530e516fc670a053c77df66831cc9327",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gateway"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Gateway"
+                ],
+                "summary": "Gateway update",
+                "operationId": "85762b2347842bd0d76910ac9755045f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "serial_number",
+                                    "IPv4_address"
+                                ],
+                                "properties": {
+                                    "serial_number": {
+                                        "type": "string",
+                                        "example": "123456"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Gateway 1"
+                                    },
+                                    "IPv4_address": {
+                                        "type": "string",
+                                        "example": "127.0.0.1"
+                                    },
+                                    "peripheral": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/components/schemas/Peripheral"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Gateway updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Gateway"
+                                }
+                            }
+                        }
+                    },
+                    "302": {
+                        "description": "Gateway updated successfully",
+                        "headers": {
+                            "Location": {
+                                "description": "/api/gateway",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "GET /api/gateway"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Gateway"
+                ],
+                "summary": "Gateway destroy",
+                "operationId": "d833800507c39a33191dea88f67ae69c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "302": {
+                        "description": "Gateway deleted successfully",
+                        "headers": {
+                            "Location": {
+                                "description": "/api/gateway",
+                                "schema": {
+                                    "type": "string",
+                                    "example": "GET /api/gateway"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Gateway": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "serial_number": {
+                        "type": "string",
+                        "example": "1234567"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Gateway 1"
+                    },
+                    "IPv4_address": {
+                        "type": "string",
+                        "example": "127.0.0.1"
+                    },
+                    "peripheral": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Peripheral"
+                        }
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-01-01T00:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-01-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "Peripheral": {
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "UID": {
+                        "type": "string",
+                        "example": "1234567"
+                    },
+                    "vendor": {
+                        "type": "string",
+                        "example": "vendor TEST CREATED"
+                    },
+                    "status": {
+                        "type": "string",
+                        "enum": [
+                            "online",
+                            "offline"
+                        ],
+                        "example": "offline"
+                    },
+                    "gateway_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-01-01T00:00:00.000000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2022-01-01T00:00:00.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Gateway",
+            "description": "Gateway crud"
+        }
+    ]
+}

@@ -50,7 +50,6 @@ class GatewayController extends Controller
     /**
      * @todo The view is not implemented
      */
-
     public function show($id): JsonResponse|View
     {
         $gateway = $this->repository->find($id); //it uses findOrFail
