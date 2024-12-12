@@ -40,7 +40,7 @@ class GatewayRequest extends FormRequest
     protected function prepareForValidation()
     {
         $this->merge([
-            'name' => strip_tags($this->name),
+            'name' => !empty($this->name) ? strip_tags($this->name) : $this->name,
             'serial_number' => strip_tags($this->serial_number),
         ]);
     }
@@ -56,7 +56,7 @@ class GatewayRequest extends FormRequest
                     'message' => 'Validation errors',
                     'data' => $errors,
                 ],
-                Response::HTTP_BAD_REQUEST,
+                Response::HTTP_UNPROCESSABLE_ENTITY,
             ),
         );
     }

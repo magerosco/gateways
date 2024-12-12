@@ -555,3 +555,102 @@ class GatewayResourceSchema
 }
 ```
 </details>
+
+## API Versioning
+<details>
+<summary>
+When a system is active in production for a long time, it is common to face the need to version resources to allow coupling with new users or systems, which makes it necessary to create versions of the API services.
+</summary>
+<br>
+
+**Adding a new API version, some points need to be considered to keep the code clean:**
+
+1. Create a new API route file to group all versioned endpoints in **routes/api.php**
+```php	
+// API V2
+Route::prefix('v2')->group(base_path('routes/api_v2.php'));
+```
+NOTE: That will be enough to redirect to the versioned API services if the route contains "V2"
+
+***However, microservices do not control the base URL, so when we use an API Gateway that unifies and simplifies access for all services, we can negotiate the version through headers.***
+
+We can solve it using middleware to check the headers and redirect them to a new path:
+```php
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+class APIVersionMiddleware
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     */
+    public function handle(Request $request, Closure $next): Response
+    {
+        // Get version from headers, query parameters, or  set a default version if none
+        $apiVersion = $request->header('Accept-Version') ?? ($request->query('version') ?? 'v1');
+
+        if ($apiVersion === 'v2') {
+            $newPath = str_replace('api/', 'api/v2/', $request->getRequestUri());
+            return redirect($newPath);
+        }
+
+        if ($apiVersion && $apiVersion !== 'v1') {
+            return response()->json(['error' => 'Unsupported API version'], 400);
+        }
+
+        return $next($request);
+    }
+}
+```
+This could be a test:
+```php	
+    public function test_get_gateway_list_by_accept_version_header(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => $this->token,
+            'Accept' => 'application/json',
+            'Accept-Version' => 'v2',
+        ])->get('/api/gateway/');
+
+        //Check redirection
+        $response->assertStatus(302);
+
+        //Set redirect url
+        $redirectUrl = $response->headers->get('Location');
+
+        $response = $this->get($redirectUrl);
+
+        //After the redirection, it must have the same response as test_get_gateway_list
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']],
+            'origin',
+        ]);
+
+        $response->assertJsonCount(5, 'data');
+    }
+
+    public function test_get_unsupported_api_version_by_wrong_header(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => $this->token,
+            'Accept' => 'application/json',
+            'Accept-Version' => 'v3',
+        ])->get('/api/gateway/');
+
+
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            'error',
+        ]);
+    }
+```
+
+</details>

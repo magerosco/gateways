@@ -159,4 +159,11 @@ class PeripheralTest extends TestCase
         $response->assertJsonFragment($updatedData);
         $response->assertStatus(200);
     }
+    public function test_get_peripheral_list_unauthorized()
+    {
+        $response = $this->withHeaders([
+            'Accept' => 'application/json',
+        ])->get('/api/peripheral/');
+        $response->assertStatus(401); // Expecting unauthorized status
+    }
 }

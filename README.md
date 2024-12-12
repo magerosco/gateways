@@ -1,16 +1,16 @@
 ![alt text](/README/image/php-cleaning.jpg)
 
-## ⚠️IMPORTANT
-**Additional design strategies were added (which were not needed for the solution). These are personal ideas to show concepts and intentions of using clean, decoupled code aligned with SOLID principles.**  
+**✅ The list below shows personal ideas, and concepts to use clean, decoupled code aligned with SOLID principles.**  
 ***Details 👉🏻 [HERE](README/README.md):***
-1. **Response Strategy**
-2. **Policy Example**
+1. **Response Strategy.**
+2. **Policy Example.**
 3. **Handling the Roles/Permissions with spatie/laravel-permission and personalized middleware for the access to the resources.**
-4. **Dispatching events for an specific function from the repository**
-5. **Swagger OpenAPI to align work between the backend and frontend**
+4. **Dispatching events for a specific function from a decorated repository.**
+5. **Swagger OpenAPI to align work between the backend and frontend.**
+6. **API Versioning.**
 
 
-## About this project
+## Project specification
 
 This sample project is managing gateways - master devices that control multiple peripheral devices. 
 

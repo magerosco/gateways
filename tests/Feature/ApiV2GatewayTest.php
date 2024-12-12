@@ -5,11 +5,8 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Gateway;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Anasa\ResponseStrategy\AdditionalDataRequest;
 
-class GatewayTest extends TestCase
+class ApiV2GatewayTest extends TestCase
 {
     protected $user;
     protected $token;
@@ -29,8 +26,8 @@ class GatewayTest extends TestCase
         }
         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;
 
-        $service = AdditionalDataRequest::getInstance();
-        $service->setMethod('API');
+        // $service = AdditionalDataRequest::getInstance();
+        // $service->setMethod('API');
     }
 
     /**
@@ -45,27 +42,69 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_list(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/');
+        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/v2/gateway/');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'data' => [['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']],
+            'origin',
         ]);
 
         $response->assertJsonCount(5, 'data');
     }
+    public function test_get_gateway_list_by_accept_version_header(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => $this->token,
+            'Accept' => 'application/json',
+            'Accept-Version' => 'v2',
+        ])->get('/api/gateway/');
 
+        //Check redirection
+        $response->assertStatus(302);
+
+        //Set redirect url
+        $redirectUrl = $response->headers->get('Location');
+
+        $response = $this->get($redirectUrl);
+
+        //After the redirection, it must have the same response as test_get_gateway_list
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            'data' => [['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']],
+            'origin',
+        ]);
+
+        $response->assertJsonCount(5, 'data');
+    }
+    public function test_get_unsupported_api_version_by_wrong_header(): void
+    {
+        $response = $this->withHeaders([
+            'Authorization' => $this->token,
+            'Accept' => 'application/json',
+            'Accept-Version' => 'v3',
+        ])->get('/api/gateway/');
+
+
+        $response->assertStatus(400);
+        $response->assertJsonStructure([
+            'error',
+        ]);
+    }
     public function test_get_gateway_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');
+        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/v2/gateway/1');
         $response->assertStatus(200);
-        $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);
+        $response->assertJsonStructure([
+            'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
+            'origin',
+        ]);
         $response->assertJsonFragment(['id' => 1]);
     }
 
     public function test_get_gateway_non_existing_gateway_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/9999');
+        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/v2/gateway/9999');
         $response->assertStatus(404);
     }
 
@@ -78,11 +117,12 @@ class GatewayTest extends TestCase
             'peripheral' => [],
         ];
 
-        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/gateway', $data);
+        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/v2/gateway', $data);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
             'message',
+            'origin',
         ]);
 
         $response->assertJsonFragment($data);
@@ -98,7 +138,7 @@ class GatewayTest extends TestCase
             'peripheral' => [],
         ];
 
-        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/gateway', $data);
+        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/v2/gateway', $data);
 
         $response->assertStatus(422); // Expecting validation errors
         $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number', 'IPv4_address']]);
@@ -122,11 +162,12 @@ class GatewayTest extends TestCase
             'IPv4_address' => '192.168.0.2',
             'name' => 'Updated Gateway',
         ];
-        $response = $this->withHeaders(['Authorization' => $this->token])->putJson("/api/gateway/$id", $updatedData);
+        $response = $this->withHeaders(['Authorization' => $this->token])->putJson("/api/v2/gateway/$id", $updatedData);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
             'message',
+            'origin',
         ]);
 
         $response->assertJsonFragment($updatedData);
@@ -138,12 +179,9 @@ class GatewayTest extends TestCase
         $gateway = Gateway::factory()->create();
         $id = $gateway->id;
 
-        $response = $this->withHeaders(['Authorization' => $this->token])->deleteJson("/api/gateway/$id");
+        $response = $this->withHeaders(['Authorization' => $this->token])->deleteJson("/api/v2/gateway/$id");
 
-        $response->assertJsonStructure([
-            'data' => [],
-            'message',
-        ]);
+        $response->assertJsonStructure(['message', 'origin']);
 
         $response->assertStatus(200);
     }
@@ -161,19 +199,22 @@ class GatewayTest extends TestCase
         $gateway = Gateway::factory()->create();
         $id = $gateway->id;
 
-        $response = $this->withHeaders(['Authorization' => $token])->deleteJson("/api/gateway/$id");
-        $response->assertJsonStructure([
-            'data' => [],
-            'message',
-        ]);
+        $response = $this->withHeaders(['Authorization' => $token])->deleteJson("/api/v2/gateway/$id");
+
+        $response->assertJsonStructure(['message']);
         $response->assertStatus(403); // Forbidden, no permission to create
     }
 
     public function test_get_gateway_list_unauthorized()
     {
+        /**
+         * Test unauthorized access to the gateway list
+         *
+         * @return void
+         */
         $response = $this->withHeaders([
             'Accept' => 'application/json',
-        ])->get('/api/gateway/');
+        ])->get('/api/v2/gateway/');
         $response->assertStatus(401); // Expecting unauthorized status
     }
 }
