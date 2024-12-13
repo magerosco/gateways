@@ -157,12 +157,6 @@ Body raw:
 ```
 ![alt text](README/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
 
-
-
- ## Developer notes:
- - This is a basic project, so, some design patterns aren't necessary. In order to give examples, they were implemented. 
-
-
  ## Testing Cache with Redis
 **IMPORTANT!**
 To tes this way, you need Redis installed and running, and php must support redis (extension=php_redis.dll)
