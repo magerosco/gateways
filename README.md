@@ -178,7 +178,7 @@ CACHE_STORE=redis
 ```
 
  **From postman:**
-![alt text](public/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
+![alt text](/README/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
 
 **Run Laravel Command to Check if Redis is Working:**
 ```
@@ -199,7 +199,7 @@ CACHE_STORE=redis
 ```
 **Output:**
 
-![alt text](public/image/{50387309-699E-47EA-922A-D070D7DB36F5}.png)
+![alt text](/README/image/{50387309-699E-47EA-922A-D070D7DB36F5}.png)
 
 ## Testing Cache with database
 **Clearing Cache:**
@@ -211,7 +211,7 @@ php artisan cache:clear
 CACHE_STORE=databese
 ```
  **From postman:**
-![alt text](public/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
+![alt text](/README/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
 
 **Go to the database (cache table)):**
-![alt text](public/image/{B3BFA3A3-5AAD-451D-99CF-1D4A27E8E2A1}.png)
+![alt text](/README/image/{B3BFA3A3-5AAD-451D-99CF-1D4A27E8E2A1}.png)
