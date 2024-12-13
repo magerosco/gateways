@@ -210,5 +210,5 @@ CACHE_STORE=databese
  **From postman:**
 ![alt text](public/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
 
-**Go to the database (table cache)):**
+**Go to the database (cache table)):**
 ![alt text](public/image/{B3BFA3A3-5AAD-451D-99CF-1D4A27E8E2A1}.png)
