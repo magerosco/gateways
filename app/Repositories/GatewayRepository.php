@@ -28,7 +28,7 @@ class GatewayRepository implements CrudRepositoryInterface
     public function find($id)
     {
         return $this->cacheRemember(__METHOD__ . $id, $this->cacheTime, function () use ($id) {
-            return Gateway::find($id);
+            return Gateway::findOrFail($id);
         });
     }
 
@@ -57,8 +57,8 @@ class GatewayRepository implements CrudRepositoryInterface
 
     public function delete($gateway)
     {
-        $Gateway = $this->find($id);
+        $id = $gateway->id;
         $this->clearCacheForGateway(str_replace('delete', 'find', __METHOD__ . $id));
-        $Gateway->delete();
+        $gateway->delete();
     }
 }
