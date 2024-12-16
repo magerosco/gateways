@@ -804,6 +804,7 @@ Cache::get('gateway.list');
 ```
 
 **Go to the database (cache table)):**
+
 ![alt text](/README/image/{J4BFA3A3-5AAD-451D-99CF-1D4A27E8E2YY}.png)
 
 
