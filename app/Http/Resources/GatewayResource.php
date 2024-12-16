@@ -21,7 +21,7 @@ class GatewayResource extends JsonResource
             'IPv4_address' => $this->IPv4_address,
             'peripheral' => $this->peripheral,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
+            'updated_at' => $this->updated_at,
         ];
     }
 }

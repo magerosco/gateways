@@ -1,6 +1,8 @@
 
 ## Response Strategy
+
 <details>
+
 <summary>
 This is an optional solution to handle the type of output that will be implemented for a crud. Make sure to respect the naming standards or you will need to modify the AdditionalDataRequest inputs for (setMethod, setView, setRoute).
 </summary>
@@ -242,7 +244,6 @@ class GatewayTest extends TestCase
 ```
 </details>
 
-
 ## Policy Example
 <details>
 <summary>
@@ -409,7 +410,6 @@ public function updateGateway($id, array $data)
 ```
 </details>
 
-
 ## Swagger OpenAPI to align work between the backend and frontend
 <details>
 <summary>
@@ -556,6 +556,7 @@ class GatewayResourceSchema
 ```
 </details>
 
+
 ## API Versioning
 <details>
 <summary>
@@ -652,5 +653,158 @@ This could be a test:
         ]);
     }
 ```
+
+</details>
+<br>
+
+## Handling Cache
+
+<details>
+<summary>
+The example demonstrates the use of tags in Redis and their ability to efficiently manage the cache for groups of related data. Tags allow cache keys to be grouped under a common name, making it easier to bulk invalidate related entries without having to manually manage each individual key. This improves performance and simplifies the cache management logic in the application.
+</summary>
+
+<br>
+<br>
+
+*NOTE: The names of the keys can be improved..* 😉
+
+1. **A Trait is used to globalize the cache methods (can be an interface or a facade). Maintaining the abstraction of the dependencies. In this case only redis or memcached are taken into account, to use tags, otherwise, the cache is managed using the Key:**
+
+```php
+namespace App\Traits;
+//(..code...)
+trait Cacheable
+{
+    private $time = 60;
+    private $supportedCacheStores = ['redis', 'memcached'];
+
+    public function cacheRemember($key, $time = null, $tag = null, $callback = null)
+    {
+        $time = is_numeric($time) && $time > 0 ? $time : $this->time;
+
+        if ($this->useTag() && !empty($tag)) {
+            return Cache::tags($tag)->remember($key, $time, $this->setCallbackDefault($callback));
+        }
+
+        return Cache::remember($key, $time, $this->setCallbackDefault($callback));
+    }
+
+    public function clearCache($key, $tag = null)
+    {
+        if ($this->useTag() && !empty($tag)) {
+            return Cache::tags($tag)->flush();
+        }
+        return Cache::forget($key);
+    }
+
+    public function clearCacheByTagAndKey($tag, $key, $callback = null)
+    {
+        if ($this->useTag() && !empty($tag)) {
+            return Cache::tags($tag)->forget($key, $this->setCallbackDefault($callback));
+        }
+        return Cache::forget($key);
+    }
+
+    private function useTag(): bool
+    {
+        return in_array(env('CACHE_DRIVER'), $this->supportedCacheStores);
+    }
+    private function setCallbackDefault(?Closure $callback = null): Closure
+    {
+        return $callback ?? fn() => true;
+    }
+}
+```
+2. **Considering that each action within the CRUD that involves writing to the DB could generate updates to the related cache, an Observer has been created to handle this in isolation:**
+
+```php
+namespace App\Observers;
+//(..code..)
+class GatewayObserver
+{
+    use Cacheable;
+
+    protected $cacheTag = 'gateway.';
+ 
+    public function created(Gateway $gateway): void
+    {
+        $this->clearCacheByTagAndKey($this->cacheTag . 'list', $this->cacheTag);
+    }
+    public function updated(Gateway $gateway): void
+    {
+        $this->clearCacheByTagAndKey($this->cacheTag . 'list', $this->cacheTag);
+        $this->clearCacheByTagAndKey($this->cacheTag . 'find' . $gateway->id, $this->cacheTag, fn() => $gateway);
+    }
+    public function deleted(Gateway $gateway): void
+    {
+        $this->clearCacheByTagAndKey($this->cacheTag . 'list', $this->cacheTag);
+        $this->clearCacheByTagAndKey($this->cacheTag . 'find' . $gateway->id, $this->cacheTag, fn() => $gateway);
+    }
+    //(..code..)
+}
+```
+
+## Testing Cache with Redis
+**IMPORTANT!**
+To test this way, you need Redis installed and running, and php must support redis **(extension=php_redis.dll)**
+
+**From redis installation directory, run the following command:**
+```bash
+.\redis-server.exe
+```
+
+**Clearing Cache:**
+```dm	
+php artisan cache:clear
+```
+
+**Set environment variables in the .env file:**
+```dm
+CACHE_STORE=redis
+```
+
+ **From postman:**
+![alt text](/README/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
+
+**Run Laravel Command to Check if Redis is Working:**
+```
+ php artisan tinker
+```
+**In the console, run the following command:**
+```
+ Cache::tags('gateway.')->get('gateway.list');
+``` 
+**Output:**
+
+![alt text](/README/image/{50387309-699E-47EA-922A-D070D7DB36F5}.png)
+
+## Testing Cache with DATABASE
+
+**NOTE:**
+*This cache store does not support tagging.* **The solution takes this into account, so it saves and obtains values ​​from the Keys**
+
+**Clearing Cache:**
+```dm	
+php artisan cache:clear
+```
+**Set environment variables in the .env file:**
+```dm
+CACHE_STORE=databese
+```
+ **From postman:**
+![alt text](/README/image/{52626AAA-C7C3-4F3D-B859-6F183B416D0B}.png)
+
+**Go to the database (cache table)):**
+![alt text](/README/image/{B3BFA3A3-5AAD-451D-99CF-1D4A27E8E2A1}.png)
+
+
+```bash
+Cache::get('gateway.list');
+```
+
+**Go to the database (cache table)):**
+![alt text](/README/image/{J4BFA3A3-5AAD-451D-99CF-1D4A27E8E2YY}.png)
+
 
 </details>

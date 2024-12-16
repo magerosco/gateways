@@ -3,38 +3,37 @@
 namespace App\Repositories;
 
 use App\Models\Gateway;
+use App\Traits\Cacheable;
 use Illuminate\Support\Facades\Cache;
 
 class GatewayRepository implements CrudRepositoryInterface
 {
-    protected $cacheTime = 600;
+    use Cacheable;
 
-    public function clearCacheForGateway($key)
-    {
-        Cache::forget($key);
-    }
-    public function cacheRemember($key, $time = null, $callback)
-    {
-        return Cache::remember($key, $time ?? $this->cacheTime, $callback);
-    }
+    protected $cacheTime = 30;
+    protected $cacheTag = 'gateway.';
 
     public function all()
     {
-        return $this->cacheRemember(__METHOD__, $this->cacheTime, function () {
+        return $this->cacheRemember($this->cacheTag . 'list', $this->cacheTime, null, function () {
             return Gateway::all();
         });
     }
 
     public function find($id)
     {
-        return $this->cacheRemember(__METHOD__ . $id, $this->cacheTime, function () use ($id) {
-            return Gateway::findOrFail($id);
-        });
+        return $this->cacheRemember(
+            $this->cacheTag . 'find' . $id,
+            $this->cacheTime,
+            $this->cacheTag,
+            fn () => Gateway::findOrFail($id)
+        );
     }
 
     public function create(array $data)
     {
-        return Gateway::create($data);
+        $result = Gateway::create($data);
+        return $result;
     }
 
     public function update($id, array $data)
@@ -57,8 +56,6 @@ class GatewayRepository implements CrudRepositoryInterface
 
     public function delete($gateway)
     {
-        $id = $gateway->id;
-        $this->clearCacheForGateway(str_replace('delete', 'find', __METHOD__ . $id));
         $gateway->delete();
     }
 }
