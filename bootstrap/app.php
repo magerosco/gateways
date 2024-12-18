@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'gateway_action' => \App\Http\Middleware\GatewayActionMiddleware::class,
             'role_or_permission' => \App\Http\Middleware\RoleOrPermissionMiddleware::class,
             'api_version' => \App\Http\Middleware\APIVersionMiddleware::class,
+            'RabbitMQ' => App\Facades\RabbitMQ::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

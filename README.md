@@ -163,3 +163,24 @@ Body raw:
 }
 ```
 ![alt text](README/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
+
+
+
+
+## RabbitMQ
+
+- **RabbitMQ** - [Installation Instructions](https://www.rabbitmq.com/docs/install-windows)
+
+**Active the interface by PowerShell:**
+
+```bash
+ C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-plugins.bat enable rabbitmq_management
+```
+**Rum server**
+
+```bash
+    C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-server.bat
+```
+- Dirección: http://localhost:15672
+- Default user: guest
+- Default password: guest

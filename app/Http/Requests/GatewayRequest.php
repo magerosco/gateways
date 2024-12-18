@@ -47,7 +47,7 @@ class GatewayRequest extends FormRequest
 
     protected function failedValidation(Validator $validator)
     {
-        $errors = $validator->errors();
+        $errors = $validator->errors()->getMessages();
 
         throw new HttpResponseException(
             response()->json(

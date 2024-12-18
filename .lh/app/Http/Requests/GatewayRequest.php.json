@@ -10,7 +10,7 @@
             "content": "<?php\n\nnamespace App\\Http\\Requests;\n\nuse Illuminate\\Foundation\\Http\\FormRequest;\n\nclass GatewayRequest extends FormRequest\n{\n    /**\n     * Determine if the user is authorized to make this request.\n     */\n    public function authorize(): bool\n    {\n        return true;\n    }\n\n    /**\n     * Get the validation rules that apply to the request.\n     *\n     * @return array<string, \\Illuminate\\Contracts\\Validation\\ValidationRule|array<mixed>|string>\n     */\n    public function rules(): array\n    {\n        return [\n            //\n        ];\n    }\n}\n"
         },
         {
-            "activePatchIndex": 26,
+            "activePatchIndex": 33,
             "patches": [
                 {
                     "date": 1725034888222,
@@ -119,6 +119,34 @@
                 {
                     "date": 1733835606966,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -39,9 +39,9 @@\n \n     protected function prepareForValidation()\n     {\n         $this->merge([\n-            'name' => !empty($this->name) ? strip_tags($this->name) : strip_tags($this->name),\n+            'name' => !empty($this->name) ? strip_tags($this->name) : $this->name,\n             'serial_number' => strip_tags($this->serial_number),\n         ]);\n     }\n \n"
+                },
+                {
+                    "date": 1734539419958,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,20 +44,20 @@\n             'serial_number' => strip_tags($this->serial_number),\n         ]);\n     }\n \n-    protected function failedValidation(Validator $validator)\n-    {\n-        $errors = $validator->errors();\n+    // protected function failedValidation(Validator $validator)\n+    // {\n+    //     $errors = $validator->errors();\n \n-        throw new HttpResponseException(\n-            response()->json(\n-                [\n-                    'success' => false,\n-                    'message' => 'Validation errors',\n-                    'data' => $errors,\n-                ],\n-                Response::HTTP_UNPROCESSABLE_ENTITY,\n-            ),\n-        );\n-    }\n+    //     throw new HttpResponseException(\n+    //         response()->json(\n+    //             [\n+    //                 'success' => false,\n+    //                 'message' => 'Validation errors',\n+    //                 'data' => $errors,\n+    //             ],\n+    //             Response::HTTP_UNPROCESSABLE_ENTITY,\n+    //         ),\n+    //     );\n+    // }\n }\n"
+                },
+                {
+                    "date": 1734539438153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,20 +44,20 @@\n             'serial_number' => strip_tags($this->serial_number),\n         ]);\n     }\n \n-    // protected function failedValidation(Validator $validator)\n-    // {\n-    //     $errors = $validator->errors();\n+    protected function failedValidation(Validator $validator)\n+    {\n+        $errors = $validator->errors();\n \n-    //     throw new HttpResponseException(\n-    //         response()->json(\n-    //             [\n-    //                 'success' => false,\n-    //                 'message' => 'Validation errors',\n-    //                 'data' => $errors,\n-    //             ],\n-    //             Response::HTTP_UNPROCESSABLE_ENTITY,\n-    //         ),\n-    //     );\n-    // }\n+        throw new HttpResponseException(\n+            response()->json(\n+                [\n+                    'success' => false,\n+                    'message' => 'Validation errors',\n+                    'data' => $errors,\n+                ],\n+                Response::HTTP_UNPROCESSABLE_ENTITY,\n+            ),\n+        );\n+    }\n }\n"
+                },
+                {
+                    "date": 1734539537546,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     }\n \n     protected function failedValidation(Validator $validator)\n     {\n-        $errors = $validator->errors();\n+        $errors = $validator->me();\n \n         throw new HttpResponseException(\n             response()->json(\n                 [\n"
+                },
+                {
+                    "date": 1734539543631,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     }\n \n     protected function failedValidation(Validator $validator)\n     {\n-        $errors = $validator->me();\n+        $errors = $validator->messages();\n \n         throw new HttpResponseException(\n             response()->json(\n                 [\n"
+                },
+                {
+                    "date": 1734539565086,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     }\n \n     protected function failedValidation(Validator $validator)\n     {\n-        $errors = $validator->messages();\n+        $errors = $validator->;\n \n         throw new HttpResponseException(\n             response()->json(\n                 [\n"
+                },
+                {
+                    "date": 1734539576550,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     }\n \n     protected function failedValidation(Validator $validator)\n     {\n-        $errors = $validator->;\n+        $errors = $validator->messages();\n \n         throw new HttpResponseException(\n             response()->json(\n                 [\n"
+                },
+                {
+                    "date": 1734539583637,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -46,9 +46,9 @@\n     }\n \n     protected function failedValidation(Validator $validator)\n     {\n-        $errors = $validator->messages();\n+        $errors = $validator->errors()->;\n \n         throw new HttpResponseException(\n             response()->json(\n                 [\n"
                 }
             ],
             "date": 1725034888222,

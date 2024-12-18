@@ -2,8 +2,9 @@
 
 return [
     App\Providers\AppServiceProvider::class,
-    App\Providers\GatewayProvider::class,
-    App\Providers\VoltServiceProvider::class,
-    App\Providers\ResponseServiceProvider::class,
     App\Providers\GatewayInterceptorServiceProvider::class,
+    App\Providers\GatewayProvider::class,
+    App\Providers\RabbitMQServiceProvider::class,
+    App\Providers\ResponseServiceProvider::class,
+    App\Providers\VoltServiceProvider::class,
 ];
