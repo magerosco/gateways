@@ -26,7 +26,7 @@ class RabbitMQService implements RabbitMQServiceInterface
     public function sendMessage(string $message, string $queueName = 'default'): void
     {
         if (!$this->isServerAvailable()) {
-            Log::warning("Cannot send message; RabbitMQ server is unavailable.");
+            Log::warning('Cannot send message; RabbitMQ server is unavailable.');
             return;
         }
 
@@ -47,7 +47,7 @@ class RabbitMQService implements RabbitMQServiceInterface
     public function receiveMessage(string $queueName = 'default'): void
     {
         if (!$this->isServerAvailable()) {
-            Log::warning("Cannot receive message; RabbitMQ server is unavailable.");
+            Log::warning('Cannot receive message; RabbitMQ server is unavailable.');
             return;
         }
 
@@ -59,7 +59,12 @@ class RabbitMQService implements RabbitMQServiceInterface
             Log::info("Waiting for messages in '$queueName'. To exit press CTRL+C");
 
             $callback = function ($msg) {
-                Log::info("Received message: " . $msg->body);
+                Log::info('Received message: ' . $msg->body);
+
+                $data = json_decode($msg->body, true);
+                if ($data && isset($data['action'])) {
+                    $this->processMessageAction($data['action'], $data['payload'] ?? []);
+                }
             };
 
             // Start consuming
@@ -69,9 +74,24 @@ class RabbitMQService implements RabbitMQServiceInterface
             while ($this->channel->is_consuming()) {
                 $this->channel->wait();
             }
-
         } catch (\Exception $e) {
             Log::error('Error receiving message: ' . $e->getMessage());
+        }
+    }
+
+    private function processMessageAction(string $action, array $payload): void
+    {
+        switch ($action) {
+            case 'notify_user':
+                // Implement a notification logic here
+                Log::info('Notifying user with payload: ' . json_encode($payload));
+                break;
+            case 'update_database':
+                // Example: Update a record in the database
+                Log::info('Updating database with payload: ' . json_encode($payload));
+                break;
+            default:
+                Log::warning("Unknown action: $action");
         }
     }
 
