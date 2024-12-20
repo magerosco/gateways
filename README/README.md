@@ -1,4 +1,6 @@
 
+***These are simple examples of integrating the logic of any specific requirement ensuring that good programming practices are maintained, complying with SOLID principles, and applying design patterns in search of a correct code structuring.***
+
 ## Response Strategy
 
 <details>
