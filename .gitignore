@@ -1,3 +1,4 @@
+
 /.phpunit.cache
 /node_modules
 /public/build
@@ -16,7 +17,7 @@ auth.json
 npm-debug.log
 yarn-error.log
 /.fleet
-/.lh
+/.lh/
 /.idea
 /.vscode
 
