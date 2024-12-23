@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Gateway;
 use App\Policies\GatewayPolicy;
 use App\Services\SanctumTokenService;
+use Illuminate\Support\Facades\Route;
 use App\Contracts\TokenServiceInterface;
 use App\Contracts\TokenRepositoryInterface;
 use App\Services\Passport\PassportTokenService;
@@ -13,7 +14,6 @@ use App\Services\Passport\PassportTokenRepository;
 use App\Contracts\PersonalAccessTokenFactoryInterface;
 use App\Services\Passport\PassportPersonalAccessTokenFactory;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,5 +47,14 @@ class AppServiceProvider extends ServiceProvider
         $this->registerPolicies();
         User::observe(\App\Observers\UserObserver::class);
         Gateway::observe(\App\Observers\GatewayObserver::class);
+
+        if (app()->environment('testing')) {
+            $this->loadTestingRoutes();
+        }
+    }
+
+    protected function loadTestingRoutes(): void
+    {
+        Route::middleware('web')->group(base_path('routes/test.php'));
     }
 }
