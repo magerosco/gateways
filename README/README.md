@@ -809,5 +809,164 @@ Cache::get('gateway.list');
 
 ![alt text](/README/image/{J4BFA3A3-5AAD-451D-99CF-1D4A27E8E2YY}.png)
 
+</details>
 
+## JSON Web Tokens (JWT) + OAuth
+<details>
+<summary>
+OAuth is a widely used authorization standard for granting access to protected resources without exposing user credentials, which enhances security and flexibility in API access. Using JWT + OAuth is a robust and scalable option for authentication and authorization in APIs, especially when interacting with multiple platforms or external services. JWT (JSON Web Tokens) allows for secure transmission of information between client and server without the need to store it on the server, facilitating integration with other APIs and improving management of mobile or third-party applications.
+</summary>
+<br>
+
+***Note: This project has API versioning, and this exercise intends to make both authentications coexist, assuming a scenario where it is necessary to maintain the legacy authentication method.***
+
+<br>
+
+**Seeking decoupling code, the controller depends on only one interface (TokenServiceInterface), this loads the service depending on what the system needs:**
+```php
+namespace App\Http\Controllers\Auth;
+//(..code..)
+use App\Contracts\TokenServiceInterface;
+
+class OAuthController extends Controller
+{
+    public function __construct(protected TokenServiceInterface $tokenService){}
+
+    public function getAccessToken(LoginRequest $request): \Illuminate\Http\JsonResponse
+    {
+        if (!Auth::attempt($request->credentials())) {
+            return response()->json(['error' => 'Invalid credentials'], 401);
+        }
+
+        $user = Auth::user();
+        // Generate token by passport service
+        $tokenResponse = $this->tokenService->generateTokenForUser($user);
+
+        return response()->json($tokenResponse);
+    }
+}
+```	
+**For working with APIs, it is recommended to use HEADER instead of prefixes to achieve unlocking. With this in mind, loading the correct token generator service is managed through a header.**
+
+```php
+class AppServiceProvider extends ServiceProvider
+{
+    //(..code..)    
+    public function register(): void
+    {
+
+        $this->app->bind(TokenServiceInterface::class, function ($app) {
+            $headerValue = request()->header('X-Auth-Service');
+
+            if (strtolower($headerValue) === 'oauth') {
+                return $app->make(PassportTokenService::class);
+            }
+
+            return $app->make(SanctumTokenService::class);
+        });
+
+        $this->app->bind(PersonalAccessTokenFactoryInterface::class, PassportPersonalAccessTokenFactory::class);
+        $this->app->bind(TokenRepositoryInterface::class, PassportTokenRepository::class);
+    }
+```
+**App\Services\Passport\PassportTokenService.php**
+```php
+namespace App\Services\Passport;
+
+use App\Traits\RoleScopeMapper;
+use App\Contracts\TokenServiceInterface;
+use App\Contracts\TokenRepositoryInterface;
+use App\Contracts\PersonalAccessTokenFactoryInterface;
+
+class PassportTokenService implements TokenServiceInterface
+{
+    use RoleScopeMapper;
+
+    protected $tokenFactory;
+    protected $tokenRepository;
+
+    public function __construct(PersonalAccessTokenFactoryInterface $tokenFactory, TokenRepositoryInterface $tokenRepository)
+    {
+        $this->tokenFactory = $tokenFactory;
+        $this->tokenRepository = $tokenRepository;
+    }
+
+    public function revokeExistingTokens($user)
+    {
+        foreach ($this->tokenRepository->forUser($user->getKey()) as $token) {
+            $this->tokenRepository->revokeAccessToken($token->id);
+        }
+    }
+
+    public function generateTokenForUser($user)
+    {
+        $this->revokeExistingTokens($user);
+
+        $scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());
+        $token = $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);
+
+        return [
+            'access_token' => $token->accessToken,
+            'expires_at' => $token->token->expires_at,
+        ];
+    }
+}
+```
+**See also:**
+```	
+ App\Services\Passport\PassportTokenRepository.php
+ App\Services\Passport\PassportPersonalAccessTokenFactory.php
+```
+
+//Authentication process by OAuth:
+```	
+POST            api/auth/token 
+```	
+**This would be the answer when using Passport Factory (without converting to token yet)**
+```php
+namespace App\Services\Passport;
+//(..code..)
+class PassportTokenService implements TokenServiceInterface
+{
+    //(..code..)
+    public function generateTokenForUser($user)
+    {
+        //(..code..)
+        // The response of this line is a token object
+        $token = $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);
+        //(..code..)
+    }
+}
+```
+**It should look like this:**
+![alt text](/README/image/tokenFactoryByPassport.png)
+
+
+
+```php
+namespace App\Services\Passport;
+//(..code..)
+class PassportTokenService implements TokenServiceInterface
+{
+    //(..code..)
+    public function generateTokenForUser($user)
+    {
+        //(..code..)
+        $scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());
+        $token = $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);
+
+        //converting to Json Web Token (JWT) by $token->accessToken
+        return [
+            'access_token' => $token->accessToken,
+            'expires_at' => $token->token->expires_at,
+        ];
+    }
+}
+
+```
+**After converting to Json Web Token (JWT) by $token->accessToken the response should look like this:**
+![alt text](/README/image/JWT.png)
+
+**Currently, only one route is auth:api**
+![alt text](/README/image/api-route-oauth.png)
 </details>

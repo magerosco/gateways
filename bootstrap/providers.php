@@ -2,6 +2,7 @@
 
 return [
     App\Providers\AppServiceProvider::class,
+    App\Providers\AuthServiceProvider::class,
     App\Providers\GatewayInterceptorServiceProvider::class,
     App\Providers\GatewayProvider::class,
     App\Providers\RabbitMQServiceProvider::class,

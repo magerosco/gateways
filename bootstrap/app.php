@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role_or_permission' => \App\Http\Middleware\RoleOrPermissionMiddleware::class,
             'api_version' => \App\Http\Middleware\APIVersionMiddleware::class,
             'RabbitMQ' => App\Facades\RabbitMQ::class,
+            'scope' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -15,6 +15,7 @@
 5. **Swagger OpenAPI to align work between the backend and frontend.**
 6. **API Versioning.**
 7. **Handling Cache.**
+8. **Coexistence of Oauth+JWT and Sanctum for versioned APIs.**
 
 
 ## Project specification

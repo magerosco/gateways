@@ -45,4 +45,13 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    // Necessary for Passport library, the CheckToken middleware requires a token() method instead of tokens()
+    public function token()
+    {
+        return $this->tokens();
+    }
+
+
 }

@@ -5,7 +5,15 @@ namespace App\Providers;
 use App\Models\User;
 use App\Models\Gateway;
 use App\Policies\GatewayPolicy;
+use App\Services\SanctumTokenService;
+use App\Contracts\TokenServiceInterface;
+use App\Contracts\TokenRepositoryInterface;
+use App\Services\Passport\PassportTokenService;
+use App\Services\Passport\PassportTokenRepository;
+use App\Contracts\PersonalAccessTokenFactoryInterface;
+use App\Services\Passport\PassportPersonalAccessTokenFactory;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,6 +25,18 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->app->bind(TokenServiceInterface::class, function ($app) {
+            $headerValue = request()->header('X-Auth-Service');
+
+            if (strtolower($headerValue) === 'oauth') {
+                return $app->make(PassportTokenService::class);
+            }
+
+            return $app->make(SanctumTokenService::class);
+        });
+
+        $this->app->bind(PersonalAccessTokenFactoryInterface::class, PassportPersonalAccessTokenFactory::class);
+        $this->app->bind(TokenRepositoryInterface::class, PassportTokenRepository::class);
     }
 
     /**

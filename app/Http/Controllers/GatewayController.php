@@ -74,7 +74,7 @@ class GatewayController extends Controller
 
         /**
          * It uses updateGateway instead of update because it is implemented to test the GatewayRepositoryDecorator
-         * to test even trigger for specific function.
+         * to test even trigger and RabbitMQ message for specific function.
          */
 
         $updated_data = $this->repository->updateGateway($id, $validatedData); //it uses findOrFail

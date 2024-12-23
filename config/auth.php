@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
@@ -40,11 +39,14 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
-
+        'sanctum' => [
+            'driver' => 'sanctum',
+            'provider' => 'users',
+                'hash' => false,
+        ],
         'api' => [
-        'driver' => 'sanctum',
-        'provider' => 'users',
-        'hash' => false,
+            'driver' => 'passport',
+            'provider' => 'users',
         ],
     ],
 
@@ -117,5 +119,4 @@ return [
     */
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
-
 ];

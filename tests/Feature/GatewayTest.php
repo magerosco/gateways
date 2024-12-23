@@ -4,15 +4,19 @@ namespace Tests\Feature;
 
 use Tests\TestCase;
 use App\Models\Gateway;
+use App\Traits\RoleScopeMapper;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Anasa\ResponseStrategy\AdditionalDataRequest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GatewayTest extends TestCase
 {
+    use RoleScopeMapper;
+
     protected $user;
-    protected $token;
+    protected $sanctumToken;
+    protected $oauthToken;
 
     protected function setUp(): void
     {
@@ -27,10 +31,31 @@ class GatewayTest extends TestCase
                 'password' => 'admin',
             ]);
         }
-        $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;
+
+        // Oauth token generation
+        $this->createPersonalAccessClient();
+        $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());
+
+        $tokenFactory = app(\Laravel\Passport\PersonalAccessTokenFactory::class);
+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);
+        $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;
+
+        // Sanctum token generation
+        $sanctumToken = $this->user->createToken('SanctumTestToken');
+        $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;
 
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
+    }
+
+    public function createPersonalAccessClient()
+    {
+        $this->app['config']->set('database.default', 'mysql');
+
+        $exitCode = Artisan::call('passport:client', ['--personal' => true]);
+
+        $this->assertEquals(0, $exitCode);
+        $this->assertDatabaseHas('oauth_clients', ['personal_access_client' => 1]);
     }
 
     /**
@@ -45,7 +70,7 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_list(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/');
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
@@ -57,7 +82,7 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');
+        $response = $this->withHeaders(['Authorization' => $this->oauthToken])->get('/api/gateway/1');
         $response->assertStatus(200);
         $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);
         $response->assertJsonFragment(['id' => 1]);
@@ -65,7 +90,7 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_non_existing_gateway_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/9999');
+        $response = $this->withHeaders(['Authorization' => $this->oauthToken])->get('/api/gateway/9999');
         $response->assertStatus(404);
     }
 
@@ -78,7 +103,7 @@ class GatewayTest extends TestCase
             'peripheral' => [],
         ];
 
-        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/gateway', $data);
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->postJson('/api/gateway', $data);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
@@ -98,7 +123,7 @@ class GatewayTest extends TestCase
             'peripheral' => [],
         ];
 
-        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/gateway', $data);
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->postJson('/api/gateway', $data);
 
         $response->assertStatus(422); // Expecting validation errors
         $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number', 'IPv4_address']]);
@@ -122,7 +147,7 @@ class GatewayTest extends TestCase
             'IPv4_address' => '192.168.0.2',
             'name' => 'Updated Gateway',
         ];
-        $response = $this->withHeaders(['Authorization' => $this->token])->putJson("/api/gateway/$id", $updatedData);
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->putJson("/api/gateway/$id", $updatedData);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
@@ -138,7 +163,7 @@ class GatewayTest extends TestCase
         $gateway = Gateway::factory()->create();
         $id = $gateway->id;
 
-        $response = $this->withHeaders(['Authorization' => $this->token])->deleteJson("/api/gateway/$id");
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->deleteJson("/api/gateway/$id");
 
         $response->assertJsonStructure([
             'data' => [],
@@ -156,12 +181,12 @@ class GatewayTest extends TestCase
             'password' => 'userWithoutDeletePermission',
         ]);
 
-        $token = 'Bearer ' . $userWithoutPermission->createToken('TestToken')->plainTextToken;
+        $sanctumToken = 'Bearer ' . $userWithoutPermission->createToken('TestToken')->plainTextToken;
 
         $gateway = Gateway::factory()->create();
         $id = $gateway->id;
 
-        $response = $this->withHeaders(['Authorization' => $token])->deleteJson("/api/gateway/$id");
+        $response = $this->withHeaders(['Authorization' => $sanctumToken])->deleteJson("/api/gateway/$id");
         $response->assertJsonStructure([
             'data' => [],
             'message',

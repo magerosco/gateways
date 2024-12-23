@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 30,
+            "activePatchIndex": 32,
             "patches": [
                 {
                     "date": 1722423756518,
@@ -128,6 +128,14 @@
                 {
                     "date": 1727211310746,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,7 +1,7 @@\n <?php\n \n-require_once __DIR__  .\"auth.php\";\n+require_once __DIR__  . \"\\auth.php\";\n \n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\GatewayController;\n use App\\Http\\Controllers\\PeripheralController;\n"
+                },
+                {
+                    "date": 1734691131897,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,5 +19,7 @@\n \n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->middleware('api_or_web');\n \n+Route::post('auth/token', [OAuthController::class, 'getAccessToken']);\n \n+\n"
+                },
+                {
+                    "date": 1734691466954,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,8 +3,9 @@\n require_once __DIR__  . \"\\auth.php\";\n \n use Illuminate\\Support\\Facades\\Route;\n use App\\Http\\Controllers\\GatewayController;\n+use App\\Http\\Controllers\\Auth\\OAuthController;\n use App\\Http\\Controllers\\PeripheralController;\n \n Route::view('/', 'welcome');\n \n@@ -19,7 +20,5 @@\n \n Route::resource('/gateway', GatewayController::class)->middleware('api_or_web');\n Route::resource('/peripheral', PeripheralController::class)->middleware('api_or_web');\n \n-Route::post('auth/token', [OAuthController::class, 'getAccessToken']);\n \n-\n"
                 }
             ],
             "date": 1722423756518,

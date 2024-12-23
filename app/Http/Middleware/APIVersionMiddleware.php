@@ -23,10 +23,10 @@ class APIVersionMiddleware
             return redirect($newPath);
         }
 
-        if ($apiVersion && $apiVersion !== 'v1') {
-            return response()->json(['error' => 'Unsupported API version'], 400);
+        if ($apiVersion === 'v1') {
+            return $next($request);
         }
 
-        return $next($request);
+        return response()->json(['error' => 'Unsupported API version'], 400);
     }
 }

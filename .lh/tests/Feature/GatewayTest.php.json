@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 199,
+            "activePatchIndex": 276,
             "patches": [
                 {
                     "date": 1722420931409,
@@ -804,6 +804,314 @@
                 {
                     "date": 1733904272355,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -160,9 +160,9 @@\n \n         $gateway = Gateway::factory()->create();\n         $id = $gateway->id;\n \n-        $response = $this->withHeaders(['Authorization' => $this->token])->deleteJson(\"/api/gateway/$id\");\n+        $response = $this->withHeaders(['Authorization' => $token])->deleteJson(\"/api/gateway/$id\");\n         $response->assertJsonStructure([\n             'data' => [],\n             'message',\n         ]);\n"
+                },
+                {
+                    "date": 1734943410528,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,8 +57,9 @@\n \n     public function test_get_gateway_detail(): void\n     {\n         $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');\n+        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');\n         $response->assertStatus(200);\n         $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);\n         $response->assertJsonFragment(['id' => 1]);\n     }\n"
+                },
+                {
+                    "date": 1734943429824,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,8 +27,9 @@\n                 'password' => 'admin',\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n+        http://127.0.0.1:8000/api/auth/token\n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n@@ -57,9 +58,8 @@\n \n     public function test_get_gateway_detail(): void\n     {\n         $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');\n-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');\n         $response->assertStatus(200);\n         $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);\n         $response->assertJsonFragment(['id' => 1]);\n     }\n"
+                },
+                {
+                    "date": 1734943533808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,10 +27,12 @@\n                 'password' => 'admin',\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n-        http://127.0.0.1:8000/api/auth/token\n \n+        \n+\n+\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n"
+                },
+                {
+                    "date": 1734943578581,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,8 +29,9 @@\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n         \n+        $tokenResponse = $this->tokenService->generateTokenForUser($user);\n \n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n"
+                },
+                {
+                    "date": 1734943585232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n-        \n+        $tokenService\n         $tokenResponse = $this->tokenService->generateTokenForUser($user);\n \n \n         $service = AdditionalDataRequest::getInstance();\n"
+                },
+                {
+                    "date": 1734943591046,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,10 @@\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n-        $tokenService\n-        $tokenResponse = $this->tokenService->generateTokenForUser($user);\n+        $tokenService = \n+        $tokenResponse = $tokenService->generateTokenForUser($user);\n \n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n"
+                },
+                {
+                    "date": 1734943625579,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,9 @@\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n-        $tokenService = \n+        $tokenService = new TokenService(new PersonalAccessTokenFactory(), new TokenRepository());\n         $tokenResponse = $tokenService->generateTokenForUser($user);\n \n \n         $service = AdditionalDataRequest::getInstance();\n"
+                },
+                {
+                    "date": 1734943656431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,10 @@\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n-        $tokenService = new TokenService(new PersonalAccessTokenFactory(), new TokenRepository());\n-        $tokenResponse = $tokenService->generateTokenForUser($user);\n+        \n+        $tokenResponse = $this->tokenService->generateTokenForUser($user);\n \n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n"
+                },
+                {
+                    "date": 1734943663062,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,8 @@\n             ]);\n         }\n         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n-        \n-        $tokenResponse = $this->tokenService->generateTokenForUser($user);\n \n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n"
+                },
+                {
+                    "date": 1734943765185,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -26,9 +26,9 @@\n                 'email' => 'admin@admin.com',\n                 'password' => 'admin',\n             ]);\n         }\n-        $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n+        $this->sanctumToken = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n \n \n         $service = AdditionalDataRequest::getInstance();\n@@ -46,9 +46,9 @@\n     }\n \n     public function test_get_gateway_list(): void\n     {\n-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/');\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');\n \n         $response->assertStatus(200);\n         $response->assertJsonStructure([\n             'data' => [['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']],\n@@ -58,17 +58,17 @@\n     }\n \n     public function test_get_gateway_detail(): void\n     {\n-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/1');\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/1');\n         $response->assertStatus(200);\n         $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);\n         $response->assertJsonFragment(['id' => 1]);\n     }\n \n     public function test_get_gateway_non_existing_gateway_detail(): void\n     {\n-        $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/gateway/9999');\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/9999');\n         $response->assertStatus(404);\n     }\n \n     public function test_can_store_gateway()\n@@ -79,9 +79,9 @@\n             'IPv4_address' => '192.168.0.1',\n             'peripheral' => [],\n         ];\n \n-        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/gateway', $data);\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->postJson('/api/gateway', $data);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n@@ -99,9 +99,9 @@\n             'IPv4_address' => 'invalid_address', // Invalid IPv4\n             'peripheral' => [],\n         ];\n \n-        $response = $this->withHeaders(['Authorization' => $this->token])->postJson('/api/gateway', $data);\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->postJson('/api/gateway', $data);\n \n         $response->assertStatus(422); // Expecting validation errors\n         $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number', 'IPv4_address']]);\n \n@@ -123,9 +123,9 @@\n             'serial_number' => '88888888',\n             'IPv4_address' => '192.168.0.2',\n             'name' => 'Updated Gateway',\n         ];\n-        $response = $this->withHeaders(['Authorization' => $this->token])->putJson(\"/api/gateway/$id\", $updatedData);\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->putJson(\"/api/gateway/$id\", $updatedData);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n@@ -139,9 +139,9 @@\n     {\n         $gateway = Gateway::factory()->create();\n         $id = $gateway->id;\n \n-        $response = $this->withHeaders(['Authorization' => $this->token])->deleteJson(\"/api/gateway/$id\");\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->deleteJson(\"/api/gateway/$id\");\n \n         $response->assertJsonStructure([\n             'data' => [],\n             'message',\n"
+                },
+                {
+                    "date": 1734943777472,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,9 @@\n \n class GatewayTest extends TestCase\n {\n     protected $user;\n-    protected $token;\n+    protected $sanctumToken;\n \n     protected function setUp(): void\n     {\n         parent::setUp();\n@@ -157,14 +157,14 @@\n             'email' => 'userWithoutDeletePermission@test.com',\n             'password' => 'userWithoutDeletePermission',\n         ]);\n \n-        $token = 'Bearer ' . $userWithoutPermission->createToken('TestToken')->plainTextToken;\n+        $sanctumToken = 'Bearer ' . $userWithoutPermission->createToken('TestToken')->plainTextToken;\n \n         $gateway = Gateway::factory()->create();\n         $id = $gateway->id;\n \n-        $response = $this->withHeaders(['Authorization' => $token])->deleteJson(\"/api/gateway/$id\");\n+        $response = $this->withHeaders(['Authorization' => $sanctumToken])->deleteJson(\"/api/gateway/$id\");\n         $response->assertJsonStructure([\n             'data' => [],\n             'message',\n         ]);\n"
+                },
+                {
+                    "date": 1734943786758,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,8 +12,9 @@\n class GatewayTest extends TestCase\n {\n     protected $user;\n     protected $sanctumToken;\n+    protected $sanctumToken;\n \n     protected function setUp(): void\n     {\n         parent::setUp();\n"
+                },
+                {
+                    "date": 1734943796088,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -12,9 +12,9 @@\n class GatewayTest extends TestCase\n {\n     protected $user;\n     protected $sanctumToken;\n-    protected $sanctumToken;\n+    protected $oauthToken;\n \n     protected function setUp(): void\n     {\n         parent::setUp();\n"
+                },
+                {
+                    "date": 1734943803667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,10 +29,13 @@\n             ]);\n         }\n         $this->sanctumToken = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n+        $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n+    $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n+\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n"
+                },
+                {
+                    "date": 1734943824621,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -30,12 +30,15 @@\n         }\n         $this->sanctumToken = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n         $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n-    $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n+        $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n+        $sanctumToken = $this->user->createToken('SanctumTestToken');\n+    $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n \n+\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n"
+                },
+                {
+                    "date": 1734943830307,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,10 +32,11 @@\n \n         $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n+        \n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n-    $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n+        $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n \n \n         $service = AdditionalDataRequest::getInstance();\n"
+                },
+                {
+                    "date": 1734943837430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,9 +32,9 @@\n \n         $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-        \n+        // Sanctum to\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n         $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n \n"
+                },
+                {
+                    "date": 1734943892263,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,14 +27,14 @@\n                 'email' => 'admin@admin.com',\n                 'password' => 'admin',\n             ]);\n         }\n-        $this->sanctumToken = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n+        // $this->sanctumToken = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n         $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-        // Sanctum to\n+        // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n         $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n \n"
+                },
+                {
+                    "date": 1734943974228,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,8 @@\n                 'email' => 'admin@admin.com',\n                 'password' => 'admin',\n             ]);\n         }\n-        // $this->sanctumToken = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;\n \n         $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n"
+                },
+                {
+                    "date": 1734944002389,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n             'IPv4_address' => '192.168.0.1',\n             'peripheral' => [],\n         ];\n \n-        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->postJson('/api/gateway', $data);\n+        $response = $this->withHeaders(['Authorization' => $this->])->postJson('/api/gateway', $data);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1734944014385,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n             'IPv4_address' => '192.168.0.1',\n             'peripheral' => [],\n         ];\n \n-        $response = $this->withHeaders(['Authorization' => $this->])->postJson('/api/gateway', $data);\n+        $response = $this->withHeaders(['Authorization' => $this->o])->postJson('/api/gateway', $data);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1734944047668,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -86,9 +86,9 @@\n             'IPv4_address' => '192.168.0.1',\n             'peripheral' => [],\n         ];\n \n-        $response = $this->withHeaders(['Authorization' => $this->o])->postJson('/api/gateway', $data);\n+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->postJson('/api/gateway', $data);\n \n         $response->assertJsonStructure([\n             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],\n             'message',\n"
+                },
+                {
+                    "date": 1734944084612,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -73,9 +73,9 @@\n     }\n \n     public function test_get_gateway_non_existing_gateway_detail(): void\n     {\n-        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/9999');\n+        $response = $this->withHeaders(['Authorization' => $this->o])->get('/api/gateway/9999');\n         $response->assertStatus(404);\n     }\n \n     public function test_can_store_gateway()\n"
+                },
+                {
+                    "date": 1734944595850,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,9 +28,10 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n-        $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n+        $oauthToken = $token = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        ->make($user->id, 'TestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n@@ -65,17 +66,17 @@\n     }\n \n     public function test_get_gateway_detail(): void\n     {\n-        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/1');\n+        $response = $this->withHeaders(['Authorization' => $this->oauthToken])->get('/api/gateway/1');\n         $response->assertStatus(200);\n         $response->assertJsonStructure(['data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at']]);\n         $response->assertJsonFragment(['id' => 1]);\n     }\n \n     public function test_get_gateway_non_existing_gateway_detail(): void\n     {\n-        $response = $this->withHeaders(['Authorization' => $this->o])->get('/api/gateway/9999');\n+        $response = $this->withHeaders(['Authorization' => $this->oauthToken])->get('/api/gateway/9999');\n         $response->assertStatus(404);\n     }\n \n     public function test_can_store_gateway()\n"
+                },
+                {
+                    "date": 1734944629119,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -29,9 +29,9 @@\n             ]);\n         }\n \n         $oauthToken = $token = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n-        ->make($user->id, 'TestToken', ['view-profile', 'manage-users']);\n+        ->make($thisuser->id, 'TestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n"
+                },
+                {
+                    "date": 1734944634767,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,10 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n-        $oauthToken = $token = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n-        ->make($thisuser->id, 'TestToken', ['view-profile', 'manage-users']);\n+        $oauthToken =  app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        ->make($this->user->id, 'TestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n"
+                },
+                {
+                    "date": 1734944727941,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,9 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n-        $oauthToken =  app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n-        ->make($this->user->id, 'TestToken', ['view-profile', 'manage-users']);\n+        $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n"
+                },
+                {
+                    "date": 1734944817817,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,8 +31,15 @@\n \n         $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n+\n+        $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        ->make($this->user->id, 'TestToken', ['view-profile', 'manage-users']);\n+        \n+        $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n+\n+\n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n         $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n"
+                },
+                {
+                    "date": 1734944870686,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,10 +33,10 @@\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n-        ->make($this->user->id, 'TestToken', ['view-profile', 'manage-users']);\n-        \n+        ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n+\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734944886286,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -28,10 +28,10 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n-        $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n-        $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n+        // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n+        // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n"
+                },
+                {
+                    "date": 1734944985381,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -31,9 +31,9 @@\n \n         // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-\n+$id = $this->user->getKey();\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945031693,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,8 +34,9 @@\n \n $id = $this->user->getKey();\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n+        $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);\n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n"
+                },
+                {
+                    "date": 1734945089338,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n \n $id = $this->user->getKey();\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n-        $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);\n+        $this->tokenFactory->make($user->getKey(), 'User Personal Token', ['view-profile', 'manage-users', 'manage-posts']);\n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n"
+                },
+                {
+                    "date": 1734945094975,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n \n $id = $this->user->getKey();\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n-        $this->tokenFactory->make($user->getKey(), 'User Personal Token', ['view-profile', 'manage-users', 'manage-posts']);\n+        $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);\n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n"
+                },
+                {
+                    "date": 1734945101859,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -34,9 +34,9 @@\n \n $id = $this->user->getKey();\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n-        $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);\n+        \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n"
+                },
+                {
+                    "date": 1734945111438,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,11 +33,11 @@\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n $id = $this->user->getKey();\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n-        ->make($this->user->getKey(), 'TestToken', ['view-profile', 'manage-users']);\n-        \n+        ->make($this->user->getKey(), 'TestToken', $scopes);\n \n+\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945124096,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,11 @@\n         // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n $id = $this->user->getKey();\n+\n+$scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());\n+\n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n"
+                },
+                {
+                    "date": 1734945143830,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -10,8 +10,11 @@\n use Anasa\\ResponseStrategy\\AdditionalDataRequest;\n \n class GatewayTest extends TestCase\n {\n+\n+    use RoleScopeMapper;\n+    \n     protected $user;\n     protected $sanctumToken;\n     protected $oauthToken;\n \n@@ -33,9 +36,9 @@\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n $id = $this->user->getKey();\n \n-$scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());\n+    $scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());\n \n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n"
+                },
+                {
+                    "date": 1734945157120,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -3,18 +3,19 @@\n namespace Tests\\Feature;\n \n use Tests\\TestCase;\n use App\\Models\\Gateway;\n+use App\\Traits\\RoleScopeMapper;\n use Illuminate\\Support\\Facades\\Artisan;\n use Illuminate\\Foundation\\Testing\\WithFaker;\n+use Anasa\\ResponseStrategy\\AdditionalDataRequest;\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n-use Anasa\\ResponseStrategy\\AdditionalDataRequest;\n \n class GatewayTest extends TestCase\n {\n \n     use RoleScopeMapper;\n-    \n+\n     protected $user;\n     protected $sanctumToken;\n     protected $oauthToken;\n \n@@ -36,9 +37,9 @@\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n $id = $this->user->getKey();\n \n-    $scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());\n+    $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n"
+                },
+                {
+                    "date": 1734945162433,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,8 @@\n \n         // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-$id = $this->user->getKey();\n \n     $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n         $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n"
+                },
+                {
+                    "date": 1734945205241,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -36,11 +36,11 @@\n         // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n         // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n-    $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n+        $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        $oauthToken = new(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945210778,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $oauthToken = new(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        $oauthToken = new\\Laravel\\Passport\\PersonalAccessTokenFactory\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945215911,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $oauthToken = new\\Laravel\\Passport\\PersonalAccessTokenFactory\n+        $oauthToken = new(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945266861,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,10 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $oauthToken = new(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n+        \n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945275994,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,11 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $oauthToken = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class)\n-        \n+        $tokenFactory = app(PersonalAccessTokenFactory::class);\n+        $oauthToken = $tokenFactory\n+\n         ->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945282084,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,14 +38,12 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $tokenFactory = app(PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory\n+        $tokenFactory = app(::class);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n \n-        ->make($this->user->getKey(), 'TestToken', $scopes);\n \n-\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945296290,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $tokenFactory = app(::class);\n+        $tokenFactory = app(PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945307209,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $tokenFactory = app(PersonalAccessTokenFactory::class);\n+        $tokenFactory = app(\\::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945318498,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $tokenFactory = app(\\::class);\n+        $tokenFactory = app(\\Laravel\\Passport\\Token::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945325339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,9 +38,9 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $tokenFactory = app(\\Laravel\\Passport\\Token::class);\n+        $tokenFactory = app(\\Laravel\\Passport\\Per::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945514541,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -38,10 +38,10 @@\n \n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n-        $tokenFactory = app(\\Laravel\\Passport\\Per::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n+        $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken');\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n"
+                },
+                {
+                    "date": 1734945566973,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,12 +32,9 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n-        // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n-        // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken');\n"
+                },
+                {
+                    "date": 1734945668936,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,13 +32,16 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n+        // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n+        // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n+\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken');\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n \n \n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n"
+                },
+                {
+                    "date": 1734945674987,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,12 +32,8 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n-        // $oauthToken = $this->user->createToken('OAuthTestToken', ['view-profile', 'manage-users']);\n-        // $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n-\n-\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n \n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n"
+                },
+                {
+                    "date": 1734945683950,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,13 +33,10 @@\n             ]);\n         }\n \n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n-\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n-\n-\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945689198,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -32,8 +32,9 @@\n                 'password' => 'admin',\n             ]);\n         }\n \n+        // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734945729271,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'User Personal Token', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945757107,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'User Personal Token', $scopes);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'Laravel Password Grant Client', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945786075,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'Laravel Password Grant Client', $scopes);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'User Personal Token', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945798500,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'User Personal Token', $scopes);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945806808,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'TestToken', $scopes);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734945813139,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -35,9 +35,9 @@\n \n         // Oauth token generation\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n-        $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthToken', $scopes);\n+        $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n \n         // Sanctum token generation\n"
+                },
+                {
+                    "date": 1734946399339,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,8 +48,9 @@\n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n+    \n \n     /**\n      * A basic feature test example.\n      */\n"
+                },
+                {
+                    "date": 1734946404951,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -48,10 +48,26 @@\n \n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n-    \n \n+    public function test_create_personal_access_client()\n+    {\n+        $this->app['config']->set('database.default', 'testing');\n+\n+        $exitCode = Artisan::call('passport:client', [\n+            '--personal' => true\n+        ]);\n+\n+        // Verificar que el comando haya salido correctamente\n+        $this->assertEquals(0, $exitCode);\n+\n+        // Verificar si el cliente de acceso personal ha sido creado\n+        $this->assertDatabaseHas('oauth_clients', [\n+            'personal_access_client' => 1\n+        ]);\n+    }\n+\n     /**\n      * A basic feature test example.\n      */\n     public function test_set_database_config(): void\n"
+                },
+                {
+                    "date": 1734946411170,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,13 +56,9 @@\n \n         $exitCode = Artisan::call('passport:client', [\n             '--personal' => true\n         ]);\n-\n-        // Verificar que el comando haya salido correctamente\n         $this->assertEquals(0, $exitCode);\n-\n-        // Verificar si el cliente de acceso personal ha sido creado\n         $this->assertDatabaseHas('oauth_clients', [\n             'personal_access_client' => 1\n         ]);\n     }\n"
+                },
+                {
+                    "date": 1734946422087,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -53,11 +53,10 @@\n     public function test_create_personal_access_client()\n     {\n         $this->app['config']->set('database.default', 'testing');\n \n-        $exitCode = Artisan::call('passport:client', [\n-            '--personal' => true\n-        ]);\n+        $exitCode = Artisan::call('passport:client', ['--personal' => true        ]);\n+\n         $this->assertEquals(0, $exitCode);\n         $this->assertDatabaseHas('oauth_clients', [\n             'personal_access_client' => 1\n         ]);\n"
+                },
+                {
+                    "date": 1734946431205,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,13 +49,13 @@\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n-    public function test_create_personal_access_client()\n+    public function create_personal_access_client()\n     {\n         $this->app['config']->set('database.default', 'testing');\n \n-        $exitCode = Artisan::call('passport:client', ['--personal' => true        ]);\n+        $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n         $this->assertEquals(0, $exitCode);\n         $this->assertDatabaseHas('oauth_clients', [\n             'personal_access_client' => 1\n"
+                },
+                {
+                    "date": 1734946437832,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -49,9 +49,9 @@\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n-    public function create_personal_access_client()\n+    public function createPersonalAccessClient()\n     {\n         $this->app['config']->set('database.default', 'testing');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n"
+                },
+                {
+                    "date": 1734946445244,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,8 +33,9 @@\n             ]);\n         }\n \n         // Oauth token generation\n+        $th\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n"
+                },
+                {
+                    "date": 1734946800348,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -33,9 +33,9 @@\n             ]);\n         }\n \n         // Oauth token generation\n-        $th\n+        $this->createPersonalAccessClient();\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n@@ -52,8 +52,9 @@\n     }\n \n     public function createPersonalAccessClient()\n     {\n+        $this->useEnvironmentFile('.env.testing');\n         $this->app['config']->set('database.default', 'testing');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n"
+                },
+                {
+                    "date": 1734946809225,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,9 +52,9 @@\n     }\n \n     public function createPersonalAccessClient()\n     {\n-        $this->useEnvironmentFile('.env.testing');\n+        $this->('.env.testing');\n         $this->app['config']->set('database.default', 'testing');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n"
+                },
+                {
+                    "date": 1734946821667,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,11 +52,13 @@\n     }\n \n     public function createPersonalAccessClient()\n     {\n-        $this->('.env.testing');\n-        $this->app['config']->set('database.default', 'testing');\n+        this->useEnvironmentFile('.env.testing');\n \n+        // Puedes hacer la configuración de la base de datos aquí\n+        $this->app['config']->set('database.default', 'mysql');\n+\n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n         $this->assertEquals(0, $exitCode);\n         $this->assertDatabaseHas('oauth_clients', [\n"
+                },
+                {
+                    "date": 1734946831741,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,11 +52,9 @@\n     }\n \n     public function createPersonalAccessClient()\n     {\n-        this->useEnvironmentFile('.env.testing');\n-\n-        // Puedes hacer la configuración de la base de datos aquí\n+       \n         $this->app['config']->set('database.default', 'mysql');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n"
+                },
+                {
+                    "date": 1734947089903,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -52,16 +52,15 @@\n     }\n \n     public function createPersonalAccessClient()\n     {\n-       \n+\n         $this->app['config']->set('database.default', 'mysql');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n         $this->assertEquals(0, $exitCode);\n-        $this->assertDatabaseHas('oauth_clients', [\n-            'personal_access_client' => 1\n+        $this->assertDatabaseHas('oauth_clients', [            'personal_access_client' => 1\n         ]);\n     }\n \n     /**\n"
+                },
+                {
+                    "date": 1734947096128,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n \n class GatewayTest extends TestCase\n {\n-\n     use RoleScopeMapper;\n \n     protected $user;\n     protected $sanctumToken;\n@@ -39,29 +38,24 @@\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-\n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n         $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n-\n-\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n     public function createPersonalAccessClient()\n     {\n-\n         $this->app['config']->set('database.default', 'mysql');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n         $this->assertEquals(0, $exitCode);\n-        $this->assertDatabaseHas('oauth_clients', [            'personal_access_client' => 1\n-        ]);\n+        $this->assertDatabaseHas('oauth_clients', ['personal_access_client' => 1]);\n     }\n \n     /**\n      * A basic feature test example.\n"
+                },
+                {
+                    "date": 1734947102030,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,8 +11,9 @@\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n \n class GatewayTest extends TestCase\n {\n+\n     use RoleScopeMapper;\n \n     protected $user;\n     protected $sanctumToken;\n@@ -38,18 +39,22 @@\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n+\n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n         $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n+\n+\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n     public function createPersonalAccessClient()\n     {\n+\n         $this->app['config']->set('database.default', 'mysql');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n"
+                },
+                {
+                    "date": 1734947127145,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -11,9 +11,8 @@\n use Illuminate\\Foundation\\Testing\\RefreshDatabase;\n \n class GatewayTest extends TestCase\n {\n-\n     use RoleScopeMapper;\n \n     protected $user;\n     protected $sanctumToken;\n@@ -35,26 +34,23 @@\n \n         // Oauth token generation\n         $this->createPersonalAccessClient();\n         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());\n+\n         $tokenFactory = app(\\Laravel\\Passport\\PersonalAccessTokenFactory::class);\n         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);\n         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;\n \n-\n         // Sanctum token generation\n         $sanctumToken = $this->user->createToken('SanctumTestToken');\n         $this->sanctumToken = 'Bearer ' . $sanctumToken->plainTextToken;\n \n-\n-\n         $service = AdditionalDataRequest::getInstance();\n         $service->setMethod('API');\n     }\n \n     public function createPersonalAccessClient()\n     {\n-\n         $this->app['config']->set('database.default', 'mysql');\n \n         $exitCode = Artisan::call('passport:client', ['--personal' => true]);\n \n"
                 }
             ],
             "date": 1722420931409,

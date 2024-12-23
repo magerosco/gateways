@@ -2,25 +2,34 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
 use App\Http\Controllers\GatewayController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\OAuthController;
 use App\Http\Controllers\PeripheralController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
+// OAuth
+Route::post('auth/token', [OAuthController::class, 'getAccessToken']);
+
+
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 
-// API V2
+// API V2, this route will be check and modified by APIVersionMiddleware using the Accept-Version header
 Route::prefix('v2')->group(base_path('routes/api_v2.php'));
 
 // API
 Route::group(['middleware' => ['api_version','api_or_web', 'auth:sanctum','throttle:60,1']], function () {
     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');
-    Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');
+
+    Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show')
+    ->withoutMiddleware('auth:sanctum')
+    ->middleware(['auth:api','scope:manage-users,view-profile']);
+
     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');
     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');
     Route::delete('/gateway/{gateway}', [GatewayController::class, 'destroy'])->name('gateway.destroy')
