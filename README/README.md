@@ -918,10 +918,19 @@ class PassportTokenService implements TokenServiceInterface
  App\Services\Passport\PassportPersonalAccessTokenFactory.php
 ```
 
-//Authentication process by OAuth:
+**Authentication process by OAuth:**
 ```	
 POST            api/auth/token 
+
+Body:
+{
+  "email": "tester@example.com",
+  "password": "12345678"
+}
 ```	
+**Header:**
+![alt text](/README/image/auth-postman-header.png)
+
 **This would be the answer when using Passport Factory (without converting to token yet)**
 ```php
 namespace App\Services\Passport;
