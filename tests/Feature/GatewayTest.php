@@ -33,7 +33,9 @@ class GatewayTest extends TestCase
         }
 
         // Oauth token generation
-        $this->createPersonalAccessClient();
+        // Create Personal Access Client by seeder
+        Artisan::call('db:seed', ['--class' => 'PassportClientSeeder']);
+
         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());
 
         $tokenFactory = app(\Laravel\Passport\PersonalAccessTokenFactory::class);
@@ -47,17 +49,6 @@ class GatewayTest extends TestCase
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
     }
-
-    public function createPersonalAccessClient()
-    {
-        $this->app['config']->set('database.default', 'mysql');
-
-        $exitCode = Artisan::call('passport:client', ['--personal' => true]);
-
-        $this->assertEquals(0, $exitCode);
-        $this->assertDatabaseHas('oauth_clients', ['personal_access_client' => 1]);
-    }
-
     /**
      * A basic feature test example.
      */

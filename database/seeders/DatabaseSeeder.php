@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             GatewaySeeder::class,
             PeripheralSeeder::class,
             RolePermissionSeeder::class,
+            PassportClientSeeder::class,
         ]);
     }
 }
