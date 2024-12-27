@@ -17,10 +17,6 @@ class RabbitMQService implements RabbitMQServiceInterface
         $this->connection = $connection;
         $this->channel = $connection ? $connection->channel() : null;
     }
-    public function handle(): void
-    {
-        $this->isServerAvailable() ? $this->receiveMessage() : Log::warning('RabbitMQ server is unavailable.');
-    }
 
     public function isServerAvailable(): bool
     {
