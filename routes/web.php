@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__  . "\auth.php";
+require_once __DIR__  . "/auth.php";
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GatewayController;
