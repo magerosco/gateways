@@ -3,10 +3,10 @@ name: Laravel CI
 on:
   push:
     branches:
-      - git-hub-actions
+      - main
   pull_request:
     branches:
-      - git-hub-actions
+      - main
 
 jobs:
   laravel-tests:
