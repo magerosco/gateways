@@ -40,6 +40,30 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-interaction
 
+
+        # Set up Node.js and npm
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+
+      # Cache Node.js dependencies
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      # Install npm dependencies
+      - name: Install npm dependencies
+        run: npm install
+
+      # Build assets with Vite
+      - name: Build assets
+        run: npm run build
+
       - name: Set environment file
         run: cp .env.example .env
 

@@ -35,6 +35,7 @@ class PeripheralTest extends TestCase
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
     }
+    
     public function test_get_peripheral_list(): void
     {
         $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/peripheral/');
@@ -56,7 +57,9 @@ class PeripheralTest extends TestCase
 
     public function test_get_peripheral_non_existing_peripheral_detail(): void
     {
-        $response = $this->withHeaders(['Authorization' => $this->token])->withHeaders(['Authorization' => $this->token])->get('/api/peripheral/9999');
+        $response = $this->withHeaders(['Authorization' => $this->token])
+            ->withHeaders(['Authorization' => $this->token])
+            ->get('/api/peripheral/9999');
         $response->assertStatus(404);
     }
 

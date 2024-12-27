@@ -28,6 +28,7 @@ class ApiV2GatewayTest extends TestCase
         }
         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;
     }
+
     public function test_get_gateway_list(): void
     {
         $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/v2/gateway/');
@@ -40,6 +41,7 @@ class ApiV2GatewayTest extends TestCase
 
         $response->assertJsonCount(5, 'data');
     }
+
     public function test_get_gateway_list_by_accept_version_header(): void
     {
         $response = $this->withHeaders([
@@ -73,11 +75,8 @@ class ApiV2GatewayTest extends TestCase
             'Accept-Version' => 'v3',
         ])->get('/api/gateway/');
 
-
         $response->assertStatus(400);
-        $response->assertJsonStructure([
-            'error',
-        ]);
+        $response->assertJsonStructure(['error']);
     }
     public function test_get_gateway_detail(): void
     {

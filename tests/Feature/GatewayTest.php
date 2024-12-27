@@ -46,6 +46,7 @@ class GatewayTest extends TestCase
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
     }
+    
     public function test_get_gateway_list(): void
     {
         $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');
