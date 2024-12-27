@@ -22,8 +22,9 @@ class GatewayTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = \App\Models\User::where('name', 'admin')->first();
+        Artisan::call('migrate:fresh --seed --env="testing"');
 
+        $this->user = \App\Models\User::where('name', 'admin')->first();
         if (empty($this->user)) {
             $this->user = \App\Models\User::factory()->create([
                 'name' => 'admin',
@@ -33,11 +34,7 @@ class GatewayTest extends TestCase
         }
 
         // Oauth token generation
-        // Create Personal Access Client by seeder
-        Artisan::call('db:seed', ['--class' => 'PassportClientSeeder']);
-
         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());
-
         $tokenFactory = app(\Laravel\Passport\PersonalAccessTokenFactory::class);
         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);
         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;
@@ -49,16 +46,6 @@ class GatewayTest extends TestCase
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
     }
-    /**
-     * A basic feature test example.
-     */
-    public function test_set_database_config(): void
-    {
-        Artisan::call('migrate:fresh --seed --env="testing"');
-        $response = $this->get('/');
-        $response->assertStatus(200);
-    }
-
     public function test_get_gateway_list(): void
     {
         $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');

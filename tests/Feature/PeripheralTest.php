@@ -19,6 +19,8 @@ class PeripheralTest extends TestCase
     {
         parent::setUp();
 
+        Artisan::call('migrate:fresh --seed --env="testing"');
+
         $this->user = \App\Models\User::where('name', 'admin')->first();
 
         if (empty($this->user)) {
@@ -33,17 +35,6 @@ class PeripheralTest extends TestCase
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
     }
-
-    /**
-     * A basic feature test example.
-     */
-    public function test_set_database_config(): void
-    {
-        Artisan::call('migrate:fresh --seed --env="testing"');
-        $response = $this->get('/');
-        $response->assertStatus(200);
-    }
-
     public function test_get_peripheral_list(): void
     {
         $response = $this->withHeaders(['Authorization' => $this->token])->get('/api/peripheral/');
