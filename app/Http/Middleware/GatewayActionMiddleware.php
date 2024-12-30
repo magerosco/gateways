@@ -11,8 +11,10 @@ use Anasa\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
 class GatewayActionMiddleware
 {
-    public function __construct(protected ResponseContextInterface $responseContext, protected StrategyDataInterface $strategyData)
-    {
+    public function __construct(
+        protected ResponseContextInterface $responseContext,
+        protected StrategyDataInterface $strategyData
+    ) {
     }
 
     public function handle(Request $request, Closure $next, $ability)
@@ -20,7 +22,13 @@ class GatewayActionMiddleware
         $gateway = $request->route('gateway');
 
         if (!Gate::allows($ability, $gateway)) {
-            return $this->responseContext->executeStrategy($this->strategyData->setStrategyData([], 'You are not authorized.', Response::HTTP_FORBIDDEN));
+            return $this->responseContext->executeStrategy(
+                $this->strategyData->setStrategyData(
+                    [],
+                    'You are not authorized.',
+                    Response::HTTP_FORBIDDEN
+                )
+            );
         }
 
         return $next($request);
