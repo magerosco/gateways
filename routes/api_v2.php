@@ -4,7 +4,14 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V2\GatewayController;
 
 // API V2
-Route::group(['middleware' => ['auth:sanctum', 'throttle:60,1']], function () {
+Route::group(
+    [
+        'middleware' => [
+            'auth:sanctum', // This middleware will check if the user is authenticated
+            'throttle:60,1', // This middleware will limit the number of requests per minute
+             'sanitize' // This middleware will sanitize the input
+        ]
+    ], function () {
     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');
     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');
     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');

@@ -20,6 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'api_version' => \App\Http\Middleware\APIVersionMiddleware::class,
             'RabbitMQ' => App\Facades\RabbitMQ::class,
             'scope' => \Laravel\Passport\Http\Middleware\CheckScopes::class,
+            'sanitize' => \App\Http\Middleware\SanitizeInputMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
