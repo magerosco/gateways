@@ -11,11 +11,10 @@ class PassportTokenService implements TokenServiceInterface
 {
     use RoleScopeMapper;
 
-    protected $tokenFactory;
-    protected $tokenRepository;
-
-    public function __construct(PersonalAccessTokenFactoryInterface $tokenFactory, TokenRepositoryInterface $tokenRepository)
-    {
+    public function __construct(
+        protected PersonalAccessTokenFactoryInterface $tokenFactory,
+        protected TokenRepositoryInterface $tokenRepository
+    ) {
         $this->tokenFactory = $tokenFactory;
         $this->tokenRepository = $tokenRepository;
     }

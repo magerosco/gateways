@@ -10,7 +10,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasApiTokens, HasRoles;
+    use HasFactory;
+    use Notifiable;
+    use HasApiTokens;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -46,12 +49,8 @@ class User extends Authenticatable
         ];
     }
 
-
-    // Necessary for Passport library, the CheckToken middleware requires a token() method instead of tokens()
     public function token()
     {
         return $this->tokens();
     }
-
-
 }
