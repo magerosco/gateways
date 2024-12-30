@@ -23,7 +23,17 @@ Route::post('login', [AuthController::class, 'login']);
 Route::prefix('v2')->group(base_path('routes/api_v2.php'));
 
 // API
-Route::group(['middleware' => ['api_version','api_or_web', 'auth:sanctum','throttle:60,1']], function () {
+Route::group(
+    [
+        'middleware' => [
+            'api_version', // This middleware will check the Accept-Version header and redirect to the correct version
+            'api_or_web', // This middleware will check if the request is coming from an API or a web browser
+            'auth:sanctum', // This middleware will check if the user is authenticated
+            'throttle:60,1', // This middleware will limit the number of requests per minute
+            'sanitize' // This middleware will sanitize the input
+        ]
+    ],
+    function () {
     Route::get('/gateway', [GatewayController::class, 'index'])->name('gateway.index');
 
     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show')
