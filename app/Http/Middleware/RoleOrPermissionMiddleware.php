@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use App\Helpers\AuthorizationResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class RoleOrPermissionMiddleware
@@ -22,6 +23,6 @@ class RoleOrPermissionMiddleware
             return $next($request);
         }
 
-        abort(Response::HTTP_FORBIDDEN, 'You are not authorized.');
+        return AuthorizationResponse::denied();
     }
 }

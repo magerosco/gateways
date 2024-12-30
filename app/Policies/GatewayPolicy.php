@@ -12,4 +12,9 @@ class GatewayPolicy
     {
         return str_contains($gateway->name, 'policy') || $user->email == 'admin@admin.com';
     }
+
+    public function __call($ability, $arguments)
+    {
+        return false; // deny all
+    }
 }

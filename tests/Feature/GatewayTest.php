@@ -46,7 +46,7 @@ class GatewayTest extends TestCase
         $service = AdditionalDataRequest::getInstance();
         $service->setMethod('API');
     }
-    
+
     public function test_get_gateway_list(): void
     {
         $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');
@@ -152,7 +152,7 @@ class GatewayTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_user_with_no_permission_cannot_create_gateway()
+    public function test_user_with_no_permission_cannot_destroy_gateway()
     {
         $userWithoutPermission = \App\Models\User::factory()->create([
             'name' => 'userWithoutDeletePermission',
@@ -166,10 +166,7 @@ class GatewayTest extends TestCase
         $id = $gateway->id;
 
         $response = $this->withHeaders(['Authorization' => $sanctumToken])->deleteJson("/api/gateway/$id");
-        $response->assertJsonStructure([
-            'data' => [],
-            'message',
-        ]);
+        $response->assertJsonStructure(['message']);
         $response->assertStatus(403); // Forbidden, no permission to create
     }
 

@@ -173,7 +173,7 @@ class ApiV2GatewayTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_user_with_no_permission_cannot_create_gateway()
+    public function test_user_with_no_permission_cannot_destroy_gateway()
     {
         $userWithoutPermission = \App\Models\User::factory()->create([
             'name' => 'userWithoutDeletePermission',
