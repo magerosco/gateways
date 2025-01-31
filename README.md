@@ -52,8 +52,6 @@ The task is to create a REST service (JSON/HTTP) for storing information about t
 - date created,
 - status - online/offline.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
 </details>
 
 ## Previous Requirements
