@@ -344,7 +344,7 @@ class RoleOrPermissionMiddleware
 ```
 </details>
 
-## An even example for an specific function from the repository
+## Dispatching events for a specific function from a decorated repository.
 <details>
 <summary>
 We can trigger an event on the repository, but we don't want coupled code.
