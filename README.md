@@ -23,6 +23,8 @@
 This sample project is managing gateways - master devices that control multiple peripheral devices. 
 
 The task is to create a REST service (JSON/HTTP) for storing information about these gateways and their associated devices. This information must be stored in the database. 
+<details>
+<br>
 
 - When storing a gateway, any field marked as “to be validated” must be validated and an error returned if it is invalid.
 - Also, no more that 10 peripheral devices are allowed for a gateway.
@@ -33,6 +35,7 @@ The task is to create a REST service (JSON/HTTP) for storing information about t
 -  Meaningful Unit tests.
 -  Readme file with installation guides.
 -  An automated build.
+
 
 ## Entities
 
@@ -51,7 +54,9 @@ The task is to create a REST service (JSON/HTTP) for storing information about t
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Prerequisites
+</details>
+
+## Previous Requirements
 
 Before you begin, make sure you have the following installed:
 
