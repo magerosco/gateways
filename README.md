@@ -108,7 +108,7 @@ Follow these steps to set up the project on your local environment:
 
 ## Testing 
 
- **(Recommended) You can run the feature's tests using PHPUnit:**
+ **(Recommended) You can run the feature's tests using:**
 
 ```bash
     php artisan test --filter=PeripheralTest
@@ -118,7 +118,7 @@ Follow these steps to set up the project on your local environment:
     php artisan test --filter=GatewayTest
 ```
 
- **(Optional) You can run the project's tests using PHPUnit:**
+ **(Optional) You can run the project's tests using:**
 
 ```bash
     php artisan test
@@ -185,6 +185,6 @@ Body raw:
 ```bash
     C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-server.bat
 ```
-- Dirección: http://localhost:15672
+- Default URL: http://localhost:15672
 - Default user: guest
 - Default password: guest
