@@ -15,6 +15,11 @@ class GatewayPolicy
 
     public function __call($ability, $arguments)
     {
-        return false; // deny all
+        /**
+         * Deny all.. Always returns false, which implies that it denies any ability
+        * (action) not defined in the policy. This ensures that any action not explicitly
+        * allowed will be denied.
+         */
+        return false;
     }
 }
