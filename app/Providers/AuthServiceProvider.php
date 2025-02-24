@@ -2,11 +2,17 @@
 
 namespace App\Providers;
 
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use App\Models\Gateway;
 use Laravel\Passport\Passport;
+use App\Policies\GatewayPolicy;
+use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
 {
+    protected $policies = [
+        Gateway::class => GatewayPolicy::class,
+    ];
+
     /**
      * Register services.
      */

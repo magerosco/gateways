@@ -53,4 +53,19 @@ class User extends Authenticatable
     {
         return $this->tokens();
     }
+
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function categories(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(Category::class, Post::class, 'user_id', 'id', 'id', 'category_id');
+    }
 }

@@ -12,6 +12,9 @@ class RabbitMQServiceProvider extends ServiceProvider
 {
     public function register()
     {
+
+        // This system must be able to handle RabbitMQ unavailability
+        // by returning a null-safe service
         $this->app->singleton(RabbitMQServiceInterface::class, function ($app) {
 
             try {

@@ -4,141 +4,117 @@
     <a href="https://github.com/magerosco/gateways/actions/workflows/ci.yml"><img src="https://github.com/magerosco/gateways/actions/workflows/ci.yml/badge.svg" alt="GithubActions"/></a>
 </p>
 
-![alt text](/README/image/php-cleaning.jpg)
+<div align="center">
+<img src="./README/image/php-cleaning.jpg" alt="alt text" width="70%" align="center">
+</div>
+
+
+## This project is a compilation of exercises covering different aspects of Laravel. What you will find here is:
+
 
 **✅ The list below shows personal ideas, and concepts to use clean, decoupled code aligned with SOLID principles.**  
 ***Details 👉🏻 [HERE](README/README.md):***
-1. **Response Strategy.**
+1. **Coexistence of Oauth+JWT and Sanctum for versioned APIs.**
 2. **Policy Example.**
 3. **Handling the Roles/Permissions with spatie/laravel-permission and personalized middleware for the access to the resources.**
 4. **Dispatching events for a specific function from a decorated repository.**
 5. **Swagger OpenAPI to align work between the backend and frontend.**
 6. **API Versioning.**
 7. **Handling Cache.**
-8. **Coexistence of Oauth+JWT and Sanctum for versioned APIs.**
+8. **Response Strategy.**
+
+**✅ Features:**
+1. **Created a controller with the API**
+2. **Define routes with prefixes**
+3. **Sanitize data by middleware to ensure data integrity before validations**
+4. **Handle roles by own middleware or by the spatie/laravel-permission package**
+5. **Authentication with Sanctum**
+6. **Authentication with OAuth+JWT and use public and private keys for OAuth authentication with Laravel Passport.**
+7. **Write tests and setUp method for each feature**
+8. **Implement event handling**
+9. **Implemented logs for events and validated log structure in tests**
+10. **Use Illuminate\Http\Response defining responses with appropriate status codes.**
+11. **Use Laravel Resources to define the structure of outgoing data with custom fields.**
+12. **Protect endpoints with rate limiting (throttle middleware)**
+13. **Validate inputs using Form Requests to handle the responsibility of validation in a single place.**
+14. **Configured CORS and used the database to dynamically manage allowed origins.**
+
+✅ **Design Patterns.** *Click to read more:*
+<details> <summary><b>1. Repository Layer Design Pattern:<b></summary>
+
+***Note: Dependency injection by interface and handling it  from the provider as part of multiple dependency classes that need to be injected into the same class***
+[CrudRepositoryInterface](app/Repositories/CrudRepositoryInterface.php)<br>
+[GatewayRepository](app/Repositories/GatewayRepository.php)<br>
+[InterfaceServiceProvider](app/Providers/InterfaceServiceProvider.php#L56)<br>
+</details>
 
 
-## Project specification
+<details> 
+<summary><b>2. Service Layer Design Pattern:<b></summary>
 
-This sample project is managing gateways - master devices that control multiple peripheral devices. 
+***Note: Basic example using inheritance between interfaces and handling  the multiple dependency classes that need to be injected into the same class.***
 
-The task is to create a REST service (JSON/HTTP) for storing information about these gateways and their associated devices. This information must be stored in the database. 
+[GatewayService](app/Services/Gateway/GatewayService.php) <br>
+[GatewayServiceInterface](app/Services/Gateway/GatewayServiceInterface.php)<br>
+[GatewayServiceDestroyV2Interface](app/Services/Gateway/GatewayServiceDestroyV2Interface.php)<br>
+[InterfaceServiceProvider](app/Providers/InterfaceServiceProvider.php#L38)<br>
+[GatewayController](app/Http/Controllers/Api/V2/GatewayController.php#L88)
+</details>
+
 <details>
-<br>
+<summary><b>3. Observer Design Pattern<b></summary>
 
-- When storing a gateway, any field marked as “to be validated” must be validated and an error returned if it is invalid.
-- Also, no more that 10 peripheral devices are allowed for a gateway.
-- The service must also offer an operation for displaying information about all stored gateways (and their devices) 
-- Operation for displaying details for a single gateway. 
-- It must be possible to add and remove a device from a gateway.
-- Basic UI - recommended or (providing test data for Postman (or other rest client) if you do not have enough time.
--  Meaningful Unit tests.
--  Readme file with installation guides.
--  An automated build.
+***Note: This app use cache (DB, Redis, etc..), and the example attempts to make use of the observer for clear the cache when a resource is created, updated or deleted.***
+[GatewayObserver](app/Observers/GatewayObserver.php)<br>
+</details>
 
+<details>
+<summary><b>4. Decorator Design Pattern<b></summary>
 
-## Entities
+***Note: Dispatching events for a specific function from a decorated repository to avoid coupling the code logic.***
 
-**gateway**:
+[GatewayRepository](app/Repositories/GatewayRepository.php#L49)<br>
+[GatewayRepositoryDecorator](app/Repositories/Decorators/GatewayRepositoryDecorator.php#L18)<br>
+</details>
+<details>
+<summary><b>5. Event-Driven Pattern<b></summary>
 
-- a unique serial number (string), 
-- human-readable name (string),
-- IPv4 address (to be validated),
-- multiple associated peripheral devices. 
+***Note: This example works in combination with the Decorator Design Pattern to decouple the code logic.***
 
-**peripheral**:
-- a UID (number),
-- vendor (string),
-- date created,
-- status - online/offline.
+[GatewayUpdated](app/Events/GatewayUpdated.php)<br>
+[GatewayUpdatedListener](app/Listeners/GatewayUpdatedListener.php)<br>
+</details>
+
+<details>
+<summary><b>6. Strategy Pattern.<b></summary>
+
+***Note: This example combines middleware, a vendor package, factory and the strategy pattern as an optional solution to handle the type of output that will be implemented for a crud. With middleware as a starting point, this only works for endpoints that apply it.👉🏻 [Details:](README/README.md)***
+
+[ApiOrWebMiddleware](app/Http/Middleware/ApiOrWebMiddleware.php)<br>
+[GatewayController](app/Http/Controllers/GatewayController.php#L34)<br>
+[Vendor/ResponseStrategy](vendor/anasa/response-strategy/src/)
 
 </details>
 
-## Previous Requirements
-
-Before you begin, make sure you have the following installed:
-
-- **PHP** >= 8.0
-- **Composer** - [Installation Instructions](https://getcomposer.org/download/)
-- **MySQL** 
-
 ## Installation
 
-Follow these steps to set up the project on your local environment:
+First steps:
 
-1. **Clone the repository**
-
-   Clone this repository to your local machine using Git:
-   ```bash
-   git clone https://github.com/magerosco/gateways.git
-2. **Navigate to the project directory**
-
-    Use Composer to install all required PHP dependencies:
-    ```bash
-    cd your-project
-3. **Install PHP dependencies**
-    ```bash
+```bash
     composer install
-4. **Set up the .env file**
-
-    Copy the .env.example file to .env:
-    ```bash
     cp .env.example .env
- - Open the .env file in your preferred text editor and configure the database connection and other environment settings.
- 
- 5. **Generate the application key**
- 
-    Laravel requires an application key to encrypt data. Generate this key using the following command:
-    ```bash
     php artisan key:generate
-6. **Set up the database**
-
-    Ensure your database is created and correctly configured in the .env file. Then run the migrations to create the tables:
-    
-    ```bash
     php artisan migrate
-7. **Seed the database**
-    Includes seeders, you can populate the database with initial data using:
-    ```bash
     php artisan db:seed
-8. **Start the development server**
-    ```bash
     php artisan serve
-- By default, the application will be available at http://localhost:8000.
+``` 
 
 ## Testing 
-
- **(Recommended) You can run the feature's tests using:**
-
-```bash
-    php artisan test --filter=PeripheralTest
-```
-
-```bash
-    php artisan test --filter=GatewayTest
-```
-
- **(Optional) You can run the project's tests using:**
-
-```bash
-    php artisan test
-```
  
- ## Testing REST service with postman 
+ ## Check the available endpoints to test with postman 
 
 ```
-  GET|HEAD        api/gateway   
-  POST            api/gateway   
-  GET|HEAD        api/gateway/{gateway}   
-  PUT|PATCH       api/gateway/{gateway}   
-  DELETE          api/gateway/{gateway}   
-   
-
-  GET|HEAD        api/peripheral 
-  POST            api/peripheral   
-  GET|HEAD        api/peripheral/{peripheral}   
-  PUT|PATCH       api/peripheral/{peripheral} 
-  DELETE          api/peripheral/{peripheral} 
+  php artisan route:list
 ```
 **Note: You must use the admin credentials to delete path: *api/peripheral/{peripheral}* or *api/gateway/{gateway}.***
 1. **Login to get the token.**
@@ -152,21 +128,6 @@ Body raw:
   "password": "admin"
 }
 ```
-![alt text](README/image/{0C44C1DE-D1EE-479B-AC32-E35984484270}.png)
-
-2. **(Optional), you can create a new user and then login.**
-```
-POST            api/register
-
-Body raw:
-{
-    "name": "john",
-    "email": "john@example.com",
-    "password": "12345678",
-    "password_confirmation": "12345678"
-}
-```
-![alt text](README/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
 
 
 

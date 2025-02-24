@@ -24,7 +24,7 @@ class ApiOrWebMiddleware
         /**
          * Set additional data request:
          * this will add the controller, method, view and resource. It's
-         * some dinamic data to be used in the strategy to identify and build
+         * some dynamic data to be used in the strategy to identify and build
          * the response. A facade will be used.
          */
         $service = AdditionalDataRequest::getInstance();

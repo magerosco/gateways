@@ -52,6 +52,12 @@ return [
 
     'channels' => [
 
+        'registered_user' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/registeredUser/mi_log.log'),
+            'level' => 'debug',
+        ],
+        
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', env('LOG_STACK', 'single')),
