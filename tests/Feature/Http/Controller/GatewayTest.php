@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controller;
 
 use Tests\TestCase;
 use App\Models\Gateway;
@@ -49,6 +49,7 @@ class GatewayTest extends TestCase
 
     public function test_get_gateway_list(): void
     {
+
         $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');
 
         $response->assertStatus(200);

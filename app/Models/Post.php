@@ -22,4 +22,18 @@ class Post extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    public function tags(): \Illuminate\Database\Eloquent\Relations\MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    // SCOPES
+    public function scopeTitle($query, $title)
+    {
+        if ($title) {
+            return $query->where('title', 'like', "%{$title}%");
+        }
+    }
+
 }

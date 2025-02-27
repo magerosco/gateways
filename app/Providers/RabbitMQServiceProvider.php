@@ -29,7 +29,7 @@ class RabbitMQServiceProvider extends ServiceProvider
                 return new RabbitMQService($connection);
             } catch (\Exception $e) {
                 // Log the error and return a null-safe service
-                Log::error('Failed to connect to RabbitMQ: ' . $e->getMessage());
+                Log::channel('rabbitmq')->error('Failed to connect to RabbitMQ: ' . $e->getMessage());
                 return new RabbitMQService(null); // Pass null to handle RabbitMQ unavailability
             }
         });

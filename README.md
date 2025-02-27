@@ -28,8 +28,8 @@
 2. **Define routes with prefixes**
 3. **Sanitize data by middleware to ensure data integrity before validations**
 4. **Handle roles by own middleware or by the spatie/laravel-permission package**
-5. **Authentication with Sanctum**
-6. **Authentication with OAuth+JWT and use public and private keys for OAuth authentication with Laravel Passport.**
+5. **Authentication with Sanctum and tests**
+6. **Authentication with OAuth+JWT and use public and private keys for OAuth authentication with Laravel Passport. and tests**
 7. **Write tests and setUp method for each feature**
 8. **Implement event handling**
 9. **Implemented logs for events and validated log structure in tests**
@@ -39,7 +39,20 @@
 13. **Validate inputs using Form Requests to handle the responsibility of validation in a single place.**
 14. **Configured CORS and used the database to dynamically manage allowed origins.**
 
-✅ **Design Patterns.** *Click to read more:*
+15. **Defined relationships (hasOne, hasMany, belongsTo, belongsToMany, morphTo, morphToMany, morphOne, morphMany, morphedByMany, hasOneThrough, hasManyThrough).**
+16. **Used advanced queries (whereHas, withCount, subqueries, mutators & accessors).**
+17. **Implemented caching using Redis, Memcached, Database. Apply tags to group cache keys by a trait to manage the cache globally. Use the model events from the observer as an option to clear the cache.**
+18. **Implemented query scopes and model events (Use observer to handle the model events)**
+19. **Optimized queries using chunk(), lazy(), cursor()**
+20. **Handled transactions and lockings (DB::transaction(), lockForUpdate()).**
+21. **Used Gates & Policies for fine-grained permissions.**
+22. **Configured multi-auth for handling different user types.**
+23. **Used factories and seeders in tests**
+24. **Mocked dependencies with Mockery/Laravel Mock.**
+25. **Scheduled tasks with Task Scheduling.**
+26. **Designed scalable APIs with Laravel.**
+
+✅ **Design Patterns, SOLID principles** *Click to read more:*
 <details> <summary><b>1. Repository Layer Design Pattern:<b></summary>
 
 ***Note: Dependency injection by interface and handling it  from the provider as part of multiple dependency classes that need to be injected into the same class***
@@ -95,6 +108,59 @@
 [Vendor/ResponseStrategy](vendor/anasa/response-strategy/src/)
 
 </details>
+
+<details>
+<summary><b>7. Facade Pattern<b></summary>
+
+[RabbitMQ](app/Facades/RabbitMQ.php)<br> 
+[bootstrap/app.php](bootstrap/app.php#L22)<br>
+
+</details>
+
+<details>
+<summary><b>8. DTO (Data Transfer Object) Pattern<b></summary>
+
+***Notes: Basic example, just to show the pattern***
+[DTO](app/DTO/)<br>
+</details>
+
+<details>
+<summary><b>9. Chain of Responsibility Pattern.<b></summary>
+
+[Pipelines/Order](app/Pipelines/Order)<br>
+[OrderController/processOrder](app/Http/Controllers/Api/OrderController.php#L20)<br>
+</details>
+
+<details>
+<summary><b>10. Builder Pattern<b></summary>
+
+***Note: Example in combination with Factory Pattern to generate different report formats***
+
+[ReportController](app/Http/Controllers/Api/ReportController.php#L12)<br>
+[ReportDirector](app/Services/Report/ReportDirector.php)<br>
+</details>
+
+<details>
+<summary><b>11. Factory Pattern<b></summary>
+
+***Note: Example in combination with Builder Pattern to generate different report formats.***
+[ReportFactory](app/Factories/ReportFactory.php)<br>
+</details>
+
+<details>
+<summary><b>12. Command Pattern in Laravel<b></summary>
+
+***Note: Using Illuminate\Console\Command as extension, it responds to the command line php artisan rabbit:consume {queues=default}***
+
+[ConsumeRabbitMessages](app/Console/ConsumeRabbitMessages.php)<br>
+</details>
+
+
+
+
+
+
+
 
 ## Installation
 

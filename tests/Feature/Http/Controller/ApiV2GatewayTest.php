@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controller;
 
 use Tests\TestCase;
 use App\Models\Gateway;

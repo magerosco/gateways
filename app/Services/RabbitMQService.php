@@ -26,7 +26,7 @@ class RabbitMQService implements RabbitMQServiceInterface
     public function sendMessage(string $message, string $queueName = 'default'): void
     {
         if (!$this->isServerAvailable()) {
-            Log::warning('Cannot send message; RabbitMQ server is unavailable.');
+            Log::channel('rabbitmq')->warning('Cannot send message; RabbitMQ server is unavailable.');
             return;
         }
 
@@ -38,16 +38,16 @@ class RabbitMQService implements RabbitMQServiceInterface
             $msg = new AMQPMessage($message);
             $this->channel->basic_publish($msg, '', $queueName);
 
-            Log::info("Message sent to queue '$queueName': $message");
+            Log::channel('rabbitmq')->info("Message sent to queue '$queueName': $message");
         } catch (\Exception $e) {
-            Log::error('Error sending message: ' . $e->getMessage());
+            Log::channel('rabbitmq')->error('Error sending message: ' . $e->getMessage());
         }
     }
 
     public function receiveMessage(string $queueName = 'default'): void
     {
         if (!$this->isServerAvailable()) {
-            Log::warning('Cannot receive message; RabbitMQ server is unavailable.');
+            Log::channel('rabbitmq')->warning('Cannot receive message; RabbitMQ server is unavailable.');
             return;
         }
 
@@ -56,10 +56,11 @@ class RabbitMQService implements RabbitMQServiceInterface
             $this->channel->queue_declare($queueName, false, true, false, false);
 
             // Consume messages from the queue
-            Log::info("Waiting for messages in '$queueName'. To exit press CTRL+C");
+
+            Log::channel('rabbitmq')->info("Waiting for messages in '$queueName'. To exit press CTRL+C");
 
             $callback = function ($msg) {
-                Log::info('Received message: ' . $msg->body);
+                Log::channel('rabbitmq')->info('Received message: ' . $msg->body);
 
                 $data = json_decode($msg->body, true);
                 if ($data && isset($data['action'])) {
@@ -75,7 +76,7 @@ class RabbitMQService implements RabbitMQServiceInterface
                 $this->channel->wait();
             }
         } catch (\Exception $e) {
-            Log::error('Error receiving message: ' . $e->getMessage());
+            Log::channel('rabbitmq')->error('Error receiving message: ' . $e->getMessage());
         }
     }
 
@@ -84,14 +85,14 @@ class RabbitMQService implements RabbitMQServiceInterface
         switch ($action) {
             case 'notify_user':
                 // Implement a notification logic here
-                Log::info('Notifying user with payload: ' . json_encode($payload));
+                Log::channel('rabbitmq')->info('Notifying user with payload: ' . json_encode($payload));
                 break;
             case 'update_database':
                 // Example: Update a record in the database
-                Log::info('Updating database with payload: ' . json_encode($payload));
+                Log::channel('rabbitmq')->info('Updating database with payload: ' . json_encode($payload));
                 break;
             default:
-                Log::warning("Unknown action: $action");
+                Log::channel('rabbitmq')->warning("Unknown action: $action");
         }
     }
 

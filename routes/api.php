@@ -14,11 +14,13 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // OAuth
-Route::post('auth/token', [OAuthController::class, 'getAccessToken']);
+Route::post('auth/token', [OAuthController::class, 'getAccessToken'])->name('oauth.getAccessToken');
+Route::post('auth/logout', [OAuthController::class, 'logout'])->name('oauth.logout');
 
 
 Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
+Route::post('logout', [AuthController::class, 'logout']);
 
 
 // API V2, this route will be check and modified by APIVersionMiddleware using the Accept-Version header
@@ -67,4 +69,14 @@ Route::prefix('post')
     Route::delete('/{id}', [PostController::class, 'destroy'])
     ->name('post.destroy')
     ->middleware(['auth:sanctum', 'role_or_permission:admin']);
+});
+
+Route::prefix('order')
+->group(function () {
+    Route::post('/processOrder', [\App\Http\Controllers\Api\OrderController::class, 'processOrder']);
+});
+
+Route::prefix('report')
+->group(function () {
+    Route::post('/generate', [\App\Http\Controllers\Api\ReportController::class, 'generateReport']);
 });
