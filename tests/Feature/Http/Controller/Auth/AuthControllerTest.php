@@ -4,8 +4,6 @@ namespace Tests\Feature\Http\Controller\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 

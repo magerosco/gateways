@@ -1,0 +1,103 @@
+
+networks:
+  gateway_network:
+    driver: bridge
+
+volumes:
+  server_mongo_data:
+    driver: local
+  server_mysql_data:
+    driver: local
+  server_mysql_testing_data:
+    driver: local
+
+
+services:
+  #mongoDB
+  mongo_db:
+    image: mongo:8.0.4
+    container_name: gw_server_mongo_db
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+    ports:
+      - "27029:27017"
+    networks:
+      - gateway_network
+    volumes:
+      - server_mongo_data:/data/db
+
+  #MySQL
+  mysql_db:
+    image: mysql:8.0.28
+    container_name: gw_server_mysql_db
+    environment:
+      MYSQL_DATABASE: gateway_db
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+    tty: false
+    stdin_open: false
+    ports:
+      - "3319:3306"
+    networks:
+      - gateway_network
+    volumes:
+      - server_mysql_data:/var/lib/mysql
+
+  #MySQL testing
+  mysql_db_testing:
+    image: mysql:8.0.28
+    container_name: gw_server_mysql_testing_db
+    environment:
+        MYSQL_DATABASE: gatewaytesting
+        MYSQL_ROOT_PASSWORD: root
+        MYSQL_PASSWORD: root
+    ports:
+        - "3320:3306"
+    networks:
+        - gateway_network
+    volumes:
+        - server_mysql_testing_data:/var/lib/mysql
+
+## RabbitMQ
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: gw_rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    networks:
+        - gateway_network
+
+# Redis
+  redis:
+    image: redis:latest
+    container_name: redis_cache
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+        - gateway_network
+
+  # Gateway service
+  gateway_service:
+    build: .
+    container_name: gateway_service
+    restart: unless-stopped
+    ports:
+      - "9111:8088"
+    depends_on:
+      - mysql_db
+      - mysql_db_testing
+      - mongo_db
+      - rabbitmq
+      - redis
+    networks:
+      - gateway_network
+    # env_file:
+    #   - .env

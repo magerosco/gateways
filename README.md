@@ -1,15 +1,14 @@
+
+
 <p align="center">
     <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-11-FF2D20.svg?style=flat&logo=laravel" alt="Laravel 11"/></a>
     <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-8.2-777BB4.svg?style=flat&logo=php" alt="PHP 8.2"/></a>
     <a href="https://github.com/magerosco/gateways/actions/workflows/ci.yml"><img src="https://github.com/magerosco/gateways/actions/workflows/ci.yml/badge.svg" alt="GithubActions"/></a>
 </p>
 
-<div align="center">
-<img src="./README/image/php-cleaning.jpg" alt="alt text" width="70%" align="center">
-</div>
 
 
-## This project is a compilation of exercises covering different aspects of Laravel. What you will find here is:
+## This project is a compilation of exercises covering different aspects of Laravel. You will find here:
 
 
 **✅ The list below shows personal ideas, and concepts to use clean, decoupled code aligned with SOLID principles.**  
@@ -26,31 +25,45 @@
 **✅ Features:**
 1. **Created a controller with the API**
 2. **Define routes with prefixes**
-3. **Sanitize data by middleware to ensure data integrity before validations**
+3. **Sanitize data by middleware to ensure data integrity before validations (XSS, SQL Injection)**
 4. **Handle roles by own middleware or by the spatie/laravel-permission package**
 5. **Authentication with Sanctum and tests**
 6. **Authentication with OAuth+JWT and use public and private keys for OAuth authentication with Laravel Passport. and tests**
 7. **Write tests and setUp method for each feature**
 8. **Implement event handling**
-9. **Implemented logs for events and validated log structure in tests**
+9. **Implemented custom log channels and validated log structure in tests**
 10. **Use Illuminate\Http\Response defining responses with appropriate status codes.**
 11. **Use Laravel Resources to define the structure of outgoing data with custom fields.**
 12. **Protect endpoints with rate limiting (throttle middleware)**
 13. **Validate inputs using Form Requests to handle the responsibility of validation in a single place.**
 14. **Configured CORS and used the database to dynamically manage allowed origins.**
-
 15. **Defined relationships (hasOne, hasMany, belongsTo, belongsToMany, morphTo, morphToMany, morphOne, morphMany, morphedByMany, hasOneThrough, hasManyThrough).**
 16. **Used advanced queries (whereHas, withCount, subqueries, mutators & accessors).**
 17. **Implemented caching using Redis, Memcached, Database. Apply tags to group cache keys by a trait to manage the cache globally. Use the model events from the observer as an option to clear the cache.**
 18. **Implemented query scopes and model events (Use observer to handle the model events)**
 19. **Optimized queries using chunk(), lazy(), cursor()**
 20. **Handled transactions and lockings (DB::transaction(), lockForUpdate()).**
-21. **Used Gates & Policies for fine-grained permissions.**
+21. **Used Gates & Policies.**
 22. **Configured multi-auth for handling different user types.**
 23. **Used factories and seeders in tests**
 24. **Mocked dependencies with Mockery/Laravel Mock.**
 25. **Scheduled tasks with Task Scheduling.**
 26. **Designed scalable APIs with Laravel.**
+27. **Used the lint to check the scripts. I consider it important, for example, to quickly review scripts in production.**
+ ```bash
+ #GitBash:
+ find . -name "*.php" -exec php -l {} \;
+
+#PowerShell
+Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.FullName }
+```
+28. **Use RabbitMQ. Implemented a simple RabbitMQ service and external library as examples.**
+29. ***(Handling failed connection to RabbitMQ.)*** **RabbitQM is an external service that allows you to send and receive messages between apps/microservices in different ecosystems. Regardless of a failed connection and sent notifications to administrators, the system must be able to keep working.**
+30. **Monitored queues with Horizon.**
+31. **Built custom commands.**
+32. **Configured GitHub Actions**
+33. **Setup enviroment with Docker. (Apache, Redis, RabbitMQ, Mongo, MySql)**
+
 
 ✅ **Design Patterns, SOLID principles** *Click to read more:*
 <details> <summary><b>1. Repository Layer Design Pattern:<b></summary>
