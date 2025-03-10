@@ -38,12 +38,12 @@ jobs:
         run: |
           docker-compose -f docker-compose.yml up -d
 
-        # Wait for services to be ready
-      - name: Wait for services to be ready
-        run: |
-          docker-compose exec -T mysql_db_testing mysqladmin ping --host=mysql_db_testing --silent
-          docker-compose exec -T redis redis-cli ping
-          docker-compose exec -T memcached echo "stats" | nc localhost 11211
+      #   # Wait for services to be ready
+      # - name: Wait for services to be ready
+      #   run: |
+      #     docker-compose exec -T mysql_db_testing mysqladmin ping --host=mysql_db_testing --silent
+      #     docker-compose exec -T redis redis-cli ping
+      #     docker-compose exec -T memcached echo "stats" | nc localhost 11211
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
