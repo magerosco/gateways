@@ -13,5 +13,6 @@ return [
     App\Providers\VoltServiceProvider::class,
     App\Providers\EventServiceProvider::class,
     Spatie\Permission\PermissionServiceProvider::class,
+    Barryvdh\DomPDF\ServiceProvider::class,
 
 ];

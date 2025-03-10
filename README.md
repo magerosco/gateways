@@ -1,5 +1,4 @@
 
-
 <p align="center">
     <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-11-FF2D20.svg?style=flat&logo=laravel" alt="Laravel 11"/></a>
     <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-8.2-777BB4.svg?style=flat&logo=php" alt="PHP 8.2"/></a>
@@ -7,23 +6,10 @@
 </p>
 
 
-
-## This project is a compilation of exercises covering different aspects of Laravel. You will find here:
-
-
-**✅ The list below shows personal ideas, and concepts to use clean, decoupled code aligned with SOLID principles.**  
-***Details 👉🏻 [HERE](README/README.md):***
-1. **Coexistence of Oauth+JWT and Sanctum for versioned APIs.**
-2. **Policy Example.**
-3. **Handling the Roles/Permissions with spatie/laravel-permission and personalized middleware for the access to the resources.**
-4. **Dispatching events for a specific function from a decorated repository.**
-5. **Swagger OpenAPI to align work between the backend and frontend.**
-6. **API Versioning.**
-7. **Handling Cache.**
-8. **Response Strategy.**
+## This project is a compilation of exercises covering different aspects of Laravel, and applying concepts to use clean, decoupled code aligned with SOLID principles.**  
 
 **✅ Features:**
-1. **Created a controller with the API**
+1. **Setup enviroment with Docker. (Apache, Redis, RabbitMQ, Mongo, MySql)**
 2. **Define routes with prefixes**
 3. **Sanitize data by middleware to ensure data integrity before validations (XSS, SQL Injection)**
 4. **Handle roles by own middleware or by the spatie/laravel-permission package**
@@ -38,18 +24,20 @@
 13. **Validate inputs using Form Requests to handle the responsibility of validation in a single place.**
 14. **Configured CORS and used the database to dynamically manage allowed origins.**
 15. **Defined relationships (hasOne, hasMany, belongsTo, belongsToMany, morphTo, morphToMany, morphOne, morphMany, morphedByMany, hasOneThrough, hasManyThrough).**
-16. **Used advanced queries (whereHas, withCount, subqueries, mutators & accessors).**
-17. **Implemented caching using Redis, Memcached, Database. Apply tags to group cache keys by a trait to manage the cache globally. Use the model events from the observer as an option to clear the cache.**
-18. **Implemented query scopes and model events (Use observer to handle the model events)**
+16. **Used advanced queries (whereHas, withCount, subqueries, mutators & accessors) and implemented query scopes**
+17. **Implemented caching using Redis, Memcached, Database. Apply tags to group cache keys by a trait to manage the cache globally. Use the model events from the observer as an option to clear the cache.** [Details](README/README.md#L377):
+18. **Model events (Use observer to handle the model events)**
 19. **Optimized queries using chunk(), lazy(), cursor()**
 20. **Handled transactions and lockings (DB::transaction(), lockForUpdate()).**
 21. **Used Gates & Policies.**
-22. **Configured multi-auth for handling different user types.**
-23. **Used factories and seeders in tests**
+22. **Used factories and seeders in tests**
+23. **Develop tests with/without database persistence (ModelName::factory()->create(), ModelName::factory()->make())**
 24. **Mocked dependencies with Mockery/Laravel Mock.**
 25. **Scheduled tasks with Task Scheduling.**
-26. **Designed scalable APIs with Laravel.**
-27. **Used the lint to check the scripts. I consider it important, for example, to quickly review scripts in production.**
+26. **Monitored queues with Horizon.**
+27. **Swagger OpenAPI to align work between the backend and frontend.**
+28. **API Versioning.**
+29. **Used the lint to check the scripts. I consider it important, for example, to quickly review scripts in production.**
  ```bash
  #GitBash:
  find . -name "*.php" -exec php -l {} \;
@@ -57,12 +45,11 @@
 #PowerShell
 Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.FullName }
 ```
-28. **Use RabbitMQ. Implemented a simple RabbitMQ service and external library as examples.**
-29. ***(Handling failed connection to RabbitMQ.)*** **RabbitQM is an external service that allows you to send and receive messages between apps/microservices in different ecosystems. Regardless of a failed connection and sent notifications to administrators, the system must be able to keep working.**
-30. **Monitored queues with Horizon.**
-31. **Built custom commands.**
-32. **Configured GitHub Actions**
-33. **Setup enviroment with Docker. (Apache, Redis, RabbitMQ, Mongo, MySql)**
+30. **Built custom commands.**
+31. **Configured GitHub Actions**
+32. **Use RabbitMQ. Implemented a simple RabbitMQ service and external library as examples.**
+33. ***(Handling failed connection to RabbitMQ.)*** **RabbitQM is an external service that allows you to send and receive messages between apps/microservices in different ecosystems. Regardless of a failed connection and sent notifications to administrators, the system must be able to keep working.**
+
 
 
 ✅ **Design Patterns, SOLID principles** *Click to read more:*
@@ -211,20 +198,3 @@ Body raw:
 
 
 
-## RabbitMQ
-
-- **RabbitMQ** - [Installation Instructions](https://www.rabbitmq.com/docs/install-windows)
-
-**Active the interface by PowerShell:**
-
-```bash
- C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-plugins.bat enable rabbitmq_management
-```
-**Rum server**
-
-```bash
-    C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-server.bat
-```
-- Default URL: http://localhost:15672
-- Default user: guest
-- Default password: guest

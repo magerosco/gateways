@@ -28,7 +28,7 @@ RUN pecl install redis && docker-php-ext-enable redis
 
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql pgsql
+    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql pgsql fileinfo gettext dom intl zip
 
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
