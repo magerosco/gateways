@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-RUN sudo apt-get update && sudo apt-get install -y \
+RUN apt-get update && apt-get install -y \
     default-mysql-client \
     netcat-traditional \
     libpng-dev \
