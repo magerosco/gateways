@@ -4,7 +4,7 @@ RUN apt-get update && apt-get install -y \
     default-mysql-client \
     netcat-traditional \
     libpng-dev \
-    libjpeg62-turbo-dev \
+    libjpeg-dev \
     libfreetype6-dev \
     locales \
     zip \
