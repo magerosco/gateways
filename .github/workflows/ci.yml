@@ -101,11 +101,8 @@ jobs:
       - name: Build assets
         run: npm run build
 
-      - name: Set environment file
-        run: cp .env.example .env
-
-      - name: Set environment file for testing
-        run: cp .env.testing .env
+      - name: Set environment file for CI
+        run: cp .env.ci.testing .env.testing
 
       - name: Generate application key
         run: php artisan key:generate
