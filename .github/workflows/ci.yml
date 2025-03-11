@@ -33,7 +33,9 @@ jobs:
 
       - name: Wait for gateway_service to finish passport:install and be ready
         run: |
-          until docker-compose logs gateway_service | grep -q "Running passport:install for testing..." && docker-compose logs gateway_service | grep -q "Dockerfile is ready" && docker-compose logs gateway_service | grep -q "Encryption keys generated successfully"; do
+          until docker-compose logs gateway_service | grep -q "Running passport:keys for testing..." && \
+              docker-compose logs gateway_service | grep -q "Encryption keys generated successfully" && \
+              docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
             echo "Waiting for gateway_service to be fully ready..."
             sleep 5
           done
