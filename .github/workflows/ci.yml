@@ -60,7 +60,7 @@ jobs:
 
       - name: Wait for gateway_service to be ready
         run: |
-          until docker-compose exec -T gateway_service curl -s http://localhost:8080; do
+          until docker-compose exec -T gateway_service curl -s http://localhost:8088; do
             echo "Waiting for gateway_service to be ready..."
             sleep 5
           done
