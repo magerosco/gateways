@@ -31,7 +31,7 @@ jobs:
         run: |
           docker ps | grep gateway_service || echo "gateway_service is not running"
 
-      - name: Wait for gateway_service to finish passport:install and be ready
+      - name: Wait for gateway_service to finish configurations and restart apache
         run: |
           until docker-compose logs gateway_service | grep -q "Running passport:keys for testing..." && \
               docker-compose logs gateway_service | grep -q "Encryption keys generated successfully" && \
