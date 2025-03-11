@@ -40,10 +40,10 @@ jobs:
       #   run: docker-compose exec gateway_service npm run build
 
       - name: Generate application key inside gateway_service
-        run: docker-compose exec gateway_service php artisan key:generate
+        run: docker-compose exec -T gateway_service php artisan key:generate
 
       - name: Generate Passport keys inside gateway_service
-        run: docker-compose exec gateway_service php artisan passport:keys
+        run: docker-compose exec -T gateway_service php artisan passport:keys
 
       # - name: Wait for Database
       #   run: |
@@ -54,11 +54,11 @@ jobs:
       #   run: docker-compose exec gateway_service php artisan migrate --force
 
 
-      - name: Run migrations for testing inside gateway_service
-        run: docker-compose exec gateway_service php artisan migrate --env=testing --force
+      # - name: Run migrations for testing inside gateway_service
+      #   run: docker-compose exec -T gateway_service php artisan migrate --env=testing --no-interaction
 
       - name: Run tests inside gateway_service
-        run: docker-compose exec gateway_service vendor/bin/phpunit
+        run: docker-compose exec -T gateway_service vendor/bin/phpunit
 
       - name: Stop Docker Compose services
         run: docker-compose down --volumes --remove-orphans
