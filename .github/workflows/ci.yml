@@ -57,6 +57,21 @@ jobs:
       # - name: Run migrations for testing inside gateway_service
       #   run: docker-compose exec -T gateway_service php artisan migrate --env=testing --no-interaction
 
+
+      - name: Wait for gateway_service to be ready
+        run: |
+          until docker-compose exec -T gateway_service curl -s http://localhost:8080; do
+            echo "Waiting for gateway_service to be ready..."
+            sleep 5
+          done
+
+      - name: Wait for MySQL to be ready
+        run: |
+          until docker-compose exec -T gateway_service mysqladmin ping --host=mysql_db_testing --silent; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
+
       - name: Run tests inside gateway_service
         run: docker-compose exec -T gateway_service vendor/bin/phpunit
 
