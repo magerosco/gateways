@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - patterns
-      # - main
   pull_request:
     branches:
       - main
@@ -13,134 +12,53 @@ jobs:
   laravel-tests:
     runs-on: ubuntu-latest
 
-
     steps:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-
       - name: Checkout code
         uses: actions/checkout@v3
-
-      # - name: Install Docker Compose
-      #   run: |
-      #     sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-      #     sudo chmod +x /usr/local/bin/docker-compose
-      #     docker-compose --version
 
       - name: Set up Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-        # Run Docker Compose containers
       - name: Start Docker Compose services
-        run: |
-          docker-compose -f docker-compose.yml up -d
+        run: docker-compose up -d
 
-      #   # Wait for services to be ready
-      # - name: Wait for services to be ready
+      # - name: Set environment file for CI inside gateway_service
+      #   run: docker-compose exec gateway_service cp .env.ci.testing .env.testing
+
+      - name: Install Composer dependencies inside gateway_service
+        run: docker-compose exec gateway_service composer install --prefer-dist --no-progress --no-interaction
+
+      - name: Install npm dependencies inside gateway_service
+        run: docker-compose exec gateway_service npm install
+
+      - name: Build assets inside gateway_service
+        run: docker-compose exec gateway_service npm run build
+
+      - name: Generate application key inside gateway_service
+        run: docker-compose exec gateway_service php artisan key:generate
+
+      - name: Generate Passport keys inside gateway_service
+        run: docker-compose exec gateway_service php artisan passport:keys
+
+      # - name: Wait for Database
       #   run: |
-      #     docker-compose exec -T mysql_db_testing mysqladmin ping --host=mysql_db_testing --silent
-      #     docker-compose exec -T redis redis-cli ping
-      #     docker-compose exec -T memcached echo "stats" | nc localhost 11211
+      #     chmod +x docker/scripts/wait-for-db.sh
+      #     docker-compose exec gateway_service ./docker/scripts/wait-for-db.sh
 
-      - name: Set up PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.2'
-          extensions: mbstring, bcmath, mysqli, pdo_mysql, redis, mongodb, pdo_pgsql, pgsql, intl, zip, gettext
-          coverage: none
+      - name: Run migrations inside gateway_service
+        run: docker-compose exec gateway_service php artisan migrate --force
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update && sudo apt-get install -y \
-            netcat-traditional \
-            libpng-dev \
-            libjpeg-dev \
-            libfreetype6-dev \
-            locales \
-            zip \
-            libzip-dev \
-            unzip \
-            git \
-            curl \
-            libonig-dev \
-            libxml2-dev \
-            libpq-dev \
-            memcached \
-            redis-server
 
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
+      - name: Run migrations for testing inside gateway_service
+        run: docker-compose exec gateway_service php artisan migrate --env=testing --force
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress --no-interaction
+      - name: Run tests inside gateway_service
+        run: docker-compose exec gateway_service vendor/bin/phpunit
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-
-      - name: Cache Node.js dependencies
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-npm-
-
-      - name: Install npm dependencies
-        run: npm install
-
-      - name: Build assets
-        run: npm run build
-
-      - name: Set environment file for CI
-        run: cp .env.ci.testing .env.testing
-
-      - name: Generate application key
-        run: php artisan key:generate
-
-      - name: Generate Passport keys
-        run: php artisan passport:keys
-
-      - name: Check Redis connection
-        run: redis-cli ping
-
-      - name: Check Memcached connection
-        run: echo "stats" | nc localhost 11211
-
-      - name: Wait for Database
-        run: |
-          chmod +x docker/scripts/wait-for-db.sh
-          ./docker/scripts/wait-for-db.sh
-
-      - name: Run migrations
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: mysql_db_testing
-          DB_PORT: 3306
-          DB_DATABASE: gatewaytesting
-          DB_USERNAME: root
-          DB_PASSWORD: root
-        run: php artisan migrate --force
-
-      - name: Run tests
-        env:
-          DB_CONNECTION: mysql
-          DB_HOST: mysql_db_testing
-          DB_PORT: 3306
-          DB_DATABASE: gatewaytesting
-          DB_USERNAME: root
-          DB_PASSWORD: root
-        run: vendor/bin/phpunit
-
-        # Stop Docker Compose containers
       - name: Stop Docker Compose services
         run: docker-compose down --volumes --remove-orphans
