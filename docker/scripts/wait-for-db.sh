@@ -7,6 +7,9 @@ do
   sleep 5
 done
 
+echo "Composer installing..."
+composer install --optimize-autoloader
+
 echo "Database ready!, executing migrations..."
 
 echo "Running migrations..."

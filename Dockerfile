@@ -31,7 +31,7 @@ RUN pecl install redis && docker-php-ext-enable redis
 
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql pgsql fileinfo gettext dom intl zip
+    && docker-php-ext-install sockets pdo_mysql mbstring exif pcntl bcmath gd pdo_pgsql pgsql fileinfo gettext dom intl zip
 
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
@@ -50,9 +50,15 @@ COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
 
 COPY . /var/www/html
 
+COPY .env.example /var/www/html/.env
+
 #### Set permissions ####
 RUN chown -R www-data:www-data /var/www/html \
-    && chmod -R 755 /var/www/html
+    && chmod -R 755 /var/www/html \
+    && git config --global --add safe.directory /var/www/html
+
+# Install composer dependencies
+# RUN composer install --no-dev --optimize-autoloader
 
 RUN git config --global --add safe.directory /var/www/html
 
