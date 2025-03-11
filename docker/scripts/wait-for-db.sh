@@ -33,3 +33,9 @@ php artisan migrate --env=testing --no-interaction
 
 echo "Running passport:install for testing..."
 php artisan passport:client --personal --env=testing --no-interaction
+
+echo "Running passport:install for testing..."
+php artisan key:generate --env=testing --no-interaction
+
+echo "Running passport:install for testing..."
+php artisan passport:keys --env=testing --no-interaction --force

@@ -39,11 +39,11 @@ jobs:
       # - name: Build assets inside gateway_service
       #   run: docker-compose exec gateway_service npm run build
 
-      - name: Generate application key inside gateway_service
-        run: docker-compose exec -T gateway_service php artisan key:generate
+      # - name: Generate application key inside gateway_service
+      #   run: docker-compose exec -T gateway_service php artisan key:generate
 
-      - name: Generate Passport keys inside gateway_service
-        run: docker-compose exec -T gateway_service php artisan passport:keys
+      # - name: Generate Passport keys inside gateway_service
+      #   run: docker-compose exec -T gateway_service php artisan passport:keys
 
       # - name: Wait for Database
       #   run: |
