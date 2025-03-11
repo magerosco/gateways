@@ -30,14 +30,14 @@ jobs:
       # - name: Set environment file for CI inside gateway_service
       #   run: docker-compose exec gateway_service cp .env.ci.testing .env.testing
 
-      - name: Install Composer dependencies inside gateway_service
-        run: docker-compose exec gateway_service composer install --prefer-dist --no-progress --no-interaction
+      # - name: Install Composer dependencies inside gateway_service
+      #   run: docker-compose exec gateway_service composer install --prefer-dist --no-progress --no-interaction
 
-      - name: Install npm dependencies inside gateway_service
-        run: docker-compose exec gateway_service npm install
+      # - name: Install npm dependencies inside gateway_service
+      #   run: docker-compose exec gateway_service npm install
 
-      - name: Build assets inside gateway_service
-        run: docker-compose exec gateway_service npm run build
+      # - name: Build assets inside gateway_service
+      #   run: docker-compose exec gateway_service npm run build
 
       - name: Generate application key inside gateway_service
         run: docker-compose exec gateway_service php artisan key:generate
@@ -50,8 +50,8 @@ jobs:
       #     chmod +x docker/scripts/wait-for-db.sh
       #     docker-compose exec gateway_service ./docker/scripts/wait-for-db.sh
 
-      - name: Run migrations inside gateway_service
-        run: docker-compose exec gateway_service php artisan migrate --force
+      # - name: Run migrations inside gateway_service
+      #   run: docker-compose exec gateway_service php artisan migrate --force
 
 
       - name: Run migrations for testing inside gateway_service

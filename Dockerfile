@@ -19,6 +19,9 @@ RUN apt-get update && apt-get install -y \
     libmemcached-dev \
     libpq-dev && rm -rf /var/lib/apt/lists/*
 
+ # Instalar Node.js y npm
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+&& apt-get install -y nodejs
 
 # Rewrite Module enabled
 RUN a2enmod rewrite \
@@ -32,6 +35,12 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 
 
 RUN pecl install mongodb && docker-php-ext-enable mongodb
+
+# Copy composer.lock and composer.json before the installing dependencies
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
 
 #### Composer ####
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -49,6 +58,8 @@ RUN git config --global --add safe.directory /var/www/html
 
 RUN echo "ServerName gateway.test" >> /etc/apache2/apache2.conf
 
+# Build assets
+RUN npm run build
 
 EXPOSE 8088
 
