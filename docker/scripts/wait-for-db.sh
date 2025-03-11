@@ -31,11 +31,11 @@ echo "Current environment: $(php artisan env --env=testing)"
 echo "Running migrations for testing..."
 php artisan migrate --env=testing --no-interaction
 
-echo "Running passport:install for testing..."
+echo "Running passport:client for testing..."
 php artisan passport:client --personal --env=testing --no-interaction
 
-echo "Running passport:install for testing..."
+echo "Running key:generate for testing..."
 php artisan key:generate --env=testing --no-interaction
 
-echo "Running passport:install for testing..."
+echo "Running passport:keys for testing..."
 php artisan passport:keys --env=testing --no-interaction --force
