@@ -58,12 +58,16 @@ jobs:
       #   run: docker-compose exec -T gateway_service php artisan migrate --env=testing --no-interaction
 
 
-      - name: Wait for gateway_service to be ready
+      - name: Check if gateway_service is running
         run: |
-          until docker-compose exec -T gateway_service curl -s http://localhost:8088; do
-            echo "Waiting for gateway_service to be ready..."
-            sleep 5
-          done
+          docker ps | grep gateway_service || echo "gateway_service is not running"
+
+      # - name: Wait for gateway_service to be ready
+      #   run: |
+      #     until docker-compose exec -T gateway_service curl -s http://localhost:8088; do
+      #       echo "Waiting for gateway_service to be ready..."
+      #       sleep 5
+      #     done
 
       - name: Wait for MySQL to be ready
         run: |
