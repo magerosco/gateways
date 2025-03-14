@@ -46,9 +46,10 @@
 Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.FullName }
 ```
 30. **Built custom commands.**
-31. **Configured GitHub Actions**
+31. **Configured GitHub Actions to run tests using Dockers containers.**
 32. **Use RabbitMQ. Implemented a simple RabbitMQ service and external library as examples.**
 33. ***(Handling failed connection to RabbitMQ.)*** **RabbitQM is an external service that allows you to send and receive messages between apps/microservices in different ecosystems. Regardless of a failed connection and sent notifications to administrators, the system must be able to keep working.**
+
 
 
 

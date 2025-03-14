@@ -1,9 +1,10 @@
-name: Laravel CI
+name: Laravel CI - Main
 
 on:
   push:
     branches:
-      - patterns
+      - main
+
   pull_request:
     branches:
       - main

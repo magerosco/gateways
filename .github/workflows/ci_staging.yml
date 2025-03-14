@@ -1,0 +1,56 @@
+name: Laravel CI - Staging
+
+on:
+  push:
+    branches:
+      - staging
+
+  pull_request:
+    branches:
+      - staging
+
+jobs:
+  laravel-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
+
+      - name: Start Docker Compose services
+        run: docker-compose up --build --force-recreate -d
+
+      - name: Check if gateway_service is running
+        run: |
+          docker ps | grep gateway_service || echo "gateway_service is not running"
+
+      - name: Wait for gateway_service to finish configurations and restart apache
+        run: |
+          until docker-compose logs gateway_service | grep -q "Running passport:keys for testing..." && \
+              docker-compose logs gateway_service | grep -q "Encryption keys generated successfully" && \
+              docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
+            echo "Waiting for gateway_service to be fully ready..."
+            sleep 5
+          done
+
+      - name: Run tests inside gateway_service
+        run: docker-compose exec -T gateway_service vendor/bin/phpunit
+
+      - name: Stop Docker Compose services
+        run: docker-compose down --volumes --remove-orphans
+
+      - name: Push to main if tests pass
+        run: |
+          git config --global user.email "github-actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git checkout main
+          git merge --no-ff staging -m "Auto-merge from staging"
+          git push origin main
