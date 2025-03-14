@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\PeripheralRequest;
 use App\Http\Resources\PeripheralResource;
-use App\Repositories\PeripheralRepository;
+use App\Repositories\CrudRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Anasa\ResponseStrategy\ResponseContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,7 +15,7 @@ use Anasa\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 class PeripheralController extends Controller
 {
     public function __construct(
-        protected PeripheralRepository $repository,
+        protected CrudRepositoryInterface $repository,
         protected ResponseContextInterface $responseContext,
         protected StrategyDataInterface $strategyData
     ) {

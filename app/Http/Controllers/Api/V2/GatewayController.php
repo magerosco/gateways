@@ -2,18 +2,22 @@
 
 namespace App\Http\Controllers\Api\V2;
 
+use App\Models\Gateway;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GatewayRequest;
 use App\Http\Resources\GatewayResource;
-use App\Repositories\GatewayRepository;
+use App\Repositories\CrudRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
+use App\Services\Gateway\GatewayServiceInterface;
 
 class GatewayController extends Controller
 {
-    public function __construct(protected GatewayRepository $repository)
-    {
-    }
+    public function __construct(
+        protected CrudRepositoryInterface $repository,
+        protected GatewayServiceInterface $gatewayService // EXAMPLE: it's part of service layer design pattern example
+    ) {}
 
     public function index(): JsonResponse
     {
@@ -63,27 +67,24 @@ class GatewayController extends Controller
         );
     }
 
-    public function destroy($gateway): JsonResponse
+    public function destroy(Gateway $gateway): JsonResponse
     {
-
-        /******************************************************
-         * This security control is just for run the tests,
-         * it must be in a middleware, just like the Version 1
-         **************************************************** */
-        if (!str_contains($gateway->name, 'policy') && request()->user()->email != 'admin@admin.com') {
+        try {
+            /**
+             * EXAMPLE:  Use the service layer pattern when you
+             * want to keep the logic out of the controller
+             */
+            $this->gatewayService->destroyV2($gateway);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
             return response()->json(
                 [
-                    'message' => 'You are not authorized.',
+                    'message' => 'Bad request.',
                     'origin' => 'From V2',
                 ],
-                Response::HTTP_FORBIDDEN,
+                Response::HTTP_BAD_REQUEST,
             );
         }
-        /*********************** */
-
-
-        $this->repository->delete($gateway);
-
         return response()->json(
             [
                 'message' => 'Gateway deleted successfully',

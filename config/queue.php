@@ -81,6 +81,17 @@ return [
             'queue' => env('RABBITMQ_QUEUE', 'default'),
             'retry_after' => 90,
             'block_for' => null,
+            'options' => [
+                'exchange' => [
+                    'name' => 'default_exchange',
+                    'type' => 'direct',
+                ],
+                'queue' => [
+                    'prioritize_delayed' =>  false, // It's is True by default
+                    'queue_max_priority' => 10, // It's is 2 by default
+                ],
+            ],
+
         ],
     ],
 

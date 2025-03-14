@@ -5,10 +5,11 @@ namespace App\Models;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable // implements MustVerifyEmail
 {
     use HasFactory;
     use Notifiable;
@@ -24,6 +25,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'provider',
+        'provider_id'
     ];
 
     /**
@@ -52,5 +55,20 @@ class User extends Authenticatable
     public function token()
     {
         return $this->tokens();
+    }
+
+    public function posts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function image(): \Illuminate\Database\Eloquent\Relations\MorphOne
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function categories(): \Illuminate\Database\Eloquent\Relations\HasManyThrough
+    {
+        return $this->hasManyThrough(Category::class, Post::class, 'user_id', 'id', 'id', 'category_id');
     }
 }

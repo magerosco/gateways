@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
             PeripheralSeeder::class,
             RolePermissionSeeder::class,
             PassportClientSeeder::class,
+            CategorySeeder::class,
+            PostSeeder::class,
+            ImageSeeder::class,
+            ProductSeeder::class,
+            OrderSeeder::class,
         ]);
     }
 }

@@ -14,7 +14,7 @@ trait Cacheable
     {
         $time = is_numeric($time) && $time > 0 ? $time : $this->time;
 
-        if ($this->useTag() && !empty($tag)) {
+        if (!empty($tag) &&  $this->useTag()) {
             return Cache::tags($tag)->remember($key, $time, $this->setCallbackDefault($callback));
         }
 
@@ -23,7 +23,7 @@ trait Cacheable
 
     public function clearCache($key, $tag = null)
     {
-        if ($this->useTag() && !empty($tag)) {
+        if (!empty($tag) && $this->useTag()) {
             return Cache::tags($tag)->flush();
         }
         return Cache::forget($key);
@@ -31,7 +31,7 @@ trait Cacheable
 
     public function clearCacheByTagAndKey($tag, $key, $callback = null)
     {
-        if ($this->useTag() && !empty($tag)) {
+        if (!empty($tag) && $this->useTag()) {
             return Cache::tags($tag)->forget($key, $this->setCallbackDefault($callback));
         }
         return Cache::forget($key);

@@ -4,11 +4,10 @@ namespace App\Repositories;
 
 use App\Models\Gateway;
 use App\Traits\Cacheable;
-use Illuminate\Support\Facades\Cache;
 
 class GatewayRepository implements CrudRepositoryInterface
 {
-    use Cacheable;
+    use Cacheable; // EXAMPLE: This is a trait to manage the cache.
 
     protected $cacheTime = 30;
     protected $cacheTag = 'gateway.';
