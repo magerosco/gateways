@@ -5,9 +5,9 @@ on:
     branches:
       - staging
 
-  pull_request:
-    branches:
-      - staging
+  # pull_request:
+  #   branches:
+  #     - staging
 
 jobs:
   laravel-tests:
