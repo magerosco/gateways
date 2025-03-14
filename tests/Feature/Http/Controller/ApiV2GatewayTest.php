@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controller;
 
 use Tests\TestCase;
 use App\Models\Gateway;
@@ -131,7 +131,7 @@ class ApiV2GatewayTest extends TestCase
         $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number', 'IPv4_address']]);
 
         $response->assertJsonFragment([
-            'serial_number' => ['The serial number field is required.'],
+            'serial_number' => ['The serial number is required.'],
         ]);
 
         $response->assertJsonFragment([

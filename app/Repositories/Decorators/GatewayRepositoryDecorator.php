@@ -4,10 +4,14 @@ namespace App\Repositories\Decorators;
 
 use App\Facades\RabbitMQ;
 use App\Events\GatewayUpdated;
+use App\Traits\RabbitMQConnection;
+use Illuminate\Support\Facades\Log;
 use App\Repositories\GatewayRepository;
 
 class GatewayRepositoryDecorator extends GatewayRepository
 {
+    use RabbitMQConnection;
+
     protected $repository;
 
     public function __construct(GatewayRepository $repository)
@@ -24,7 +28,6 @@ class GatewayRepositoryDecorator extends GatewayRepository
         // Example: Trigger an event from the decorated repository
         event(new GatewayUpdated($gateway));
 
-        // Example: Send a message to RabbitMQ
         RabbitMQ::sendMessage(json_encode($gateway));
 
         return $result;

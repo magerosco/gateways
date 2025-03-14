@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use App\DTO\TokenResponseDTO;
+use Illuminate\Http\Response;
+use Illuminate\Http\JsonResponse;
 use App\Http\Requests\LoginRequest;
+use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Contracts\TokenServiceInterface;
@@ -23,6 +28,31 @@ class OAuthController extends Controller
         // Generate token by passport service
         $tokenResponse = $this->tokenService->generateTokenForUser($user);
 
-        return response()->json($tokenResponse);
+        $token = TokenResponseDTO::fromArray($tokenResponse);
+
+        return new JsonResponse(
+            [
+                'accessToken' => $token->accessToken,
+                'expiresAt' => $token->expiresAt,
+                'message' => 'Login success',
+            ],
+            Response::HTTP_OK,
+        );
+    }
+
+    public function logout(Request $request)
+    {
+        Log::info('logout');
+
+        $this->tokenService->revokeExistingTokens($request->user());
+
+        Auth::logout();
+
+        return new JsonResponse(
+            [
+                'message' => 'Logout success',
+            ],
+            Response::HTTP_OK,
+        );
     }
 }

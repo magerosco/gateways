@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GatewayRequest;
 use App\Http\Resources\GatewayResource;
-use App\Repositories\GatewayRepository;
+use App\Repositories\CrudRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Anasa\ResponseStrategy\ResponseContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -16,9 +16,9 @@ use Anasa\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 class GatewayController extends Controller
 {
     public function __construct(
-        protected GatewayRepository $repository,
-        protected ResponseContextInterface $responseContext,
-        protected StrategyDataInterface $strategyData
+        protected CrudRepositoryInterface $repository, // EXAMPLE: It's part of repository design pattern example
+        protected ResponseContextInterface $responseContext, // EXAMPLE: It's part of strategy design pattern example
+        protected StrategyDataInterface $strategyData // EXAMPLE: It's part of service layer design pattern example
     ) {
         $this->repository = $repository;
         $this->responseContext = $responseContext;
