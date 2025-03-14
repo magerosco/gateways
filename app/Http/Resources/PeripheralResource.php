@@ -25,6 +25,4 @@ class PeripheralResource extends JsonResource
             'updated_at' => $this->updated_at,
         ];
     }
-
-
 }

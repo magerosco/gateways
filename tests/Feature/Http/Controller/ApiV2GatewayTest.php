@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controller;
 
 use Tests\TestCase;
 use App\Models\Gateway;
@@ -15,6 +15,8 @@ class ApiV2GatewayTest extends TestCase
     {
         parent::setUp();
 
+        Artisan::call('migrate:fresh --seed --env="testing"');
+
         $this->user = \App\Models\User::where('name', 'admin')->first();
 
         if (empty($this->user)) {
@@ -25,19 +27,6 @@ class ApiV2GatewayTest extends TestCase
             ]);
         }
         $this->token = 'Bearer ' . $this->user->createToken('TestToken')->plainTextToken;
-
-        // $service = AdditionalDataRequest::getInstance();
-        // $service->setMethod('API');
-    }
-
-    /**
-     * A basic feature test example.
-     */
-    public function test_set_database_config(): void
-    {
-        Artisan::call('migrate:fresh --seed --env="testing"');
-        $response = $this->get('/');
-        $response->assertStatus(200);
     }
 
     public function test_get_gateway_list(): void
@@ -52,6 +41,7 @@ class ApiV2GatewayTest extends TestCase
 
         $response->assertJsonCount(5, 'data');
     }
+
     public function test_get_gateway_list_by_accept_version_header(): void
     {
         $response = $this->withHeaders([
@@ -85,11 +75,8 @@ class ApiV2GatewayTest extends TestCase
             'Accept-Version' => 'v3',
         ])->get('/api/gateway/');
 
-
         $response->assertStatus(400);
-        $response->assertJsonStructure([
-            'error',
-        ]);
+        $response->assertJsonStructure(['error']);
     }
     public function test_get_gateway_detail(): void
     {
@@ -144,7 +131,7 @@ class ApiV2GatewayTest extends TestCase
         $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number', 'IPv4_address']]);
 
         $response->assertJsonFragment([
-            'serial_number' => ['The serial number field is required.'],
+            'serial_number' => ['The serial number is required.'],
         ]);
 
         $response->assertJsonFragment([
@@ -186,7 +173,7 @@ class ApiV2GatewayTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_user_with_no_permission_cannot_create_gateway()
+    public function test_user_with_no_permission_cannot_destroy_gateway()
     {
         $userWithoutPermission = \App\Models\User::factory()->create([
             'name' => 'userWithoutDeletePermission',

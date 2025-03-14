@@ -11,13 +11,19 @@ class PassportTokenService implements TokenServiceInterface
 {
     use RoleScopeMapper;
 
-    protected $tokenFactory;
-    protected $tokenRepository;
+    private $tokenName = 'User Personal Token';
 
-    public function __construct(PersonalAccessTokenFactoryInterface $tokenFactory, TokenRepositoryInterface $tokenRepository)
-    {
+    public function __construct(
+        protected PersonalAccessTokenFactoryInterface $tokenFactory,
+        protected TokenRepositoryInterface $tokenRepository
+    ) {
         $this->tokenFactory = $tokenFactory;
         $this->tokenRepository = $tokenRepository;
+    }
+
+    public  function getTokenName()
+    {
+        return $this->tokenName;
     }
 
     public function revokeExistingTokens($user)
@@ -32,11 +38,11 @@ class PassportTokenService implements TokenServiceInterface
         $this->revokeExistingTokens($user);
 
         $scopes = $this->determineScopesBasedOnRole($user->getRoleNames()->all());
-        $token = $this->tokenFactory->make($user->getKey(), 'User Personal Token', $scopes);
+        $token = $this->tokenFactory->make($user->getKey(), $this->tokenName, $scopes);
 
         return [
-            'access_token' => $token->accessToken,
-            'expires_at' => $token->token->expires_at,
+            'accessToken' => $token->accessToken,
+            'expiresAt' => $token->token->expires_at,
         ];
     }
 }

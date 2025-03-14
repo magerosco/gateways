@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services\Passport;
 
 use App\Contracts\PersonalAccessTokenFactoryInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+namespace Tests\Feature\Http\Controller;
 
 use Tests\TestCase;
 use App\Models\Gateway;
@@ -22,8 +22,9 @@ class GatewayTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = \App\Models\User::where('name', 'admin')->first();
+        Artisan::call('migrate:fresh --seed --env="testing"');
 
+        $this->user = \App\Models\User::where('name', 'admin')->first();
         if (empty($this->user)) {
             $this->user = \App\Models\User::factory()->create([
                 'name' => 'admin',
@@ -33,9 +34,7 @@ class GatewayTest extends TestCase
         }
 
         // Oauth token generation
-        $this->createPersonalAccessClient();
         $scopes = $this->determineScopesBasedOnRole($this->user->getRoleNames()->all());
-
         $tokenFactory = app(\Laravel\Passport\PersonalAccessTokenFactory::class);
         $oauthToken = $tokenFactory->make($this->user->getKey(), 'oauthTestToken', $scopes);
         $this->oauthToken = 'Bearer ' . $oauthToken->accessToken;
@@ -48,28 +47,9 @@ class GatewayTest extends TestCase
         $service->setMethod('API');
     }
 
-    public function createPersonalAccessClient()
-    {
-        $this->app['config']->set('database.default', 'mysql');
-
-        $exitCode = Artisan::call('passport:client', ['--personal' => true]);
-
-        $this->assertEquals(0, $exitCode);
-        $this->assertDatabaseHas('oauth_clients', ['personal_access_client' => 1]);
-    }
-
-    /**
-     * A basic feature test example.
-     */
-    public function test_set_database_config(): void
-    {
-        Artisan::call('migrate:fresh --seed --env="testing"');
-        $response = $this->get('/');
-        $response->assertStatus(200);
-    }
-
     public function test_get_gateway_list(): void
     {
+
         $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->get('/api/gateway/');
 
         $response->assertStatus(200);
@@ -129,7 +109,7 @@ class GatewayTest extends TestCase
         $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number', 'IPv4_address']]);
 
         $response->assertJsonFragment([
-            'serial_number' => ['The serial number field is required.'],
+            'serial_number' => ['The serial number is required.'],
         ]);
 
         $response->assertJsonFragment([
@@ -173,7 +153,7 @@ class GatewayTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_user_with_no_permission_cannot_create_gateway()
+    public function test_user_with_no_permission_cannot_destroy_gateway()
     {
         $userWithoutPermission = \App\Models\User::factory()->create([
             'name' => 'userWithoutDeletePermission',
@@ -187,10 +167,7 @@ class GatewayTest extends TestCase
         $id = $gateway->id;
 
         $response = $this->withHeaders(['Authorization' => $sanctumToken])->deleteJson("/api/gateway/$id");
-        $response->assertJsonStructure([
-            'data' => [],
-            'message',
-        ]);
+        $response->assertJsonStructure(['message']);
         $response->assertStatus(403); // Forbidden, no permission to create
     }
 

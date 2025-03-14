@@ -11,24 +11,29 @@ class SanctumTokenService implements TokenServiceInterface
 {
     use RoleScopeMapper;
 
-    protected $tokenFactory;
-    protected $tokenRepository;
+    private $tokenName = 'User Personal Token';
 
-    public function __construct(PersonalAccessTokenFactoryInterface $tokenFactory, TokenRepositoryInterface $tokenRepository)
-    {
+    public function __construct(
+        protected PersonalAccessTokenFactoryInterface $tokenFactory,
+        protected TokenRepositoryInterface $tokenRepository
+    ) {
         $this->tokenFactory = $tokenFactory;
         $this->tokenRepository = $tokenRepository;
     }
 
+    public  function getTokenName()
+    {
+        return $this->tokenName;
+    }
+
     public function revokeExistingTokens($user)
     {
-        $user->tokens()->where('name', 'Personal Access Token')->delete();
+        $user->tokens()->where('name', $this->tokenName)->delete();
     }
 
     public function generateTokenForUser($user)
     {
         $this->revokeExistingTokens($user);
-        return $user->createToken('Personal Access Token')->plainTextToken;
-
+        return $user->createToken($this->tokenName)->plainTextToken;
     }
 }

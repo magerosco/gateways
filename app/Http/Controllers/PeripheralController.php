@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Contracts\View\View;
 use App\Http\Requests\PeripheralRequest;
 use App\Http\Resources\PeripheralResource;
-use App\Repositories\PeripheralRepository;
+use App\Repositories\CrudRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Anasa\ResponseStrategy\ResponseContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,8 +14,14 @@ use Anasa\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
 class PeripheralController extends Controller
 {
-    public function __construct(protected PeripheralRepository $repository, protected ResponseContextInterface $responseContext, protected StrategyDataInterface $strategyData)
-    {
+    public function __construct(
+        protected CrudRepositoryInterface $repository,
+        protected ResponseContextInterface $responseContext,
+        protected StrategyDataInterface $strategyData
+    ) {
+        $this->repository = $repository;
+        $this->responseContext = $responseContext;
+        $this->strategyData = $strategyData;
     }
     /**
      * Display a listing of the resource.
@@ -27,7 +33,7 @@ class PeripheralController extends Controller
         return $this->responseContext->executeStrategy($strategy);
     }
 
-     /**
+    /**
      * @todo The view is not implemented
      */
     public function create(): View
@@ -43,7 +49,11 @@ class PeripheralController extends Controller
         $validatedData = $request->validated();
         $data = $this->repository->create($validatedData);
 
-        $strategy = $this->strategyData->setStrategyData(new PeripheralResource($data), 'Peripheral created successfully', Response::HTTP_CREATED);
+        $strategy = $this->strategyData->setStrategyData(
+            new PeripheralResource($data),
+            'Peripheral created successfully',
+            Response::HTTP_CREATED
+        );
 
         return $this->responseContext->executeStrategy($strategy);
     }
@@ -74,17 +84,25 @@ class PeripheralController extends Controller
         $validatedData = $request->validated();
         $updated_data = $this->repository->update($id, $validatedData); //it uses findOrFail
 
-        $strategy = $this->strategyData->setStrategyData(new PeripheralResource($updated_data), 'Peripheral updated successfully', Response::HTTP_OK);
+        $strategy = $this->strategyData->setStrategyData(
+            new PeripheralResource($updated_data),
+            'Peripheral updated successfully',
+            Response::HTTP_OK
+        );
 
         return $this->responseContext->executeStrategy($strategy);
     }
-
-
 
     public function destroy($peripheral): JsonResponse|RedirectResponse
     {
         $this->repository->delete($peripheral);
 
-        return $this->responseContext->executeStrategy($this->strategyData->setStrategyData([], 'Peripheral deleted successfully', Response::HTTP_OK));
+        return $this->responseContext->executeStrategy(
+            $this->strategyData->setStrategyData(
+                [],
+                'Peripheral deleted successfully',
+                Response::HTTP_OK
+            )
+        );
     }
 }

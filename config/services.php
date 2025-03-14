@@ -41,5 +41,11 @@ return [
         'redirect' => env('PASSPORT_REDIRECT_URI', 'http://localhost/auth/callback'),
     ],
 
+    'github' => [
+        'client_id' => env('GITHUB_CLIENT_ID'),
+        'client_secret' => env('GITHUB_CLIENT_SECRET'),
+        'redirect' => env('GITHUB_REDIRECT_URI'),
+    ],
+
 
 ];

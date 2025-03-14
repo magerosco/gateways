@@ -12,4 +12,14 @@ class GatewayPolicy
     {
         return str_contains($gateway->name, 'policy') || $user->email == 'admin@admin.com';
     }
+
+    public function __call($ability, $arguments)
+    {
+        /**
+         * Deny all.. Always returns false, which implies that it denies any ability
+        * (action) not defined in the policy. This ensures that any action not explicitly
+        * allowed will be denied.
+         */
+        return false;
+    }
 }

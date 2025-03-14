@@ -52,6 +52,22 @@ return [
 
     'channels' => [
 
+        'rabbitmq' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/rabbitmq/rabbitmq.log'),
+            'level' => 'debug',
+        ],
+        'order_processing' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/orderProcessing/log.log'),
+            'level' => 'debug',
+        ],
+        'registered_user' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/registeredUser/mi_log.log'),
+            'level' => 'debug',
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => explode(',', env('LOG_STACK', 'single')),

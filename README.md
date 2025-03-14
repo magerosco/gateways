@@ -1,141 +1,187 @@
+
 <p align="center">
     <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-11-FF2D20.svg?style=flat&logo=laravel" alt="Laravel 11"/></a>
     <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-8.2-777BB4.svg?style=flat&logo=php" alt="PHP 8.2"/></a>
-    <a href="https://github.com/orphail/laravel-ddd/actions"><img src="https://github.com/orphail/laravel-ddd/actions/workflows/laravel-tests.yml/badge.svg" alt="GithubActions"/></a>
+    <a href="https://github.com/magerosco/gateways/actions/workflows/ci.yml"><img src="https://github.com/magerosco/gateways/actions/workflows/ci.yml/badge.svg" alt="GithubActions"/></a>
 </p>
 
-![alt text](/README/image/php-cleaning.jpg)
 
-**✅ The list below shows personal ideas, and concepts to use clean, decoupled code aligned with SOLID principles.**  
-***Details 👉🏻 [HERE](README/README.md):***
-1. **Response Strategy.**
-2. **Policy Example.**
-3. **Handling the Roles/Permissions with spatie/laravel-permission and personalized middleware for the access to the resources.**
-4. **Dispatching events for a specific function from a decorated repository.**
-5. **Swagger OpenAPI to align work between the backend and frontend.**
-6. **API Versioning.**
-7. **Handling Cache.**
-8. **Coexistence of Oauth+JWT and Sanctum for versioned APIs.**
+## This project is a compilation of exercises covering different aspects of Laravel, and applying concepts to use clean, decoupled code aligned with SOLID principles.**  
+
+**✅ Features:**
+1. **Setup enviroment with Docker. (Apache, Redis, RabbitMQ, Mongo, MySql)**
+2. **Define routes with prefixes**
+3. **Sanitize data by middleware to ensure data integrity before validations (XSS, SQL Injection)**
+4. **Handle roles by own middleware or by the spatie/laravel-permission package**
+5. **Authentication with Sanctum and tests**
+6. **Authentication with OAuth+JWT and use public and private keys for OAuth authentication with Laravel Passport. and tests**
+7. **Write tests and setUp method for each feature**
+8. **Implement event handling**
+9. **Implemented custom log channels and validated log structure in tests**
+10. **Use Illuminate\Http\Response defining responses with appropriate status codes.**
+11. **Use Laravel Resources to define the structure of outgoing data with custom fields.**
+12. **Protect endpoints with rate limiting (throttle middleware)**
+13. **Validate inputs using Form Requests to handle the responsibility of validation in a single place.**
+14. **Configured CORS and used the database to dynamically manage allowed origins.**
+15. **Defined relationships (hasOne, hasMany, belongsTo, belongsToMany, morphTo, morphToMany, morphOne, morphMany, morphedByMany, hasOneThrough, hasManyThrough).**
+16. **Used advanced queries (whereHas, withCount, subqueries, mutators & accessors) and implemented query scopes**
+17. **Implemented caching using Redis, Memcached, Database. Apply tags to group cache keys by a trait to manage the cache globally. Use the model events from the observer as an option to clear the cache.** [Details](README/README.md#L377):
+18. **Model events (Use observer to handle the model events)**
+19. **Optimized queries using chunk(), lazy(), cursor()**
+20. **Handled transactions and lockings (DB::transaction(), lockForUpdate()).**
+21. **Used Gates & Policies.**
+22. **Used factories and seeders in tests**
+23. **Develop tests with/without database persistence (ModelName::factory()->create(), ModelName::factory()->make())**
+24. **Mocked dependencies with Mockery/Laravel Mock.**
+25. **Scheduled tasks with Task Scheduling.**
+26. **Monitored queues with Horizon.**
+27. **Swagger OpenAPI to align work between the backend and frontend.**
+28. **API Versioning.**
+29. **Used the lint to check the scripts. I consider it important, for example, to quickly review scripts in production.**
+ ```bash
+ #GitBash:
+ find . -name "*.php" -exec php -l {} \;
+
+#PowerShell
+Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.FullName }
+```
+30. **Built custom commands.**
+31. **Configured GitHub Actions to run tests using Dockers containers.**
+32. **Use RabbitMQ. Implemented a simple RabbitMQ service and external library as examples.**
+33. ***(Handling failed connection to RabbitMQ.)*** **RabbitQM is an external service that allows you to send and receive messages between apps/microservices in different ecosystems. Regardless of a failed connection and sent notifications to administrators, the system must be able to keep working.**
 
 
-## Project specification
 
-This sample project is managing gateways - master devices that control multiple peripheral devices. 
 
-The task is to create a REST service (JSON/HTTP) for storing information about these gateways and their associated devices. This information must be stored in the database. 
+✅ **Design Patterns, SOLID principles** *Click to read more:*
+<details> <summary><b>1. Repository Layer Design Pattern:<b></summary>
 
-- When storing a gateway, any field marked as “to be validated” must be validated and an error returned if it is invalid.
-- Also, no more that 10 peripheral devices are allowed for a gateway.
-- The service must also offer an operation for displaying information about all stored gateways (and their devices) 
-- Operation for displaying details for a single gateway. 
-- It must be possible to add and remove a device from a gateway.
-- Basic UI - recommended or (providing test data for Postman (or other rest client) if you do not have enough time.
--  Meaningful Unit tests.
--  Readme file with installation guides.
--  An automated build.
+***Note: Dependency injection by interface and handling it  from the provider as part of multiple dependency classes that need to be injected into the same class***
+[CrudRepositoryInterface](app/Repositories/CrudRepositoryInterface.php)<br>
+[GatewayRepository](app/Repositories/GatewayRepository.php)<br>
+[InterfaceServiceProvider](app/Providers/InterfaceServiceProvider.php#L56)<br>
+</details>
 
-## Entities
 
-**gateway**:
+<details> 
+<summary><b>2. Service Layer Design Pattern:<b></summary>
 
-- a unique serial number (string), 
-- human-readable name (string),
-- IPv4 address (to be validated),
-- multiple associated peripheral devices. 
+***Note: Basic example using inheritance between interfaces and handling  the multiple dependency classes that need to be injected into the same class.***
 
-**peripheral**:
-- a UID (number),
-- vendor (string),
-- date created,
-- status - online/offline.
+[GatewayService](app/Services/Gateway/GatewayService.php) <br>
+[GatewayServiceInterface](app/Services/Gateway/GatewayServiceInterface.php)<br>
+[GatewayServiceDestroyV2Interface](app/Services/Gateway/GatewayServiceDestroyV2Interface.php)<br>
+[InterfaceServiceProvider](app/Providers/InterfaceServiceProvider.php#L38)<br>
+[GatewayController](app/Http/Controllers/Api/V2/GatewayController.php#L88)
+</details>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<details>
+<summary><b>3. Observer Design Pattern<b></summary>
 
-## Prerequisites
+***Note: This app use cache (DB, Redis, etc..), and the example attempts to make use of the observer for clear the cache when a resource is created, updated or deleted.***
+[GatewayObserver](app/Observers/GatewayObserver.php)<br>
+</details>
 
-Before you begin, make sure you have the following installed:
+<details>
+<summary><b>4. Decorator Design Pattern<b></summary>
 
-- **PHP** >= 8.0
-- **Composer** - [Installation Instructions](https://getcomposer.org/download/)
-- **MySQL** 
+***Note: Dispatching events for a specific function from a decorated repository to avoid coupling the code logic.***
+
+[GatewayRepository](app/Repositories/GatewayRepository.php#L49)<br>
+[GatewayRepositoryDecorator](app/Repositories/Decorators/GatewayRepositoryDecorator.php#L18)<br>
+</details>
+<details>
+<summary><b>5. Event-Driven Pattern<b></summary>
+
+***Note: This example works in combination with the Decorator Design Pattern to decouple the code logic.***
+
+[GatewayUpdated](app/Events/GatewayUpdated.php)<br>
+[GatewayUpdatedListener](app/Listeners/GatewayUpdatedListener.php)<br>
+</details>
+
+<details>
+<summary><b>6. Strategy Pattern.<b></summary>
+
+***Note: This example combines middleware, a vendor package, factory and the strategy pattern as an optional solution to handle the type of output that will be implemented for a crud. With middleware as a starting point, this only works for endpoints that apply it.👉🏻 [Details:](README/README.md)***
+
+[ApiOrWebMiddleware](app/Http/Middleware/ApiOrWebMiddleware.php)<br>
+[GatewayController](app/Http/Controllers/GatewayController.php#L34)<br>
+[Vendor/ResponseStrategy](vendor/anasa/response-strategy/src/)
+
+</details>
+
+<details>
+<summary><b>7. Facade Pattern<b></summary>
+
+[RabbitMQ](app/Facades/RabbitMQ.php)<br> 
+[bootstrap/app.php](bootstrap/app.php#L22)<br>
+
+</details>
+
+<details>
+<summary><b>8. DTO (Data Transfer Object) Pattern<b></summary>
+
+***Notes: Basic example, just to show the pattern***
+[DTO](app/DTO/)<br>
+</details>
+
+<details>
+<summary><b>9. Chain of Responsibility Pattern.<b></summary>
+
+[Pipelines/Order](app/Pipelines/Order)<br>
+[OrderController/processOrder](app/Http/Controllers/Api/OrderController.php#L20)<br>
+</details>
+
+<details>
+<summary><b>10. Builder Pattern<b></summary>
+
+***Note: Example in combination with Factory Pattern to generate different report formats***
+
+[ReportController](app/Http/Controllers/Api/ReportController.php#L12)<br>
+[ReportDirector](app/Services/Report/ReportDirector.php)<br>
+</details>
+
+<details>
+<summary><b>11. Factory Pattern<b></summary>
+
+***Note: Example in combination with Builder Pattern to generate different report formats.***
+[ReportFactory](app/Factories/ReportFactory.php)<br>
+</details>
+
+<details>
+<summary><b>12. Command Pattern in Laravel<b></summary>
+
+***Note: Using Illuminate\Console\Command as extension, it responds to the command line php artisan rabbit:consume {queues=default}***
+
+[ConsumeRabbitMessages](app/Console/ConsumeRabbitMessages.php)<br>
+</details>
+
+
+
+
+
+
+
 
 ## Installation
 
-Follow these steps to set up the project on your local environment:
+First steps:
 
-1. **Clone the repository**
-
-   Clone this repository to your local machine using Git:
-   ```bash
-   git clone https://github.com/magerosco/gateways.git
-2. **Navigate to the project directory**
-
-    Use Composer to install all required PHP dependencies:
-    ```bash
-    cd your-project
-3. **Install PHP dependencies**
-    ```bash
+```bash
     composer install
-4. **Set up the .env file**
-
-    Copy the .env.example file to .env:
-    ```bash
     cp .env.example .env
- - Open the .env file in your preferred text editor and configure the database connection and other environment settings.
- 
- 5. **Generate the application key**
- 
-    Laravel requires an application key to encrypt data. Generate this key using the following command:
-    ```bash
     php artisan key:generate
-6. **Set up the database**
-
-    Ensure your database is created and correctly configured in the .env file. Then run the migrations to create the tables:
-    
-    ```bash
     php artisan migrate
-7. **Seed the database**
-    Includes seeders, you can populate the database with initial data using:
-    ```bash
     php artisan db:seed
-8. **Start the development server**
-    ```bash
     php artisan serve
-- By default, the application will be available at http://localhost:8000.
+``` 
 
 ## Testing 
-
- **(Recommended) You can run the feature's tests using PHPUnit:**
-
-```bash
-    php artisan test --filter=PeripheralTest
-```
-
-```bash
-    php artisan test --filter=GatewayTest
-```
-
- **(Optional) You can run the project's tests using PHPUnit:**
-
-```bash
-    php artisan test
-```
  
- ## Testing REST service with postman 
+ ## Check the available endpoints to test with postman 
 
 ```
-  GET|HEAD        api/gateway   
-  POST            api/gateway   
-  GET|HEAD        api/gateway/{gateway}   
-  PUT|PATCH       api/gateway/{gateway}   
-  DELETE          api/gateway/{gateway}   
-   
-
-  GET|HEAD        api/peripheral 
-  POST            api/peripheral   
-  GET|HEAD        api/peripheral/{peripheral}   
-  PUT|PATCH       api/peripheral/{peripheral} 
-  DELETE          api/peripheral/{peripheral} 
+  php artisan route:list
 ```
 **Note: You must use the admin credentials to delete path: *api/peripheral/{peripheral}* or *api/gateway/{gateway}.***
 1. **Login to get the token.**
@@ -149,39 +195,7 @@ Body raw:
   "password": "admin"
 }
 ```
-![alt text](README/image/{0C44C1DE-D1EE-479B-AC32-E35984484270}.png)
-
-2. **(Optional), you can create a new user and then login.**
-```
-POST            api/register
-
-Body raw:
-{
-    "name": "john",
-    "email": "john@example.com",
-    "password": "12345678",
-    "password_confirmation": "12345678"
-}
-```
-![alt text](README/image/{7CD6D5B4-763F-46DA-802A-B2AD5B744D64}.png)
 
 
 
 
-## RabbitMQ
-
-- **RabbitMQ** - [Installation Instructions](https://www.rabbitmq.com/docs/install-windows)
-
-**Active the interface by PowerShell:**
-
-```bash
- C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-plugins.bat enable rabbitmq_management
-```
-**Rum server**
-
-```bash
-    C:\Program Files\RabbitMQ Server\rabbitmq_server-4.0.5\sbin> .\rabbitmq-server.bat
-```
-- Dirección: http://localhost:15672
-- Default user: guest
-- Default password: guest

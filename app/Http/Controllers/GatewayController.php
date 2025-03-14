@@ -7,7 +7,7 @@ use Illuminate\Contracts\View\View;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\GatewayRequest;
 use App\Http\Resources\GatewayResource;
-use App\Repositories\GatewayRepository;
+use App\Repositories\CrudRepositoryInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Anasa\ResponseStrategy\ResponseContextInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -15,8 +15,14 @@ use Anasa\ResponseStrategy\OutputDataFormat\StrategyDataInterface;
 
 class GatewayController extends Controller
 {
-    public function __construct(protected GatewayRepository $repository, protected ResponseContextInterface $responseContext, protected StrategyDataInterface $strategyData)
-    {
+    public function __construct(
+        protected CrudRepositoryInterface $repository, // EXAMPLE: It's part of repository design pattern example
+        protected ResponseContextInterface $responseContext, // EXAMPLE: It's part of strategy design pattern example
+        protected StrategyDataInterface $strategyData // EXAMPLE: It's part of service layer design pattern example
+    ) {
+        $this->repository = $repository;
+        $this->responseContext = $responseContext;
+        $this->strategyData = $strategyData;
     }
 
     /**
@@ -43,7 +49,11 @@ class GatewayController extends Controller
         $validatedData = $request->validated();
         $gateway = $this->repository->create($validatedData);
 
-        $strategy = $this->strategyData->setStrategyData(new GatewayResource($gateway), 'Gateway created successfully', Response::HTTP_CREATED);
+        $strategy = $this->strategyData->setStrategyData(
+            new GatewayResource($gateway),
+            'Gateway created successfully',
+            Response::HTTP_CREATED
+        );
 
         return $this->responseContext->executeStrategy($strategy);
     }
@@ -79,7 +89,11 @@ class GatewayController extends Controller
 
         $updated_data = $this->repository->updateGateway($id, $validatedData); //it uses findOrFail
 
-        $strategy = $this->strategyData->setStrategyData(new GatewayResource($updated_data), 'Gateway updated successfully', Response::HTTP_OK);
+        $strategy = $this->strategyData->setStrategyData(
+            new GatewayResource($updated_data),
+            'Gateway updated successfully',
+            Response::HTTP_OK
+        );
 
         return $this->responseContext->executeStrategy($strategy);
     }
@@ -88,6 +102,12 @@ class GatewayController extends Controller
     {
         $this->repository->delete($gateway);
 
-        return $this->responseContext->executeStrategy($this->strategyData->setStrategyData([], 'Gateway deleted successfully', Response::HTTP_OK));
+        return $this->responseContext->executeStrategy(
+            $this->strategyData->setStrategyData(
+                [],
+                'Gateway deleted successfully',
+                Response::HTTP_OK
+            )
+        );
     }
 }
