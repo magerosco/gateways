@@ -16,7 +16,7 @@ Route::group(
     Route::get('/gateway/{id}', [GatewayController::class, 'show'])->name('gateway.show');
     Route::post('/gateway', [GatewayController::class, 'store'])->name('gateway.store');
     Route::put('/gateway/{id}', [GatewayController::class, 'update'])->name('gateway.update');
-    Route::delete('/gateway/{gateway}', [GatewayController::class, 'destroy'])->name('gateway.destroy');
+    Route::delete('/gateway/{gateway}', [GatewayController::class, 'destroy'])->name('gateway.destroy')->middleware('gateway_action:delete');;
 });
 
 Route::model('gateway', App\Models\Gateway::class);
