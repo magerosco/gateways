@@ -10,7 +10,7 @@ on:
       - main
 
 jobs:
-  laravel-tests:
+  main-tests:
     runs-on: ubuntu-latest
 
     steps:
