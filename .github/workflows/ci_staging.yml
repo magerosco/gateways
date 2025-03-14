@@ -53,9 +53,9 @@ jobs:
       - name: Stop Docker Compose services
         run: docker-compose down --volumes --remove-orphans
 
+      - name: Configure GitHub Token for authentication
+        run: git config --global url."https://x-access-token:${{ secrets.PAT_TOKEN }}@github.com/magerosco/gateways.git".insteadOf "https://github.com/magerosco/gateways.git"
 
-      - name: Configure GitHub Token
-        run: git config --global url."https://x-access-token:${{ secrets.PAT_TOKEN }}".insteadOf "https://github.com/"
 
       - name: Push to main if tests pass
         run: |
