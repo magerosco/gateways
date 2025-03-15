@@ -2,7 +2,7 @@
 <p align="center">
     <a href="https://laravel.com/"><img src="https://img.shields.io/badge/Laravel-11-FF2D20.svg?style=flat&logo=laravel" alt="Laravel 11"/></a>
     <a href="https://www.php.net/"><img src="https://img.shields.io/badge/PHP-8.2-777BB4.svg?style=flat&logo=php" alt="PHP 8.2"/></a>
-    <a href="https://github.com/magerosco/gateways/actions/workflows/ci.yml"><img src="https://github.com/magerosco/gateways/actions/workflows/ci.yml/badge.svg" alt="GithubActions"/></a>
+    <a href="https://github.com/magerosco/gateways/actions/workflows/ci_main.yml"><img src="https://github.com/magerosco/gateways/actions/workflows/ci_main.yml/badge.svg" alt="GithubActions"/></a>
 </p>
 
 
