@@ -1,6 +1,11 @@
 name: Laravel CI - Main
 
 on:
+  workflow_run:
+    workflows: ["Laravel CI - Staging"]  # El nombre del workflow de Staging
+    types:
+      - completed
+      
   push:
     branches:
       - main
