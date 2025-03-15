@@ -5,15 +5,15 @@ on:
     branches:
       - staging
 
-  # pull_request:
-  #   branches:
-  #     - staging
+  pull_request:
+    branches:
+      - staging
 
 permissions:
   contents: write
 
 jobs:
-  laravel-tests:
+  staging-tests:
     runs-on: ubuntu-latest
 
     steps:

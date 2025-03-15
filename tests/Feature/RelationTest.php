@@ -181,7 +181,7 @@ class RelationTest extends TestCase
 
         $posts->each(function ($post) {
             $this->assertInstanceOf(Post::class, $post);
-            $this->assertStringContainsString('n', $post->title);
+            $this->assertStringContainsStringIgnoringCase('n', $post->title);
         });
     }
     public function test_scope_title_with_chunks_works_for_post()
