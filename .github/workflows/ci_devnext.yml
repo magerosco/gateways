@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - devnext
+    types:
+      - opened
+      - synchronize
 
 jobs:
   devnext-tests:
