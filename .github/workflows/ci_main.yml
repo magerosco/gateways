@@ -1,6 +1,13 @@
 name: Laravel CI - Main
 
 on:
+  workflow_run:
+    workflows: ["Laravel CI - Staging"]
+    branches:
+      - main
+    types:
+      - completed
+
   push:
     branches:
       - main
@@ -8,6 +15,12 @@ on:
   pull_request:
     branches:
       - main
+    types:
+      - opened
+      - synchronize
+
+permissions:
+  contents: write
 
 jobs:
   main-tests:
