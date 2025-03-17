@@ -18,6 +18,8 @@ on:
       - .github/workflows/ci_main.yml
       - 'README.md'
 
+  workflow_dispatch:
+
 permissions:
   contents: write
 
