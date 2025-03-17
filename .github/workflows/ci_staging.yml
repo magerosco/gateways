@@ -17,11 +17,6 @@ on:
       - opened
       - synchronize
       - reopened
-    paths-ignore:
-      - .github/workflows/ci_devnext.yml
-      - .github/workflows/ci_staging.yml
-      - .github/workflows/ci_main.yml
-      - 'README.md'
 
 permissions:
   contents: write
