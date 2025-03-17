@@ -6,7 +6,7 @@
 </p>
 
 
-## This project is a compilation of exercises covering different aspects of Laravel, and applying concepts to use clean, decoupled code aligned with SOLID principles.**  
+## This project is a compilation of exercises covering different aspects of Laravel, and applying concepts to use clean, decoupled code aligned with SOLID principles.
 
 **✅ Features:**
 1. **Setup enviroment with Docker. (Apache, Redis, RabbitMQ, Mongo, MySql)**
@@ -57,6 +57,7 @@ Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.Full
 <details> <summary><b>1. Repository Layer Design Pattern:<b></summary>
 
 ***Note: Dependency injection by interface and handling it  from the provider as part of multiple dependency classes that need to be injected into the same class***
+
 [CrudRepositoryInterface](app/Repositories/CrudRepositoryInterface.php)<br>
 [GatewayRepository](app/Repositories/GatewayRepository.php)<br>
 [InterfaceServiceProvider](app/Providers/InterfaceServiceProvider.php#L56)<br>
@@ -79,6 +80,7 @@ Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.Full
 <summary><b>3. Observer Design Pattern<b></summary>
 
 ***Note: This app use cache (DB, Redis, etc..), and the example attempts to make use of the observer for clear the cache when a resource is created, updated or deleted.***
+
 [GatewayObserver](app/Observers/GatewayObserver.php)<br>
 </details>
 
@@ -145,6 +147,7 @@ Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.Full
 <summary><b>11. Factory Pattern<b></summary>
 
 ***Note: Example in combination with Builder Pattern to generate different report formats.***
+
 [ReportFactory](app/Factories/ReportFactory.php)<br>
 </details>
 
