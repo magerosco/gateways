@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - staging
-    paths-ignore:
-      - .github/workflows/ci_devnext.yml
-      - .github/workflows/ci_staging.yml
-      - .github/workflows/ci_main.yml
-      - 'README.md'
 
   pull_request:
     branches:
