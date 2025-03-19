@@ -31,20 +31,13 @@
 20. **Handled transactions and lockings (DB::transaction(), lockForUpdate()).**
 21. **Used Gates & Policies.**
 22. **Used factories and seeders in tests**
-23. **Develop tests with/without database persistence (ModelName::factory()->create(), ModelName::factory()->make())**
+23. **Develop tests with/without DB persistence (ModelName::factory()->create(), ModelName::factory()->make())**
 24. **Mocked dependencies with Mockery/Laravel Mock.**
 25. **Scheduled tasks with Task Scheduling.**
 26. **Monitored queues with Horizon.**
 27. **Swagger OpenAPI to align work between the backend and frontend.**
 28. **API Versioning.**
 29. **Used the lint to check the scripts. I consider it important, for example, to quickly review scripts in production.**
- ```bash
- #GitBash:
- find . -name "*.php" -exec php -l {} \;
-
-#PowerShell
-Get-ChildItem -Path . -Filter "*.php" -Recurse | ForEach-Object { php -l $_.FullName }
-```
 30. **Built custom commands.**
 31. **Configured GitHub Actions to run tests using Dockers containers.**
 32. **Use RabbitMQ. Implemented a simple RabbitMQ service and external library as examples.**
