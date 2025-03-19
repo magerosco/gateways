@@ -13,6 +13,7 @@ on:
       - .github/workflows/ci_staging.yml
       - .github/workflows/ci_main.yml
       - 'README.md'
+      - 'README/**'
 
   workflow_dispatch:
 
