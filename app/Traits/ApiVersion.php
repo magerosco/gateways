@@ -6,6 +6,8 @@ namespace App\Traits;
 
 use Illuminate\Http\Request;
 
+use function Ramsey\Uuid\v3;
+
 trait ApiVersion
 {
     protected array $supportedVersions = ['v1', 'v2'];
@@ -14,6 +16,6 @@ trait ApiVersion
     {
         $version = strtolower($request->header('Accept-Version') ?? $request->query('version') ?? 'v1');
 
-        return in_array($version, $this->supportedVersions) ? $version : 'v1';
+        return in_array($version, $this->supportedVersions) ? $version : '';
     }
 }
