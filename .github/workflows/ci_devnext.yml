@@ -40,6 +40,9 @@ jobs:
         run: |
           docker ps | grep gateway_service || echo "gateway_service is not running"
 
+      - name: Enable ssh for debugging
+        uses: mxschmitt/action-tmate@v3
+
       - name: Wait for gateway_service to finish configurations and restart apache
         run: |
           until docker-compose logs gateway_service | grep -q "Running passport:keys for testing..." && \
