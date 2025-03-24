@@ -1,8 +1,8 @@
-name: Main
+name: Laravel CI - Main
 
 on:
   workflow_run:
-    workflows: ["Staging"]
+    workflows: ["Laravel CI - Staging"]
     types:
       - completed
 
@@ -59,7 +59,9 @@ jobs:
 
       - name: Wait for gateway_service to finish configurations and restart apache
         run: |
-          until docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
+          until docker-compose logs gateway_service | grep -q "Running passport:keys for testing..." && \
+              docker-compose logs gateway_service | grep -q "Encryption keys generated successfully" && \
+              docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
             echo "Waiting for gateway_service to be fully ready..."
             sleep 5
           done
