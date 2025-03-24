@@ -74,5 +74,5 @@ COPY docker/scripts/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 
 RUN chmod +x /usr/local/bin/wait-for-db.sh
 
-CMD [ "sh", "-c", "/usr/local/bin/wait-for-db.sh && apache2-foreground" ]
+CMD [ "sh", "-c", "/usr/local/bin/wait-for-db.sh" ]
 ####  ####

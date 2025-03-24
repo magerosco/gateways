@@ -42,3 +42,6 @@ php artisan key:generate --env=testing --no-interaction
 
 echo "Running passport:keys for testing..."
 php artisan passport:keys --env=testing --no-interaction --force
+
+echo "Starting Apache..."
+apache2-foreground
