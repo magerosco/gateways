@@ -99,5 +99,3 @@ services:
       - redis
     networks:
       - gateway_network
-    # env_file:
-    #   - .env
