@@ -51,7 +51,6 @@ COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
 COPY . /var/www/html
 
 COPY .env.example /var/www/html/.env
-COPY .env.docker.testing /var/www/html/.env.testing
 
 #### Set permissions ####
 RUN chown -R www-data:www-data /var/www/html \

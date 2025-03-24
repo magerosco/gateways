@@ -9,11 +9,11 @@ on:
       - synchronize
       - reopened
     paths-ignore:
+      - .github/workflows/ci_devnext.yml
+      - .github/workflows/ci_staging.yml
+      - .github/workflows/ci_main.yml
       - 'README.md'
       - 'README/**'
-      # - .github/workflows/ci_devnext.yml
-      # - .github/workflows/ci_staging.yml
-      # - .github/workflows/ci_main.yml
 
   workflow_dispatch:
 
@@ -40,17 +40,12 @@ jobs:
         run: |
           docker ps | grep gateway_service || echo "gateway_service is not running"
 
-      # - name: Wait for gateway_service to finish configurations and restart apache
-      #   run: |
-      #     until docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
-      #       echo "Waiting for gateway_service to be fully ready..."
-      #       sleep 5
-      #     done
-
-      - name: Wait for 30 seconds
+      - name: Wait for gateway_service to finish configurations and restart apache
         run: |
-          echo "Waiting for 30 seconds..."
-          sleep 30
+          until docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
+            echo "Waiting for gateway_service to be fully ready..."
+            sleep 5
+          done
 
       - name: Run tests inside gateway_service
         run: docker-compose exec -T gateway_service vendor/bin/phpunit
