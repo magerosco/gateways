@@ -149,7 +149,12 @@ class ApiV2GatewayTest extends TestCase
             'IPv4_address' => '192.168.0.2',
             'name' => 'Updated Gateway',
         ];
-        $response = $this->withHeaders(['Authorization' => $this->token])->putJson("/api/v2/gateway/$id", $updatedData);
+        $response = $this->withHeaders(
+            [
+                'Authorization' => $this->token,
+                'Accept-Version' => 'v2'
+            ]
+        )->putJson("/api/v2/gateway/$id", $updatedData);
 
         $response->assertJsonStructure([
             'data' => ['id', 'serial_number', 'name', 'IPv4_address', 'peripheral', 'created_at', 'updated_at'],
