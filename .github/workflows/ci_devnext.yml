@@ -40,12 +40,17 @@ jobs:
         run: |
           docker ps | grep gateway_service || echo "gateway_service is not running"
 
-      - name: Wait for gateway_service to finish configurations and restart apache
+      # - name: Wait for gateway_service to finish configurations and restart apache
+      #   run: |
+      #     until docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
+      #       echo "Waiting for gateway_service to be fully ready..."
+      #       sleep 5
+      #     done
+
+      - name: Wait for 30 seconds
         run: |
-          until docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
-            echo "Waiting for gateway_service to be fully ready..."
-            sleep 5
-          done
+          echo "Waiting for 30 seconds..."
+          sleep 30
 
       - name: Run tests inside gateway_service
         run: docker-compose exec -T gateway_service vendor/bin/phpunit
