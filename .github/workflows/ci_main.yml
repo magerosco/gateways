@@ -32,6 +32,7 @@ permissions:
 jobs:
   main-tests:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
 
     steps:
       - name: Set up Docker Buildx
