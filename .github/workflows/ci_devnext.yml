@@ -9,9 +9,6 @@ on:
       - synchronize
       - reopened
     paths-ignore:
-      - .github/workflows/ci_devnext.yml
-      - .github/workflows/ci_staging.yml
-      - .github/workflows/ci_main.yml
       - 'README.md'
       - 'README/**'
 
@@ -45,7 +42,9 @@ jobs:
 
       - name: Wait for gateway_service to finish configurations and restart apache
         run: |
-          until docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
+          until docker-compose logs gateway_service | grep -q "Running passport:keys for testing..." && \
+              docker-compose logs gateway_service | grep -q "Encryption keys generated successfully" && \
+              docker-compose logs gateway_service | grep -q "Command line: 'apache2 -D FOREGROUND'"; do
             echo "Waiting for gateway_service to be fully ready..."
             sleep 5
           done
