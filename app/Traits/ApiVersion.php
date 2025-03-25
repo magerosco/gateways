@@ -14,6 +14,6 @@ trait ApiVersion
     {
         $version = strtolower($request->header('Accept-Version') ?? $request->query('version') ?? 'v1');
 
-        return in_array($version, $this->supportedVersions) ? $version : 'v1';
+        return in_array($version, $this->supportedVersions) ? $version : '';
     }
 }

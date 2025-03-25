@@ -10,9 +10,6 @@ on:
     branches:
       - main
     paths-ignore:
-      - .github/workflows/ci_devnext.yml
-      - .github/workflows/ci_staging.yml
-      - .github/workflows/ci_main.yml
       - 'README.md'
       - 'README/**'
 
@@ -24,10 +21,8 @@ on:
       - synchronize
       - reopened
     paths-ignore:
-      - .github/workflows/ci_devnext.yml
-      - .github/workflows/ci_staging.yml
-      - .github/workflows/ci_main.yml
       - 'README.md'
+      - 'README/**'
 
   workflow_dispatch:
 
@@ -65,6 +60,10 @@ jobs:
             echo "Waiting for gateway_service to be fully ready..."
             sleep 5
           done
+
+      - name: Install Composer dependencies
+        run: |
+          docker-compose exec -T  gateway_service composer install --optimize-autoloader
 
       - name: Run tests inside gateway_service
         run: docker-compose exec -T gateway_service vendor/bin/phpunit
