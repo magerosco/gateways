@@ -13,9 +13,6 @@ on:
       - synchronize
       - reopened
     paths-ignore:
-      - .github/workflows/ci_devnext.yml
-      - .github/workflows/ci_staging.yml
-      - .github/workflows/ci_main.yml
       - 'README.md'
       - 'README/**'
 
@@ -35,8 +32,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0
-          ref: staging
+          fetch-depth: 0 # Fetch all history for PRs and avoid errors with merge commits based on the history
 
       - name: Set up Docker Compose
         run: |
@@ -58,6 +54,10 @@ jobs:
             echo "Waiting for gateway_service to be fully ready..."
             sleep 5
           done
+
+      - name: Install Composer dependencies
+        run: |
+          docker-compose exec -T  gateway_service composer install --optimize-autoloader
 
       - name: Run tests inside gateway_service
         run: docker-compose exec -T gateway_service vendor/bin/phpunit

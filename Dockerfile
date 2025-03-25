@@ -51,6 +51,7 @@ COPY docker/apache/default.conf /etc/apache2/sites-available/000-default.conf
 COPY . /var/www/html
 
 COPY .env.example /var/www/html/.env
+COPY .env.ci.testing /var/www/html/.env.testing
 
 #### Set permissions ####
 RUN chown -R www-data:www-data /var/www/html \
@@ -74,5 +75,5 @@ COPY docker/scripts/wait-for-db.sh /usr/local/bin/wait-for-db.sh
 
 RUN chmod +x /usr/local/bin/wait-for-db.sh
 
-CMD [ "sh", "-c", "/usr/local/bin/wait-for-db.sh && apache2-foreground" ]
+CMD [ "sh", "-c", "/usr/local/bin/wait-for-db.sh" ]
 ####  ####

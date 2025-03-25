@@ -5,7 +5,6 @@ namespace App\Repositories\Decorators;
 use App\Facades\RabbitMQ;
 use App\Events\GatewayUpdated;
 use App\Traits\RabbitMQConnection;
-use Illuminate\Support\Facades\Log;
 use App\Repositories\GatewayRepository;
 
 class GatewayRepositoryDecorator extends GatewayRepository
