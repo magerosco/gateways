@@ -6,8 +6,6 @@ namespace App\Traits;
 
 use Illuminate\Http\Request;
 
-use function Ramsey\Uuid\v3;
-
 trait ApiVersion
 {
     protected array $supportedVersions = ['v1', 'v2'];
