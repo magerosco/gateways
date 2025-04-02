@@ -31,7 +31,8 @@ class GatewayRequest extends FormRequest
             'name' => 'max:255',
             'serial_number' => [
                 'required',
-                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id')
+                Rule::unique('gateways', 'serial_number')->ignore($objectId, 'id'),
+                'alpha_num',
             ],
             'IPv4_address' => [new ValidIPv4AddressRule()],
         ];
