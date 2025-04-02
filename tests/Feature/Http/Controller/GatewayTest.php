@@ -138,6 +138,41 @@ class GatewayTest extends TestCase
         $response->assertStatus(200);
     }
 
+
+    public function test_can_not_update_gateway_with_dangerous_data()
+    {
+        $gateway = Gateway::factory()->create();
+        $id = $gateway->id;
+
+        $updatedData = [
+            'serial_number' => '<script>alert("XSS Attack!") 88888888 </script>',
+            'IPv4_address' => '192.168.0.2',
+            'name' => 'Updated Gateway',
+        ];
+
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->putJson("/api/gateway/$id", $updatedData);
+
+        $response->assertStatus(422); // Expecting validation errors
+        $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number']]);
+        $response->assertJsonFragment([
+            'serial_number' => ['The serial number is required.'],
+        ]);
+
+
+        $dangerousObject = new \stdClass();
+        $dangerousObject->script = '<script>alert("XSS Attack!")</script>';
+        $dangerousObject->message = "This is a test message.";
+
+        $updatedData['serial_number'] = json_encode($dangerousObject);
+
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->putJson("/api/gateway/$id", $updatedData);
+        $response->assertStatus(422); // Expecting validation errors
+        $response->assertJsonStructure(['success', 'message', 'data' => ['serial_number']]);
+        $response->assertJsonFragment([
+            'serial_number' => ["The serial number field must only contain letters and numbers."],
+        ]);
+    }
+
     public function test_can_destroy_gateway()
     {
         $gateway = Gateway::factory()->create();
