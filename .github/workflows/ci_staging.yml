@@ -77,5 +77,5 @@ jobs:
           git fetch origin main
 
           git checkout main
-          git merge --no-ff staging -m "Auto-merge from staging"
+          git merge --no-ff origin/staging -m "Auto-merge from staging"
           git push origin main --no-verify
