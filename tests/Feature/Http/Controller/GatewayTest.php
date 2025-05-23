@@ -213,4 +213,27 @@ class GatewayTest extends TestCase
         ])->get('/api/gateway/');
         $response->assertStatus(401); // Expecting unauthorized status
     }
+
+    /**
+     * Test updating a gateway with an invalid IPv4 address.
+     *
+     * @return void
+     */
+    public function test_update_gateway_with_invalid_ipv4_address(): void
+    {
+        $gateway = Gateway::factory()->create();
+        $id = $gateway->id;
+
+        $invalidData = [
+            'serial_number' => '12345678', // Valid serial number
+            'name' => 'Test Gateway', // Valid name
+            'IPv4_address' => '256.256.256.256', // Invalid IPv4 address
+        ];
+
+        $response = $this->withHeaders(['Authorization' => $this->sanctumToken])->putJson("/api/gateway/$id", $invalidData);
+
+        $response->assertStatus(422);
+        $response->assertJsonStructure(['success', 'message', 'data' => ['IPv4_address']]);
+        $response->assertJsonFragment(['IPv4_address' => ['IPv4_address is invalid.']]);
+    }
 }
